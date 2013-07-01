@@ -1,10 +1,9 @@
-# Library Sample #
+# Sample code chapter 5 #
 
 ## Build & Run ##
 
 ```sh
-$ cd Library_Sample
-$ ./sbt
+$ sbt
 > container:start
 > browse
 ```
