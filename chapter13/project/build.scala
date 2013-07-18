@@ -7,11 +7,9 @@ import org.scalatra.sbt.PluginKeys._
 import org.scalatra.sbt.DistPlugin._
 import org.scalatra.sbt.DistPlugin.DistKeys
 
+import com.mojolly.scalate._
 import com.mojolly.scalate.ScalatePlugin._
 import ScalateKeys._
-
-import sbtassembly.Plugin._
-import AssemblyKeys._
 
 object Chapter13Build extends Build {
   val Organization = "org.scalatra"
@@ -29,7 +27,7 @@ object Chapter13Build extends Build {
       "org.eclipse.jetty.orbit" % "javax.servlet" % "3.0.0.v201112011016" % "container;provided;test" artifacts (Artifact("javax.servlet", "jar", "jar"))
     )
 
-  val mySettings = Defaults.defaultSettings ++ Seq(
+  val mySettings = Seq(
       organization := Organization,
       name := Name,
       version := Version,
@@ -49,36 +47,12 @@ object Chapter13Build extends Build {
         )
       },
       mainClass in Dist := Some("foo")
-    ) ++ DistPlugin.webDistSettings
-
-  // settings for sbt-assembly plugin
-  // val assemblySettings = Seq(
-
-  //     // handle conflicts during assembly task
-  //     mergeStrategy in assembly <<= (mergeStrategy in assembly) {
-  //       (old) => {
-  //         case "about.html" => MergeStrategy.first
-  //         case x => old(x)
-  //       }
-  //     },
-
-  //     // copy web resources to /webapp folder
-  //     resourceGenerators in Compile <+= (resourceManaged, baseDirectory) map {
-  //       (managedBase, base) =>
-  //         val webappBase = base / "src" / "main" / "webapp"
-  //         for {
-  //           (from, to) <- webappBase ** "*" x rebase(webappBase, managedBase / "main" / "webapp")
-  //         } yield {
-  //           Sync.copy(from, to)
-  //           to
-  //         }
-  //     }
-  //   )
+    )
 
   lazy val project = Project(
     "chapter13",
     file("."),
-    settings = mySettings ++ ScalatraPlugin.scalatraWithJRebel ++ scalateSettings
+    settings = Defaults.defaultSettings ++ ScalatraPlugin.scalatraWithJRebel ++ DistPlugin.webDistSettings ++ ScalatePlugin.scalateSettings ++ mySettings
   )
 
 }
