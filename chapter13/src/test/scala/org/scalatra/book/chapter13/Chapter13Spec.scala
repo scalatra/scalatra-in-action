@@ -2,12 +2,11 @@ package org.scalatra.book.chapter13
 
 import org.scalatra.test.specs2._
 
-// For more on Specs2, see http://etorreborre.github.com/specs2/guide/org.specs2.guide.QuickStart.html
 class Chapter13Spec extends ScalatraSpec { def is =
   "Chapter13"                     ^
-    "/ should should execute action"            ! action ^
+    "/ should should execute an action"         ! action ^
     "/static.txt should return static file"     ! staticFile ^
-    "/scalate should render template"           ! scalate ^
+    "/scalate should render a template"         ! scalate ^
                                                 end
 
   addServlet(classOf[Chapter13], "/*")

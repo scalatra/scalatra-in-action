@@ -5,7 +5,7 @@ import scalate.ScalateSupport
 
 class Chapter13 extends Chapter13Stack {
 
-  get("/") {
+  get("/?") {
     "Hello, from action!"
   }
   
