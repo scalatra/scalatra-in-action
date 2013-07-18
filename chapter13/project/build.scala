@@ -52,7 +52,7 @@ object Chapter13Build extends Build {
   lazy val project = Project(
     "chapter13",
     file("."),
-    settings = Defaults.defaultSettings ++ ScalatraPlugin.scalatraWithJRebel ++ DistPlugin.webDistSettings ++ ScalatePlugin.scalateSettings ++ mySettings
+    settings = Defaults.defaultSettings ++ ScalatraPlugin.scalatraFullSettings ++ ScalatePlugin.scalateSettings ++ mySettings
   )
 
 }
