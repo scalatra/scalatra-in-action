@@ -1,11 +1,15 @@
 import sbt._
 import Keys._
+import sbt._
+import classpath.ClasspathUtilities
+import Project.Initialize
+import Defaults._
 
 import org.scalatra.sbt._
 import org.scalatra.sbt.PluginKeys._
 
 import org.scalatra.sbt.DistPlugin._
-import org.scalatra.sbt.DistPlugin.DistKeys
+import org.scalatra.sbt.DistPlugin.DistKeys._
 
 import com.mojolly.scalate._
 import com.mojolly.scalate.ScalatePlugin._
@@ -23,7 +27,7 @@ object Chapter13Build extends Build {
       "org.scalatra" %% "scalatra-scalate" % ScalatraVersion,
       "org.scalatra" %% "scalatra-specs2" % ScalatraVersion % "test",
       "ch.qos.logback" % "logback-classic" % "1.0.6" % "runtime",
-      "org.eclipse.jetty" % "jetty-webapp" % "8.1.8.v20121106" % "container",
+      "org.eclipse.jetty" % "jetty-webapp" % "8.1.8.v20121106" % "compile;container",
       "org.eclipse.jetty.orbit" % "javax.servlet" % "3.0.0.v201112011016" % "container;provided;test" artifacts (Artifact("javax.servlet", "jar", "jar"))
     )
 
@@ -46,13 +50,16 @@ object Chapter13Build extends Build {
           )
         )
       },
-      mainClass in Dist := Some("foo")
+      templatesConfig in Dist <<= (templatesConfig in Dist){ templates =>
+        templates
+      },
+      mainClass in Dist := Some("ScalatraLauncher")
     )
 
   lazy val project = Project(
     "chapter13",
     file("."),
-    settings = Defaults.defaultSettings ++ ScalatraPlugin.scalatraFullSettings ++ ScalatePlugin.scalateSettings ++ mySettings
+    settings = Defaults.defaultSettings ++ ScalatraPlugin.scalatraWithDist ++ ScalatePlugin.scalateSettings ++ mySettings
   )
 
 }
