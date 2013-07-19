@@ -37,9 +37,12 @@ object ScalatraLauncher extends App {
 
   import Env.config
 
-  val resourceBase = config.getString("basedir")
+  val resourceBase = config.getString("resourceBase")
   val port = config.getInt("port")
   val host = config.getString("host")
+
+  val key = config.getString("key")
+  println(f"key: $key")
 
   // start server
   val server = new Server

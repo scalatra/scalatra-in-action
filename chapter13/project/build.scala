@@ -58,7 +58,7 @@ object Chapter13Build extends Build {
     mainClass in Dist := Some("ScalatraLauncher"),
     memSetting in Dist := "1g",
     permMemSetting in Dist := "256m",
-    envExports in Dist := Seq("LC_CTYPE=en_US.UTF-8", "LC_ALL=en_US.utf-8"),
+    envExports in Dist := Seq("LC_CTYPE=en_US.UTF-8", "LC_ALL=en_US.utf-8", "SCALATRA_MODE=production"),
     javaOptions in Dist <++= (memSetting in Dist, permMemSetting in Dist) map { (mem, perm) =>
       val rr = Seq(
         "-Xms" + mem,
