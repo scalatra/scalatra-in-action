@@ -1,9 +1,6 @@
 import sbt._
 import Keys._
 import sbt._
-import classpath.ClasspathUtilities
-import Project.Initialize
-import Defaults._
 
 import org.scalatra.sbt._
 import org.scalatra.sbt.PluginKeys._
@@ -13,7 +10,7 @@ import org.scalatra.sbt.DistPlugin.DistKeys._
 
 import com.mojolly.scalate._
 import com.mojolly.scalate.ScalatePlugin._
-import ScalateKeys._
+import com.mojolly.scalate.ScalatePlugin.ScalateKeys._
 
 object Chapter13Build extends Build {
   val Organization = "org.scalatra"
@@ -23,43 +20,55 @@ object Chapter13Build extends Build {
   val ScalatraVersion = "2.2.1"
 
   val myDependencies = Seq(
-      "org.scalatra" %% "scalatra" % ScalatraVersion,
-      "org.scalatra" %% "scalatra-scalate" % ScalatraVersion,
-      "org.scalatra" %% "scalatra-specs2" % ScalatraVersion % "test",
-      "ch.qos.logback" % "logback-classic" % "1.0.6" % "runtime",
-      "org.eclipse.jetty" % "jetty-webapp" % "8.1.8.v20121106" % "compile;container",
-      "org.eclipse.jetty.orbit" % "javax.servlet" % "3.0.0.v201112011016" % "container;provided;test" artifacts (Artifact("javax.servlet", "jar", "jar"))
-    )
+    "org.scalatra" %% "scalatra" % ScalatraVersion,
+    "org.scalatra" %% "scalatra-scalate" % ScalatraVersion,
+    "org.scalatra" %% "scalatra-specs2" % ScalatraVersion % "test",
+    "ch.qos.logback" % "logback-classic" % "1.0.6" % "runtime",
+    "org.eclipse.jetty" % "jetty-webapp" % "8.1.8.v20121106" % "compile;container",
+    "org.eclipse.jetty.orbit" % "javax.servlet" % "3.0.0.v201112011016" % "container;provided;test" artifacts (Artifact("javax.servlet", "jar", "jar"))
+  )
 
-  val mySettings = Seq(
-      organization := Organization,
-      name := Name,
-      version := Version,
-      scalaVersion := ScalaVersion,
-      resolvers += Classpaths.typesafeReleases,
-      libraryDependencies ++= myDependencies,
-      scalateTemplateConfig in Compile <<= (sourceDirectory in Compile){ base =>
+  val myProjectSettings = Seq(
+    organization := Organization,
+    name := Name,
+    version := Version,
+    scalaVersion := ScalaVersion,
+    resolvers += Classpaths.typesafeReleases,
+    libraryDependencies ++= myDependencies
+  )
+
+  val myScalatraSetings = ScalatraPlugin.scalatraSettings
+
+  val myScalateSettings = ScalatePlugin.scalateSettings ++ Seq(
+    scalateTemplateConfig in Compile <<= (sourceDirectory in Compile) {
+      base =>
         Seq(
           TemplateConfig(
             base / "webapp" / "WEB-INF" / "templates",
-            Seq.empty,  /* default imports should be added here */
+            Seq.empty, /* default imports should be added here */
             Seq(
               Binding("context", "_root_.org.scalatra.scalate.ScalatraRenderContext", importMembers = true, isImplicit = true)
-            ),  /* add extra bindings here */
+            ), /* add extra bindings here */
             Some("templates")
           )
         )
-      },
-      templatesConfig in Dist <<= (templatesConfig in Dist){ templates =>
+    }
+  )
+
+  val myDistSettings = DistPlugin.distSettings ++ Seq(
+    templatesConfig in Dist <<= (templatesConfig in Dist) {
+      templates =>
         templates
-      },
-      mainClass in Dist := Some("ScalatraLauncher")
-    )
+    },
+    mainClass in Dist := Some("ScalatraLauncher")
+  )
+
+  val mySettings = myProjectSettings ++ myScalateSettings ++ myDistSettings
 
   lazy val project = Project(
     "chapter13",
     file("."),
-    settings = Defaults.defaultSettings ++ ScalatraPlugin.scalatraWithDist ++ ScalatePlugin.scalateSettings ++ mySettings
+    settings = Defaults.defaultSettings ++ mySettings
   )
 
 }
