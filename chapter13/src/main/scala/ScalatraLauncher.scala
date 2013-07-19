@@ -6,6 +6,8 @@ import org.scalatra.ScalatraBase
 import org.scalatra.servlet.ScalatraListener
 
 import ScalatraBase.{PortKey, HostNameKey, ForceHttpsKey}
+import ScalatraListener.LifeCycleKey
+import org.scalatra.EnvironmentKey
 
 object ScalatraLauncher extends App {
 
@@ -34,11 +36,9 @@ object ScalatraLauncher extends App {
   context.setResourceBase("webapp")
 
   // set init parameters
-  Seq(PortKey, HostNameKey, ForceHttpsKey).foreach { key =>
+  Seq(EnvironmentKey, PortKey, HostNameKey, ForceHttpsKey, LifeCycleKey).foreach { key =>
     sys.props.get(key).foreach { value => context.setInitParameter(key, value) }
   }
-
-  context.setEventListeners(Array(new ScalatraListener))
 
   // default servlet: context.addServlet(classOf[DefaultServlet], "/")
   server.setHandler(context)
