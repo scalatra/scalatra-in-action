@@ -40,6 +40,8 @@ object ScalatraLauncher extends App {
     sys.props.get(key).foreach { value => context.setInitParameter(key, value) }
   }
 
+  context.setEventListeners(Array(new ScalatraListener))
+
   // default servlet: context.addServlet(classOf[DefaultServlet], "/")
   server.setHandler(context)
 
