@@ -1,4 +1,5 @@
 
+import com.typesafe.config.{ConfigFactory, Config}
 import org.eclipse.jetty.server.nio.SelectChannelConnector
 import org.eclipse.jetty.server.Server
 import org.eclipse.jetty.webapp.WebAppContext
@@ -9,10 +10,18 @@ import ScalatraBase.{PortKey, HostNameKey, ForceHttpsKey}
 import ScalatraListener.LifeCycleKey
 import org.scalatra.EnvironmentKey
 
-object ScalatraLauncher extends App {
+case class AppConfig(config: Config) {
+  val port = config.getInt("app.port")
+  val hostname = config.getString("app.hostname")
+  val useHttps = config.getBoolean("app.useHttps")
+  val forceHttps = config.getBoolean("app.forceHttps")
+  val environment = config.getString("app.environment")
+  val lifecycle = if (config.hasPath("app.lifecycle")) Some(config.getString("app.lifecycle")) else None
+}
 
-  val port = sys.props.get(PortKey).map(_.toInt).getOrElse(8080)
-  val host = sys.props.get(HostNameKey).getOrElse("localhost")
+object ScalatraLauncherWithCustomConfig extends App {
+
+  val config = AppConfig(ConfigFactory.load())
 
   // start server
   val server = new Server
@@ -23,8 +32,8 @@ object ScalatraLauncher extends App {
   server.setStopAtShutdown(true)
 
   val connector = new SelectChannelConnector
-  connector.setHost(host)
-  connector.setPort(port)
+  connector.setHost(config.hostname)
+  connector.setPort(config.port)
   connector.setMaxIdleTime(90000)
   server.addConnector(connector)
 
@@ -33,8 +42,13 @@ object ScalatraLauncher extends App {
   context.setResourceBase("webapp")
 
   // set init parameters
-  Seq(EnvironmentKey, PortKey, HostNameKey, ForceHttpsKey, LifeCycleKey).foreach { key =>
-    sys.props.get(key).foreach { value => context.setInitParameter(key, value) }
+  Map(EnvironmentKey -> config.environment,
+    PortKey -> config.port,
+    HostNameKey -> config.hostname,
+    ForceHttpsKey -> config.forceHttps,
+    LifeCycleKey -> config.lifecycle).foreach {
+    case (key, None) =>
+    case (key, value) => context.setInitParameter(key, value.toString)
   }
 
   context.setEventListeners(Array(new ScalatraListener))
