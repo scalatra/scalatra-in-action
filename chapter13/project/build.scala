@@ -40,35 +40,29 @@ object Chapter13Build extends Build {
   val myScalatraSettings = ScalatraPlugin.scalatraSettings
 
   val myScalateSettings = ScalatePlugin.scalateSettings ++ Seq(
-    scalateTemplateConfig in Compile <<= (sourceDirectory in Compile) {
-      base =>
-        Seq(
-          TemplateConfig(
-            base / "webapp" / "WEB-INF" / "templates",
-            Seq.empty, /* default imports should be added here */
-            Seq(
-              Binding("context", "_root_.org.scalatra.scalate.ScalatraRenderContext", importMembers = true, isImplicit = true)
-            ), /* add extra bindings here */
-            Some("templates")
-          )
+    scalateTemplateConfig in Compile <<= (sourceDirectory in Compile) { base =>
+      Seq(
+        TemplateConfig(
+          base / "webapp" / "WEB-INF" / "templates",
+          Seq.empty, /* default imports should be added here */
+          Seq(
+            Binding("context", "_root_.org.scalatra.scalate.ScalatraRenderContext", importMembers = true, isImplicit = true)
+          ), /* add extra bindings here */
+          Some("templates")
         )
+      )
     }
   )
 
   val myDistSettings = DistPlugin.distSettings ++ Seq(
-    templatesConfig in Dist <<= (templatesConfig in Dist) {
-      templates =>
-        templates
+    templatesConfig in Dist <<= (templatesConfig in Dist) { templates =>
+      templates
     },
     mainClass in Dist := Some("ScalatraLauncher")
   )
 
   val mySettings = myProjectSettings ++ myScalatraSettings ++ myScalateSettings ++ myDistSettings
 
-  lazy val project = Project(
-    "chapter13",
-    file("."),
-    settings = Defaults.defaultSettings ++ mySettings
-  )
+  lazy val project = Project("chapter13", file(".")).settings(mySettings :_*)
 
 }
