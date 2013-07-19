@@ -37,7 +37,7 @@ object Chapter13Build extends Build {
     libraryDependencies ++= myDependencies
   )
 
-  val myScalatraSetings = ScalatraPlugin.scalatraSettings
+  val myScalatraSettings = ScalatraPlugin.scalatraSettings
 
   val myScalateSettings = ScalatePlugin.scalateSettings ++ Seq(
     scalateTemplateConfig in Compile <<= (sourceDirectory in Compile) {
