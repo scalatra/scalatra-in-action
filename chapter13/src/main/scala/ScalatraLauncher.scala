@@ -1,14 +1,45 @@
+import com.typesafe.config.{ConfigFactory, Config}
+import java.util.Locale
 import org.eclipse.jetty.server.nio.SelectChannelConnector
 import org.eclipse.jetty.server.Server
 import org.eclipse.jetty.webapp.WebAppContext
 import org.scalatra.servlet.ScalatraListener
 
+object Env {
+  val Production = "PRODUCTION"
+  val Development = "DEVELOPMENT"
+  val Staging = "STAGING"
+  val Test = "TEST"
+
+  private[this] def envKey = sys.env.get("SCALATRA_MODE")
+  private[this] def propsKey = sys.props.get("scalatra.mode")
+
+  val environment = (envKey orElse propsKey) getOrElse {
+    println("No environment found, defaulting to: development")
+    "development"
+  }
+
+  val isProduction = isEnvironment(Production) || isEnvironment(Staging)
+  val isDevelopment = isEnvironment(Development)
+  val isStaging = isEnvironment(Staging)
+  val isTest = isEnvironment(Test)
+  private def isEnvironment(env: String) = environment.toUpperCase(Locale.ENGLISH) startsWith env.toUpperCase(Locale.ENGLISH)
+
+  val config = {
+    val defaultLocalConfig = ConfigFactory.load()
+    if (defaultLocalConfig.hasPath(Env.environment))
+      defaultLocalConfig.getConfig(Env.environment).withFallback(defaultLocalConfig)
+    else defaultLocalConfig
+  }
+}
+
 class ScalatraLauncher extends App {
 
-  // TODO determine values
-  val resourceBase = "webapp"
-  val port = 8080
-  val host = "localhost"
+  import Env.config
+
+  val resourceBase = config.getString("basedir")
+  val port = config.getInt("port")
+  val host = config.getString("host")
 
   // start server
   val server = new Server
