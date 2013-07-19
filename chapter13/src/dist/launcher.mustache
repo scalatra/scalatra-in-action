@@ -3,12 +3,8 @@
 # Compiling launcher.mustache with
 # Map(name -> chapter13-service,
 #     javaOptions -> [-Xms1g, -Xmx1g, -XX:PermSize=256m, -XX:MaxPermSize=256m, -Xss4m,
-#                     -XX:ReservedCodeCacheSize=64m, -XX:+UseConcMarkSweepGC, -XX:+CMSParallelRemarkEnabled,
-#                     -XX:SurvivorRatio=8, -XX:MaxTenuringThreshold=1, -XX:CMSInitiatingOccupancyFraction=75,
-#                     -XX:+UseCMSInitiatingOccupancyOnly, -XX:+DoEscapeAnalysis, -XX:+UseParNewGC,
-#                     -XX:-UseBiasedLocking, -XX:MaxNewSize=32m, -XX:NewSize=32m, -XX:+UseTLAB,
 #                     -Dfile.encoding=UTF-8, -DloggerPath=conf/log4j.properties],
-#     envExports -> [LC_CTYPE=en_US.UTF-8, LC_ALL=en_US.utf-8, AKKA_MODE=production],
+#     envExports -> [LC_CTYPE=en_US.UTF-8, LC_ALL=en_US.utf-8, SCALATRA_MODE=production],
 #     mainClass -> foo,
 #     version -> 0.1.0-SNAPSHOT)
 
