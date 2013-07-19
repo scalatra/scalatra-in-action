@@ -33,7 +33,7 @@ object Env {
   }
 }
 
-class ScalatraLauncher extends App {
+object ScalatraLauncher extends App {
 
   import Env.config
 
