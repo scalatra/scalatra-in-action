@@ -63,7 +63,7 @@ object Chapter13Build extends Build {
     mainClass in Dist := Some("ScalatraLauncher")
   )
 
-  val mySettings = myProjectSettings ++ myScalateSettings ++ myDistSettings
+  val mySettings = myProjectSettings ++ myScalatraSettings ++ myScalateSettings ++ myDistSettings
 
   lazy val project = Project(
     "chapter13",
