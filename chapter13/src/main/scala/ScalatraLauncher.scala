@@ -5,15 +5,15 @@ import org.eclipse.jetty.webapp.WebAppContext
 import org.scalatra.ScalatraBase
 import org.scalatra.servlet.ScalatraListener
 
-import ScalatraBase.{PortKey, HostNameKey}
+import ScalatraBase.{PortKey, HostNameKey, ForceHttpsKey}
 
 object ScalatraLauncher extends App {
 
   //  val config = ConfigFactory.load()
   //  val port = config.getInt(PortKey)
   //  val host = config.getString(HostNameKey)
-  val port = sys.props(PortKey).toInt
-  val host = sys.props(HostNameKey)
+  val port = sys.props.get(PortKey).map(_.toInt).getOrElse(8080)
+  val host = sys.props.get(HostNameKey).getOrElse("localhost")
 
   // start server
   val server = new Server
@@ -32,6 +32,12 @@ object ScalatraLauncher extends App {
   val context = new WebAppContext
   context.setContextPath("/")
   context.setResourceBase("webapp")
+
+  // set init parameters
+  Seq(PortKey, HostNameKey, ForceHttpsKey).foreach { key =>
+    sys.props.get(key).foreach { value => context.setInitParameter(key, value) }
+  }
+
   context.setEventListeners(Array(new ScalatraListener))
 
   // default servlet: context.addServlet(classOf[DefaultServlet], "/")
