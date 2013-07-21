@@ -1,29 +1,37 @@
 
+import com.typesafe.config.ConfigFactory
 import org.eclipse.jetty.server.nio.SelectChannelConnector
 import org.eclipse.jetty.server.Server
 import org.eclipse.jetty.webapp.WebAppContext
-import org.scalatra.ScalatraBase
+import org.scalatra.LifeCycle
+import org.scalatra.ScalatraBase._
 import org.scalatra.servlet.ScalatraListener
 
-import ScalatraBase.{PortKey, HostNameKey, ForceHttpsKey}
 import ScalatraListener.LifeCycleKey
-import org.scalatra.EnvironmentKey
 
 object ScalatraLauncher extends App {
 
-  val port = sys.props.get(PortKey).map(_.toInt).getOrElse(8080)
-  val host = sys.props.get(HostNameKey).getOrElse("localhost")
+  // load config using typesafe config
+  val config = AppConfig(ConfigFactory.load())
+  val hostname  : String         = config.hostname
+  val port      : Int            = config.port
+  val lifecycle : Option[String] = config.lifecycle
 
-  // start server
+  // alternatively using system properties
+  // val port = sys.props.get(PortKey).map(_.toInt).getOrElse(8080)
+  // val host = sys.props.get(HostNameKey).getOrElse("localhost")
+  // val lifecycle = sys.props.get(LifeCycleKey)
+
+
+  // setup server
   val server = new Server
-
   server.setGracefulShutdown(5000)
   server.setSendServerVersion(false)
   server.setSendDateHeader(true)
   server.setStopAtShutdown(true)
 
   val connector = new SelectChannelConnector
-  connector.setHost(host)
+  connector.setHost(hostname)
   connector.setPort(port)
   connector.setMaxIdleTime(90000)
   server.addConnector(connector)
@@ -32,11 +40,7 @@ object ScalatraLauncher extends App {
   context.setContextPath("/")
   context.setResourceBase("webapp")
 
-  // set init parameters
-  Seq(EnvironmentKey, PortKey, HostNameKey, ForceHttpsKey, LifeCycleKey).foreach { key =>
-    sys.props.get(key).foreach { value => context.setInitParameter(key, value) }
-  }
-
+  lifecycle.foreach(l => context.setInitParameter(LifeCycleKey, l))
   context.setEventListeners(Array(new ScalatraListener))
 
   // default servlet: context.addServlet(classOf[DefaultServlet], "/")
