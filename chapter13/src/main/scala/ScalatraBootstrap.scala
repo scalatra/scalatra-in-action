@@ -7,13 +7,13 @@ import javax.servlet.ServletContext
 
 class ScalatraBootstrap extends LifeCycle {
 
-  def environment(implicit context: ServletContext): String = {
+  def environment(context: ServletContext): String = {
     sys.props.get(EnvironmentKey) orElse Option(context.getInitParameter(EnvironmentKey)) getOrElse ("DEVELOPMENT")
   }
 
-  override def init(implicit context: ServletContext) {
+  override def init(context: ServletContext) {
 
-    val config = AppConfig(ConfigFactory.load(environment))
+    val config = AppConfig(ConfigFactory.load(environment(context)))
 
     context.initParameters(HostNameKey) = config.hostname
     context.initParameters(PortKey) = config.port.toString
