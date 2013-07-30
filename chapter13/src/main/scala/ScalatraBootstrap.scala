@@ -8,7 +8,7 @@ import javax.servlet.ServletContext
 class ScalatraBootstrap extends LifeCycle {
 
   def environment(context: ServletContext): String = {
-    sys.props.get(EnvironmentKey) orElse Option(context.getInitParameter(EnvironmentKey)) getOrElse ("DEVELOPMENT")
+    sys.props.get(EnvironmentKey) orElse Option(context.getInitParameter(EnvironmentKey)) getOrElse ("development")
   }
 
   override def init(context: ServletContext) {

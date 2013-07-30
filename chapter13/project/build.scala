@@ -65,9 +65,8 @@ object Chapter13Build extends Build {
     envExports in Dist := Seq("LC_CTYPE=en_US.UTF-8", "LC_ALL=en_US.utf-8"),
     javaOptions in Dist ++= Seq("-Xss4m",
         "-Dfile.encoding=UTF-8",
-        "-Dlogback.configurationFile=logback.xml",
-        "-Dconfig.file=application.conf",
-        "-Dorg.scalatra.environment=development")
+        "-Dlogback.configurationFile=logback.prod.xml",
+        "-Dorg.scalatra.environment=production")
   )
 
   val mySettings = myProjectSettings ++ myScalatraSettings ++ myScalateSettings ++ myDistSettings
