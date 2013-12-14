@@ -15,6 +15,23 @@ import org.json4s.{DefaultFormats, Formats}
 
 case class Comment(url: String, title: String, body: String)
 
+case class CommentsRepository(collection: MongoCollection) {
+
+  def toComment(db: DBObject): Option[Comment] = for {
+    u <- db.getAs[String]("url")
+    s <- db.getAs[String]("string")
+    t <- db.getAs[String]("title")
+  } yield Comment(u, s, t)
+
+
+  def findByUrl(url: String): List[Comment] = {
+    collection.find(MongoDBObject("url" -> url)) map toComment
+  }
+
+  def findAll = collection.find.toList map toComment
+
+}
+
 class CommentsApiDoc(implicit val swagger: Swagger) extends ScalatraServlet with JacksonSwaggerBase
 
 class CommentsFrontend(mongoColl: MongoCollection) extends CommentsCollectorStack {
