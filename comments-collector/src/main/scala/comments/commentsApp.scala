@@ -35,7 +35,9 @@ case class CommentsRepository(collection: MongoCollection) {
 
 }
 
-class CommentsApiDoc(implicit val swagger: Swagger) extends ScalatraServlet with JacksonSwaggerBase
+class CommentsApiDoc(implicit val swagger: Swagger) extends ScalatraServlet with JacksonSwaggerBase {
+  override protected implicit val jsonFormats: Formats = DefaultFormats
+}
 
 class CommentsFrontend(comments: CommentsRepository) extends CommentsCollectorStack {
 
