@@ -29,19 +29,36 @@ class CommentsApi(mongoColl: MongoCollection)(implicit val swagger: Swagger) ext
   protected val applicationDescription = "The comments API. It exposes operations for adding comments and retrieving lists of comments."
 
 
-  // routes and actions
+  // An API description about retrieving comments
+  val getComments = (apiOperation[String, String, String]("getComments")
+    summary ("Show all comments")
+    notes ("""Shows all the available comments. You can optionally search
+     it using a query string parameter such as url=news.intranet.""")
+    parameters (
+    Parameter("url", """A full or partial URL with which to filter the
+          result set, e.g. menu.intranet""", DataType.String,
+      paramType = ParamType.Query, required = false)
+    ))
+
+  // An API description about adding a comment
+  val addComment = (apiOperation[Unit]("addComment")
+    summary("Add a comment")
+    notes("Allows clients to add a new comment")
+    nickname("addComment")
+    parameters(
+    Parameter("url", "The full URL to the resource you'd like to add",
+      DataType.String, paramType = ParamType.Body, required = true),
+    Parameter("title", "The title of the comment", DataType.String,
+      paramType = ParamType.Body, required = true),
+    Parameter("body", "The main information of the comment",
+      DataType.String, paramType = ParamType.Body, required = true)
+    ))
+
 
   /*
    * Retrieve a list of comments
    */
-  get("/",
-    summary("Show all comments"),
-    notes("Shows all the available comments. You can optionally search it using a query string parameter such as url=news.intranet."),
-    nickname("get comments"),
-    responseClass("List[Comment]"),
-    parameters(
-      Parameter("url", "query", DataType.String, required = false))) {
-
+  get("/", operation(getComments)) {
     params.get("url") match {
       case Some(url) =>
 
@@ -52,23 +69,13 @@ class CommentsApi(mongoColl: MongoCollection)(implicit val swagger: Swagger) ext
 
       case None => mongoColl.find
     }
-
   }
 
 
   /*
    * Adds a new comment to the list of available comments
    */
-  post("/",
-    summary("Add a comment"),
-    notes("Allows clients to add a new comment"),
-    nickname("addComment"),
-    responseClass("Unit"),
-    parameters(
-      Parameter("url", "query", DataType.String),
-      Parameter("title", "query", DataType.String),
-      Parameter("body", "query", DataType.String))) {
-
+  post("/", operation(addComment)) {
     for {
       url <- params.get("url")
       title <- params.get("title")
