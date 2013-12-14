@@ -28,9 +28,8 @@ class CommentsApi(mongoColl: MongoCollection)(implicit val swagger: Swagger) ext
   override protected val applicationName = Some("comments-collector")
   protected val applicationDescription = "The comments API. It exposes operations for adding comments and retrieving lists of comments."
 
-
   // An API description about retrieving comments
-  val getComments = (apiOperation[String, String, String]("getComments")
+  val getComments = (apiOperation[List[String]]("getComments")
     summary ("Show all comments")
     notes ("""Shows all the available comments. You can optionally search
      it using a query string parameter such as url=news.intranet.""")
