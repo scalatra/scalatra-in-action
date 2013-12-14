@@ -31,7 +31,7 @@ class CommentsApi(mongoColl: MongoCollection)(implicit val swagger: Swagger) ext
 
 
   // An API description about retrieving comments
-  val getComments = (apiOperation[Comment]("getComments")
+  val getComments = (apiOperation[List[Comment]]("getComments")
     summary ("Show all comments")
     notes ("""Shows all the available comments. You can optionally search
      it using a query string parameter such as url=news.intranet.""")
