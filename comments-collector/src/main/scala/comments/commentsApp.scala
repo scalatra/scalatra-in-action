@@ -60,7 +60,7 @@ class CommentsApi(mongoColl: MongoCollection)(implicit val swagger: Swagger) ext
    * Retrieve a list of comments
    */
   get("/", operation(getComments)) {
-    def toComment(db: DBObject) = for {
+    def toComment(db: DBObject): Option[Comment] = for {
       u <- db.getAs[String]("url")
       s <- db.getAs[String]("string")
       t <- db.getAs[String]("title")
