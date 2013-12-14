@@ -20,9 +20,11 @@ class ScalatraBootstrap extends LifeCycle {
   val mongoColl = mongoClient("comments_collector")("comments")
 
   override def init(context: ServletContext) {
-    context.mount(new CommentsApi(mongoColl), "/api/*")
+    val comments = CommentsRepository(mongoColl)
+
+    context.mount(new CommentsApi(comments), "/api/*")
     context.mount(new CommentsApiDoc(), "/api-docs/*")
-    context.mount(new CommentsFrontend(mongoColl), "/*")
+    context.mount(new CommentsFrontend(comments), "/*")
   }
 
   override def destroy(context: ServletContext) {

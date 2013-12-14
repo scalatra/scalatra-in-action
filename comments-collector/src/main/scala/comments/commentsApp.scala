@@ -23,18 +23,21 @@ case class CommentsRepository(collection: MongoCollection) {
     t <- db.getAs[String]("title")
   } yield Comment(u, s, t)
 
-
-  def findByUrl(url: String): List[Comment] = {
-    collection.find(MongoDBObject("url" -> url)) map toComment
+  def create(url: String, title: String, body: String) {
+    collection += MongoDBObject("url" -> url, "title" -> title, "body" -> body)
   }
 
-  def findAll = collection.find.toList map toComment
+  def findByUrl(url: String): List[Comment] = {
+    collection.find(MongoDBObject("url" -> url)).toList flatMap toComment
+  }
+
+  def findAll = collection.find.toList flatMap toComment
 
 }
 
 class CommentsApiDoc(implicit val swagger: Swagger) extends ScalatraServlet with JacksonSwaggerBase
 
-class CommentsFrontend(mongoColl: MongoCollection) extends CommentsCollectorStack {
+class CommentsFrontend(comments: CommentsRepository) extends CommentsCollectorStack {
 
   get("/") {
     "frontend"
@@ -42,7 +45,7 @@ class CommentsFrontend(mongoColl: MongoCollection) extends CommentsCollectorStac
 
 }
 
-class CommentsApi(mongoColl: MongoCollection)(implicit val swagger: Swagger) extends ScalatraServlet with JacksonJsonSupport with JValueResult with SwaggerSupport {
+class CommentsApi(comments: CommentsRepository)(implicit val swagger: Swagger) extends ScalatraServlet with JacksonJsonSupport with JValueResult with SwaggerSupport {
 
   // identify the application to swagger
   override protected val applicationName = Some("comments-collector")
@@ -80,24 +83,10 @@ class CommentsApi(mongoColl: MongoCollection)(implicit val swagger: Swagger) ext
   get("/", operation(getComments)) {
     contentType = formats("json")
 
-    def toComment(db: DBObject): Option[Comment] = for {
-      u <- db.getAs[String]("url")
-      s <- db.getAs[String]("string")
-      t <- db.getAs[String]("title")
-    } yield Comment(u, s, t)
-
-    val list = params.get("url") match {
-      case Some(url) =>
-
-        mongoColl.findOne(MongoDBObject("url" -> url)) match {
-          case Some(x) => List(x)
-          case None => halt(404)
-        }
-
-      case None => mongoColl.find.toList
+    params.get("url") match {
+      case Some(url) => comments.findByUrl(url)
+      case None => comments.findAll
     }
-
-    list flatMap toComment
   }
 
 
@@ -110,7 +99,7 @@ class CommentsApi(mongoColl: MongoCollection)(implicit val swagger: Swagger) ext
       title <- params.get("title")
       body <- params.get("body")
     } {
-      mongoColl += MongoDBObject("url" -> url, "title" -> title, "body" -> body)
+      comments.create(url, title, body)
     }
   }
 
