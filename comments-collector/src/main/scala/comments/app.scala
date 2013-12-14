@@ -7,35 +7,9 @@ import org.scalatra.swagger._
 
 import org.scalatra.json._
 
-import com.mongodb.casbah.Imports._
-
 import com.fasterxml.jackson.databind._
 import org.json4s.jackson.Json4sScalaModule
 import org.json4s.{DefaultFormats, Formats}
-
-case class Comment(url: String, title: String, body: String)
-
-case class CommentsRepository(collection: MongoCollection) {
-
-  def toComment(db: DBObject): Option[Comment] = for {
-    u <- db.getAs[String]("url")
-    t <- db.getAs[String]("title")
-    b <- db.getAs[String]("body")
-  } yield Comment(u, t, b)
-
-  def create(url: String, title: String, body: String) {
-    collection += MongoDBObject("url" -> url, "title" -> title, "body" -> body)
-  }
-
-  def findByUrl(url: String): List[Comment] = {
-    collection.find(MongoDBObject("url" -> url)).toList flatMap toComment
-  }
-
-  def findAll: List[Comment] = {
-    collection.find.toList flatMap toComment
-  }
-
-}
 
 class CommentsApiDoc(implicit val swagger: Swagger) extends ScalatraServlet with JacksonSwaggerBase {
   override protected implicit val jsonFormats: Formats = DefaultFormats
@@ -81,22 +55,19 @@ class CommentsApi(comments: CommentsRepository)(implicit val swagger: Swagger) e
       ))
 
 
-  /*
-   * Retrieve a list of comments
-   */
-  get("/comments", operation(getComments)) {
+  before("/*") {
     contentType = formats("json")
+  }
 
+  // Retrieve a list of comments
+  get("/comments", operation(getComments)) {
     params.get("url") match {
       case Some(url) => comments.findByUrl(url)
-      case None => comments.findAll
+      case None      => comments.findAll
     }
   }
 
-
-  /*
-   * Adds a new comment to the list of available comments
-   */
+  // creates a new comment
   post("/comments", operation(addComment)) {
     for {
       url <- params.get("url")
