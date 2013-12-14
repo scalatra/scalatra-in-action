@@ -9,7 +9,7 @@ import collection.mutable
 
 import org.scalatra.swagger._
 
-trait CommentsCollectorStack extends ScalatraServlet with ScalateSupport with SwaggerSupport {
+trait CommentsCollectorStack extends ScalatraServlet with ScalateSupport {
 
   /* wire up the precompiled templates */
   override protected def defaultTemplatePath: List[String] = List("/WEB-INF/templates/views")
