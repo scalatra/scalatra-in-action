@@ -9,8 +9,11 @@ import com.mongodb.casbah.Imports._
 // optimize imports
 class ScalatraBootstrap extends LifeCycle {
 
+
+  implicit val apiInfo = new ApiInfo("The comments API", "Docs for the comments API", "http://www.manning.com/carrero2/", "Ross", "MIT", "http://scalatra.org")
+
   // create an implicit instance of Swagger which is passed to both servlets
-  implicit val swagger = new Swagger("1.0", "1")
+  implicit val swagger = new Swagger("1.0", "1", apiInfo)
 
   // create a mongodb client and collection
   val mongoClient = MongoClient()
