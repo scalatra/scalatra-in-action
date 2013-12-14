@@ -5,10 +5,9 @@ import javax.servlet.ServletContext
 import org.scalatra.swagger._
 import com.mongodb.casbah.Imports._
 
-// TODO
-// optimize imports
 class ScalatraBootstrap extends LifeCycle {
 
+  // create an implicit instance of ApiInfo which publishes additional information
   implicit val apiInfo = new ApiInfo("The comments API",
     "Docs for the comments API",
     "http://www.manning.com/carrero2/",
@@ -22,14 +21,23 @@ class ScalatraBootstrap extends LifeCycle {
   val mongoColl = mongoClient("comments_collector")("comments")
 
   override def init(context: ServletContext) {
+
+    // create a comments repository using the mongo collection
     val comments = CommentsRepository(mongoColl)
 
+    // mount the api + swagger docs
     context.mount(new CommentsApi(comments), "/api/*")
     context.mount(new CommentsApiDoc(), "/api-docs/*")
+
+    // mount the html frontend
     context.mount(new CommentsFrontend(comments), "/*")
+
   }
 
   override def destroy(context: ServletContext) {
+
+    // shutdown the mongo client
     mongoClient.close
+
   }
 }

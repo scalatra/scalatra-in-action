@@ -1,17 +1,13 @@
 package comments
 
 import org.scalatra._
-
 import org.scalatra.swagger._
-
 import org.scalatra.json._
 
-import com.fasterxml.jackson.databind._
-import org.json4s.jackson.Json4sScalaModule
-import org.json4s.{DefaultFormats, Formats}
+import org.json4s.DefaultFormats
 
 class CommentsApiDoc(implicit val swagger: Swagger) extends ScalatraServlet with JacksonSwaggerBase {
-  override protected implicit val jsonFormats: Formats = DefaultFormats
+  override protected implicit val jsonFormats = DefaultFormats
 }
 
 class CommentsApi(comments: CommentsRepository)(implicit val swagger: Swagger) extends ScalatraServlet with JacksonJsonSupport with JValueResult with SwaggerSupport {
