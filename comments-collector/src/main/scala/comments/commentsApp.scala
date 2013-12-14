@@ -19,9 +19,9 @@ case class CommentsRepository(collection: MongoCollection) {
 
   def toComment(db: DBObject): Option[Comment] = for {
     u <- db.getAs[String]("url")
-    s <- db.getAs[String]("string")
     t <- db.getAs[String]("title")
-  } yield Comment(u, s, t)
+    b <- db.getAs[String]("body")
+  } yield Comment(u, t, b)
 
   def create(url: String, title: String, body: String) {
     collection += MongoDBObject("url" -> url, "title" -> title, "body" -> body)
@@ -31,7 +31,9 @@ case class CommentsRepository(collection: MongoCollection) {
     collection.find(MongoDBObject("url" -> url)).toList flatMap toComment
   }
 
-  def findAll = collection.find.toList flatMap toComment
+  def findAll: List[Comment] = {
+    collection.find.toList flatMap toComment
+  }
 
 }
 
@@ -82,7 +84,7 @@ class CommentsApi(comments: CommentsRepository)(implicit val swagger: Swagger) e
   /*
    * Retrieve a list of comments
    */
-  get("/", operation(getComments)) {
+  get("/comments", operation(getComments)) {
     contentType = formats("json")
 
     params.get("url") match {
@@ -95,7 +97,7 @@ class CommentsApi(comments: CommentsRepository)(implicit val swagger: Swagger) e
   /*
    * Adds a new comment to the list of available comments
    */
-  post("/", operation(addComment)) {
+  post("/comments", operation(addComment)) {
     for {
       url <- params.get("url")
       title <- params.get("title")
