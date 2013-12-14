@@ -25,7 +25,7 @@ trait MongoDbJsonConversion extends ScalatraBase with ApiFormats {
   }: RenderPipeline
 
   // add to render pipeline
-  override protected def renderPipeline = transformMongoObjectsToJson4s orElse super.renderPipeline
+  override protected def renderPipeline = transformMongoObjectsToJson orElse super.renderPipeline
 
 }
 
