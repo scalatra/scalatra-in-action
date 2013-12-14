@@ -15,21 +15,23 @@ class CommentsApiDoc(implicit val swagger: Swagger) extends ScalatraServlet with
   override protected implicit val jsonFormats: Formats = DefaultFormats
 }
 
-class CommentsFrontend(comments: CommentsRepository) extends CommentsCollectorStack {
+class CommentsFrontend(comments: CommentsRepository) extends ScalatraServlet with ScalateSupport {
 
   get("/") {
     "frontend"
+  }
+
+  notFound {
+    // anything here?
   }
 
 }
 
 class CommentsApi(comments: CommentsRepository)(implicit val swagger: Swagger) extends ScalatraServlet with JacksonJsonSupport with JValueResult with SwaggerSupport {
 
-  // identify the application to swagger
+  // Identifies the application to swagger
   override protected val applicationName = Some("comments-collector")
   protected val applicationDescription = "The comments API. It exposes operations for adding comments and retrieving lists of comments."
-
-  implicit val jsonFormats = DefaultFormats
 
   // An API description about retrieving comments
   val getComments = (apiOperation[List[Comment]]("getComments")
@@ -37,10 +39,7 @@ class CommentsApi(comments: CommentsRepository)(implicit val swagger: Swagger) e
     notes ("""Shows all the available comments. You can optionally search
      it using a query string parameter such as url=news.intranet.""")
     parameters (
-//      Parameter(DataType.String, "url", """A full or partial URL with which to filter the
-//            result set, e.g. menu.intranet""",
-//        paramType = ParamType.Query, required = false)
-        Parameter("url", DataType.String, Some("A full or partial URL with which to filter the result set"), Some("Notes go here"), ParamType.Query, None)
+      Parameter("url", DataType.String, Some("A full or partial URL with which to filter the result set"), Some("Notes go here"), ParamType.Query, None)
       ))
 
   // An API description about adding a comment
@@ -54,12 +53,14 @@ class CommentsApi(comments: CommentsRepository)(implicit val swagger: Swagger) e
       Parameter( "body", DataType.String, Some("The main information of the comment"), None, ParamType.Body, required = true)
       ))
 
+  // Required to convert an instance of Comment to JSON text
+  implicit val jsonFormats = DefaultFormats
 
   before("/*") {
     contentType = formats("json")
   }
 
-  // Retrieve a list of comments
+  // Retrieves a list of comments
   get("/comments", operation(getComments)) {
     params.get("url") match {
       case Some(url) => comments.findByUrl(url)
@@ -67,7 +68,7 @@ class CommentsApi(comments: CommentsRepository)(implicit val swagger: Swagger) e
     }
   }
 
-  // creates a new comment
+  // Creates a new comment
   post("/comments", operation(addComment)) {
     for {
       url <- params.get("url")
