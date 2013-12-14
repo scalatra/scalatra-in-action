@@ -11,6 +11,7 @@ import com.fasterxml.jackson.databind._
 import org.json4s.jackson.Json4sScalaModule
 import org.json4s.{DefaultFormats, Formats}
 
+case class Comment(url: String, title: String, body: String)
 
 class CommentsApiDoc(implicit val swagger: Swagger) extends ScalatraServlet with JacksonSwaggerBase
 
@@ -30,15 +31,15 @@ class CommentsApi(mongoColl: MongoCollection)(implicit val swagger: Swagger) ext
 
 
   // An API description about retrieving comments
-  val getComments = (apiOperation[String, String, String]("getComments")
+  val getComments = (apiOperation[Comment]("getComments")
     summary ("Show all comments")
     notes ("""Shows all the available comments. You can optionally search
      it using a query string parameter such as url=news.intranet.""")
     parameters (
-    Parameter("url", """A full or partial URL with which to filter the
-          result set, e.g. menu.intranet""", DataType.String,
-      paramType = ParamType.Query, required = false)
-    ))
+      Parameter("url", """A full or partial URL with which to filter the
+            result set, e.g. menu.intranet""", DataType.String,
+        paramType = ParamType.Query, required = false)
+      ))
 
   // An API description about adding a comment
   val addComment = (apiOperation[Unit]("addComment")
@@ -46,29 +47,37 @@ class CommentsApi(mongoColl: MongoCollection)(implicit val swagger: Swagger) ext
     notes("Allows clients to add a new comment")
     nickname("addComment")
     parameters(
-    Parameter("url", "The full URL to the resource you'd like to add",
-      DataType.String, paramType = ParamType.Body, required = true),
-    Parameter("title", "The title of the comment", DataType.String,
-      paramType = ParamType.Body, required = true),
-    Parameter("body", "The main information of the comment",
-      DataType.String, paramType = ParamType.Body, required = true)
-    ))
+      Parameter("url", "The full URL to the resource you'd like to add",
+        DataType.String, paramType = ParamType.Body, required = true),
+      Parameter("title", "The title of the comment", DataType.String,
+        paramType = ParamType.Body, required = true),
+      Parameter("body", "The main information of the comment",
+        DataType.String, paramType = ParamType.Body, required = true)
+      ))
 
 
   /*
    * Retrieve a list of comments
    */
   get("/", operation(getComments)) {
-    params.get("url") match {
+    def toComment(db: DBObject) = for {
+      u <- db.getAs[String]("url")
+      s <- db.getAs[String]("string")
+      t <- db.getAs[String]("title")
+    } yield Comment(u, s, t)
+
+    val list = params.get("url") match {
       case Some(url) =>
 
         mongoColl.findOne(MongoDBObject("url" -> url)) match {
-          case Some(x) => x
+          case Some(x) => List(x)
           case None => halt(404)
         }
 
       case None => mongoColl.find
     }
+
+    list flatMap toComment
   }
 
 
