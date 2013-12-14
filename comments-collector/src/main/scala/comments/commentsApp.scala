@@ -5,6 +5,8 @@ import org.scalatra.scalate.ScalateSupport
 
 import org.scalatra.swagger._
 
+import org.scalatra.json._
+
 import com.mongodb.casbah.Imports._
 
 import com.fasterxml.jackson.databind._
@@ -23,12 +25,13 @@ class CommentsFrontend(mongoColl: MongoCollection) extends CommentsCollectorStac
 
 }
 
-class CommentsApi(mongoColl: MongoCollection)(implicit val swagger: Swagger) extends ScalatraServlet with MongoDbJsonConversion with SwaggerSupport {
+class CommentsApi(mongoColl: MongoCollection)(implicit val swagger: Swagger) extends ScalatraServlet with JacksonJsonSupport with JValueResult with SwaggerSupport {
 
   // identify the application to swagger
   override protected val applicationName = Some("comments-collector")
   protected val applicationDescription = "The comments API. It exposes operations for adding comments and retrieving lists of comments."
 
+  implicit val jsonFormats = DefaultFormats
 
   // An API description about retrieving comments
   val getComments = (apiOperation[List[Comment]]("getComments")
@@ -60,6 +63,8 @@ class CommentsApi(mongoColl: MongoCollection)(implicit val swagger: Swagger) ext
    * Retrieve a list of comments
    */
   get("/", operation(getComments)) {
+    contentType = formats("json")
+
     def toComment(db: DBObject): Option[Comment] = for {
       u <- db.getAs[String]("url")
       s <- db.getAs[String]("string")
@@ -74,7 +79,7 @@ class CommentsApi(mongoColl: MongoCollection)(implicit val swagger: Swagger) ext
           case None => halt(404)
         }
 
-      case None => mongoColl.find
+      case None => mongoColl.find.toList
     }
 
     list flatMap toComment
