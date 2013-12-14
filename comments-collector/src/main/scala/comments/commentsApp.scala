@@ -14,7 +14,6 @@ import org.json4s.{DefaultFormats, Formats}
 
 class CommentsApiDoc(implicit val swagger: Swagger) extends ScalatraServlet with JacksonSwaggerBase
 
-
 class CommentsFrontend(mongoColl: MongoCollection) extends CommentsCollectorStack {
 
   get("/") {
