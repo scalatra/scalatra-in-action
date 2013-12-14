@@ -39,9 +39,10 @@ class CommentsApi(mongoColl: MongoCollection)(implicit val swagger: Swagger) ext
     notes ("""Shows all the available comments. You can optionally search
      it using a query string parameter such as url=news.intranet.""")
     parameters (
-      Parameter("url", """A full or partial URL with which to filter the
-            result set, e.g. menu.intranet""", DataType.String,
-        paramType = ParamType.Query, required = false)
+//      Parameter(DataType.String, "url", """A full or partial URL with which to filter the
+//            result set, e.g. menu.intranet""",
+//        paramType = ParamType.Query, required = false)
+        Parameter("url", DataType.String, Some("A full or partial URL with which to filter the result set"), Some("Notes go here"), ParamType.Query, None)
       ))
 
   // An API description about adding a comment
@@ -50,12 +51,9 @@ class CommentsApi(mongoColl: MongoCollection)(implicit val swagger: Swagger) ext
     notes("Allows clients to add a new comment")
     nickname("addComment")
     parameters(
-      Parameter("url", "The full URL to the resource you'd like to add",
-        DataType.String, paramType = ParamType.Body, required = true),
-      Parameter("title", "The title of the comment", DataType.String,
-        paramType = ParamType.Body, required = true),
-      Parameter("body", "The main information of the comment",
-        DataType.String, paramType = ParamType.Body, required = true)
+      Parameter("url", DataType.String, Some("The full URL to the resource you'd like to add"), None, ParamType.Body, required = true),
+      Parameter("title", DataType.String, Some("The title of the comment"), None, ParamType.Body, required = true),
+      Parameter( "body", DataType.String, Some("The main information of the comment"), None, ParamType.Body, required = true)
       ))
 
 
