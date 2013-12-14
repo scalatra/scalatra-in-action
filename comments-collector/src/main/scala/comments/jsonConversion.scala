@@ -13,7 +13,7 @@ import org.json4s.mongo.{JObjectParser, ObjectIdSerializer}
 trait MongoDbJsonConversion extends ScalatraBase with ApiFormats {
 
   // converts DBObject and MongoCursor to a JSON string
-  def transformMongoObjectsToJson4s = {
+  def transformMongoObjectsToJson = {
     case dbo: DBObject =>
       contentType = formats("json")
       JSON.serialize(dbo)
