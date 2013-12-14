@@ -1,7 +1,6 @@
 package comments
 
 import org.scalatra._
-import org.scalatra.scalate.ScalateSupport
 
 import org.scalatra.swagger._
 
@@ -13,18 +12,6 @@ import org.json4s.{DefaultFormats, Formats}
 
 class CommentsApiDoc(implicit val swagger: Swagger) extends ScalatraServlet with JacksonSwaggerBase {
   override protected implicit val jsonFormats: Formats = DefaultFormats
-}
-
-class CommentsFrontend(comments: CommentsRepository) extends ScalatraServlet with ScalateSupport {
-
-  get("/") {
-    "frontend"
-  }
-
-  notFound {
-    // anything here?
-  }
-
 }
 
 class CommentsApi(comments: CommentsRepository)(implicit val swagger: Swagger) extends ScalatraServlet with JacksonJsonSupport with JValueResult with SwaggerSupport {
