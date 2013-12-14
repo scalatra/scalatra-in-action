@@ -22,7 +22,7 @@ class CommentsFrontend(mongoColl: MongoCollection) extends CommentsCollectorStac
 
 }
 
-class CommentsApi(mongoColl: MongoCollection)(implicit val swagger: Swagger) extends ScalatraServlet with SwaggerSupport {
+class CommentsApi(mongoColl: MongoCollection)(implicit val swagger: Swagger) extends ScalatraServlet with MongoDbJsonConversion with SwaggerSupport {
 
   // identify the application to swagger
   override protected val applicationName = Some("comments-collector")
