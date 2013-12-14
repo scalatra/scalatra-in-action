@@ -19,8 +19,7 @@ class CommentsApi(comments: CommentsRepository)(implicit val swagger: Swagger) e
   // An API description about retrieving comments
   val getComments = (apiOperation[List[Comment]]("getComments")
     summary ("Show all comments")
-    notes ("""Shows all the available comments. You can optionally search
-     it using a query string parameter such as url=news.intranet.""")
+    notes ("Shows all the available comments. You can optionally search it using a query string parameter such as url=news.intranet.")
     parameters (
       Parameter("url", DataType.String, Some("A full or partial URL with which to filter the result set"), Some("Notes go here"), ParamType.Query, None)
       ))
@@ -33,7 +32,7 @@ class CommentsApi(comments: CommentsRepository)(implicit val swagger: Swagger) e
     parameters(
       Parameter("url", DataType.String, Some("The full URL to the resource you'd like to add"), None, ParamType.Body, required = true),
       Parameter("title", DataType.String, Some("The title of the comment"), None, ParamType.Body, required = true),
-      Parameter( "body", DataType.String, Some("The main information of the comment"), None, ParamType.Body, required = true)
+      Parameter("body", DataType.String, Some("The main information of the comment"), None, ParamType.Body, required = true)
       ))
 
   // Required to convert an instance of Comment to JSON text
