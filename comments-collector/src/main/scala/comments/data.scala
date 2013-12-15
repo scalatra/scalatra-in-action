@@ -1,13 +1,16 @@
 package comments
 
 import com.mongodb.casbah.Imports._
+import org.bson.types.ObjectId
 
 case class Comment(url: String, title: String, body: String)
 
 case class CommentsRepository(collection: MongoCollection) {
 
-  def create(url: String, title: String, body: String) {
-    collection += MongoDBObject("url" -> url, "title" -> title, "body" -> body)
+  def create(url: String, title: String, body: String): ObjectId = {
+    val m = MongoDBObject("url" -> url, "title" -> title, "body" -> body)
+    collection += m
+    m.getAs[ObjectId]("_id").get
   }
 
   def findAll: List[Comment] = {
