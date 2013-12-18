@@ -4,7 +4,7 @@
 
 ### Linux
 
-$ sudo apt-get install mongodb
+    $ sudo apt-get install mongodb
 
 ## Build & Run ##
 
