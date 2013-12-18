@@ -2,16 +2,25 @@ package comments
 
 import org.scalatra._
 import org.scalatra.scalate.ScalateSupport
+import java.net.URLEncoder
 
-class CommentsFrontend(comments: CommentsRepository) extends ScalatraServlet with ScalateSupport {
-
+class CommentsFrontend(commentsRepo: CommentsRepository) extends ScalatraServlet with ScalateSupport {
   get("/") {
-    "frontend"
+    val urls = commentsRepo.findAll.groupBy(_.url).keys.toSeq.sorted
+    layoutTemplate("index", "title" -> "Articles with comments", "urls" -> urls)
   }
 
-  notFound {
-    // anything here?
+  get("/:url") {
+    val url = params("url")
+    layoutTemplate("comments", "url" -> url, "comments" -> commentsRepo.findByUrl(url))
   }
 
+  post("/:url") {
+    val url = params("url")
+    val title = params.getOrElse("title", halt(BadRequest("title is required")))
+    val body = params.getOrElse("body", halt(BadRequest("body is required")))
+    commentsRepo.create(url, title, body)
+    redirect(s"${routeBasePath}/${URLEncoder.encode(url, "utf-8")}")
+  }
 }
 

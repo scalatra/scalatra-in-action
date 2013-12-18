@@ -1,0 +1,23 @@
+- import comments._
+-@ val url: String
+-@ val comments: Seq[Comment]
+- attributes("title") = s"Comments for ${url}"
+
+%h1
+  %a(href={url})= url
+%h2 Comments
+%dl
+  - for (comment <- comments)
+    %dt= comment.title
+    %dd= comment.body
+%h2 Post comment
+%form(method="post")
+  %label
+    Title
+    %input(type="text" name="title")
+  %br
+  %label
+    Body
+    %textarea(name="body")
+  %br
+  %input(type="submit" value="Submit")

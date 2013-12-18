@@ -1,0 +1,10 @@
+- import comments._
+- import java.net.URLEncoder.encode
+-@ val urls: Seq[String]
+
+%h1 Articles with comments
+%ul
+  - for (url <- urls)
+    %li
+      %a(href={uri("/"+encode(url, "utf-8"))})= url
+
