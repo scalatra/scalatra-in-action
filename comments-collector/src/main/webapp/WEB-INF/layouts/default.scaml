@@ -20,7 +20,7 @@
           %li
             %a(href={uri("/")}) Home
           %li.dropdown
-            %a(href="#" class="dropdown-toggle" data-toggle="dropdown") Comments <b class="caret"></b></a>
+            %a(href="#" class="dropdown-toggle" data-toggle="dropdown") Explore <b class="caret"></b></a>
 
             %ul.dropdown-menu
               - if (urls.size > 0)
@@ -29,10 +29,6 @@
                     %a(href={uri("/"+encode(url, "utf-8"))})= url
               - else
                 %li.dropdown-header No comments yet
-              %li.divider
-              %li.dropdown-header Manage
-              %li
-                %a(href={uri("/create")}) Create new
 
         %h2 comments-collector
 

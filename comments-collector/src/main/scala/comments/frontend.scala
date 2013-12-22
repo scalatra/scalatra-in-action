@@ -10,11 +10,6 @@ class CommentsFrontend(commentsRepo: CommentsRepository) extends ScalatraServlet
     layoutTemplate("index", "title" -> "Articles with comments", "urls" -> urls)
   }
 
-  get("/create") {
-    val urls = commentsRepo.findAll.groupBy(_.url).keys.toSeq.sorted
-    layoutTemplate("create", "urls" -> urls)
-  }
-
   get("/:url") {
     val url = params("url")
     val urls = commentsRepo.findAll.groupBy(_.url).keys.toSeq.sorted
