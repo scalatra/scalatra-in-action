@@ -27,7 +27,6 @@ object CommentsCollectorBuild extends Build {
         "org.scalatra" %% "scalatra-specs2" % ScalatraVersion % "test",
         "org.scalatra" %% "scalatra-swagger" % ScalatraVersion,
         "org.json4s" % "json4s-jackson_2.10" % "3.2.6",
-        "org.json4s" % "json4s-mongo_2.10" % "3.2.6",
         "org.mongodb" %% "casbah" % "2.6.0",
         "ch.qos.logback" % "logback-classic" % "1.0.6" % "runtime",
         "org.eclipse.jetty" % "jetty-webapp" % "8.1.8.v20121106" % "container",
