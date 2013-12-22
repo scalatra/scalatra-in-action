@@ -1,11 +1,9 @@
 
-
 @media (min-width: 768px) {
   .container {
     max-width: 730px;
   }
 }
-
 
 .header {
   border-bottom: 1px solid #e5e5e5;
