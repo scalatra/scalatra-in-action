@@ -2,9 +2,12 @@
 - import java.net.URLEncoder.encode
 -@ val urls: Seq[String]
 
-%h1 Articles with comments
-%ul
-  - for (url <- urls)
-    %li
-      %a(href={uri("/"+encode(url, "utf-8"))})= url
+.row
+  .col-lg-12
+    .jumbotron
+      %h2 Welcome
+      %p This is the web interface for the comments collector application. Here you can view existing comments and also create new ones.
+      %p
+        %a.btn.btn-lg.btn-primary(href={uri("/create")} role="button") Create a comment &raquo;
+
 

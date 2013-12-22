@@ -12,7 +12,8 @@ class CommentsFrontend(commentsRepo: CommentsRepository) extends ScalatraServlet
 
   get("/:url") {
     val url = params("url")
-    layoutTemplate("comments", "url" -> url, "comments" -> commentsRepo.findByUrl(url))
+    val urls = commentsRepo.findAll.groupBy(_.url).keys.toSeq.sorted
+    layoutTemplate("comments", "urls" -> urls, "url" -> url, "comments" -> commentsRepo.findByUrl(url))
   }
 
   post("/:url") {
