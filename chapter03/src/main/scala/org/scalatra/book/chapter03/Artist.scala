@@ -10,6 +10,8 @@ case class Artist(name: String, nationality: String, isActive: Boolean) {
       <nationality>${nationality}</nationality>
       <is-active>${isActive}</is-active>
     </artist>
+
+  def toJson: String = ??? // Left as an exercise to the JSON chapter.
 }
 
 object Artist {

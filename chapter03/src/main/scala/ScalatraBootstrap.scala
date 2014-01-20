@@ -5,6 +5,7 @@ import org.scalatra.book.chapter03.RecordStore
 
 class ScalatraBootstrap extends LifeCycle {
   override def init(context: ServletContext) {
+    context.setInitParameter("download-path", "/srv/media")
     context.mount(new RecordStore, "/*")
   }
 }
