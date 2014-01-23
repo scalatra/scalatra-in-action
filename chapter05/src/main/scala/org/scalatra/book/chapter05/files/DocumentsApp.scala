@@ -31,6 +31,11 @@ class DocumentsApp extends ScalatraServlet with FileUploadSupport {
   }
 
   post("/") {
+    val (profilePicByteStream: Array[Byte], contentType:String, fileName) = fileParams.get("document") match {
+      case Some(file) => (file.get(), file.contentType.getOrElse("application/octet-stream"), file.name)
+      case None => (Array(), "", null)
+    }
+
     val item: FileItem = fileParams.get("document").getOrElse(halt(500))
     val uuid = java.util.UUID.randomUUID()
     val targetFile = new File("%s/%s".format(mediaBase, uuid))

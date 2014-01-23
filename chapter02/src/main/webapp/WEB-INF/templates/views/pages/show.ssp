@@ -1,0 +1,70 @@
+<%@ import val page: com.example.chat.Page %>
+
+<div class="row">
+  <div class="span6">
+    <h2><%= page.title %> </h2>
+    <p class="lead"><%= page.summary %></p>
+    <%= page.body %>
+  </div>
+  <div class="span4 well" id="people">
+    <div class="row">
+      <div class="span6">
+        <p>Connected: 
+          <i  id="connection-indicator" 
+              class="icon-thumbs-down"></i>
+        </p>
+        <!-- Button to trigger modal -->
+        <p>
+          <a href="#loginModal" id="loginButton" 
+             role="button" class="btn" data-toggle="modal">
+             Log in to chat
+          </a>
+        </p>
+        <p>
+          <input class="input-xlarge" id="chat-input" 
+            type="text" placeholder="Say something">
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- A modal form allows users to log in -->
+<div id="loginModal" class="modal hide fade" 
+  tabindex="-1" role="dialog">
+    
+  <div class="modal-header">
+    <button type="button" class="close" 
+      data-dismiss="modal">×</button>
+
+    <h3 id="myModalLabel">Log in</h3>
+  </div>
+
+  <div class="modal-body">
+    <form class="form-horizontal" id="loginForm">
+      <div class="control-group">
+        <label class="control-label" for="inputUsername">
+          Username
+        </label>
+        <div class="controls">
+          <input type="text" id="inputUsername" 
+                placeholder="Your username">
+        </div>
+      </div>
+      <div class="control-group">
+        <label class="control-label" for="inputPassword">
+          Password
+        </label>
+        <div class="controls">
+          <input type="password" id="inputPassword" 
+                placeholder="Password">
+        </div>
+      </div>
+      <div class="control-group">
+        <div class="controls">
+          <button type="submit" class="btn">Sign in</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
