@@ -1,0 +1,9 @@
+<%@ import val page: com.example.cms.Page %>
+
+<div class="row">
+  <div class="span12">
+    <h2><%= page.title %> </h2>
+    <p class="lead"><%= page.summary %></p>
+    <%= page.body %>
+  </div>
+</div>
