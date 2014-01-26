@@ -1,9 +1,9 @@
-# ScalaChat #
+# Scalatra CMS #
 
 ## Build & Run ##
 
 ```sh
-$ cd ScalaChat
+$ cd scalatra-cms
 $ ./sbt
 > container:start
 > browse
