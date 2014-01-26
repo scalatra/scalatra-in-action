@@ -24,7 +24,7 @@ class ScalatraBootstrap extends LifeCycle {
   val mongoClient = MongoClient()
   val mongoColl = mongoClient("comments_collector")("comments")
 
-  def mountServlet(sc: ServletContext, servlet: HttpServlet, urlPattern: String) {
+  def mountServlet(sc: ServletContext, servlet: HttpServlet, urlPattern: String, loadOnStartup: Int = 0) {
     val name = servlet.getClass.getName
     val reg = Option(sc.getServletRegistration(name)) getOrElse {
       val r = sc.addServlet(name, servlet)
@@ -35,7 +35,7 @@ class ScalatraBootstrap extends LifeCycle {
       }
       if (servlet.isInstanceOf[ScalatraAsyncSupport])
         r.setAsyncSupported(true)
-      r.setLoadOnStartup(1)
+      r.setLoadOnStartup(loadOnStartup)
       r
     }
 
@@ -48,8 +48,8 @@ class ScalatraBootstrap extends LifeCycle {
     val comments = CommentsRepository(mongoColl)
 
     // mount the api + swagger docs
-    mountServlet(context, new CommentsApi(comments), "/api/*")
-    mountServlet(context, new CommentsApiDoc(), "/api-docs/*")
+    mountServlet(context, new CommentsApi(comments), "/api/*", 1)
+    mountServlet(context, new CommentsApiDoc(), "/api-docs/*", 2)
 
     // mount the html frontend
     mountServlet(context, new CommentsFrontend(comments), "/*")
