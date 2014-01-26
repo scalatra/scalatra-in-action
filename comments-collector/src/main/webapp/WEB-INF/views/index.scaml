@@ -2,9 +2,22 @@
 - import java.net.URLEncoder.encode
 -@ val urls: Seq[String]
 
-%h1 Articles with comments
-%ul
-  - for (url <- urls)
-    %li
-      %a(href={uri("/"+encode(url, "utf-8"))})= url
+:!javascript
+  $(function() {
+    $("#create-comment").click(function() {
+      var url = $("#url").val();
+      location.href = "#{uri("/")}" + encodeURIComponent(url);
+    });
+  })
+
+.row
+  .col-lg-12
+    .jumbotron
+      %h2 Welcome
+      %p This is the web interface for the comments collector application. Here you can view existing comments and also create new ones.
+      %p
+        Enter url:
+        %input#url(type="text" value="http://www.google.com")
+        %a#create-comment.btn.btn-lg.btn-primary(href="#" role="button") Create a comment &raquo;
+
 

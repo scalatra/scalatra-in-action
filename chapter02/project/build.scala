@@ -5,31 +5,31 @@ import org.scalatra.sbt.PluginKeys._
 import com.mojolly.scalate.ScalatePlugin._
 import ScalateKeys._
 
-object CommentsCollectorBuild extends Build {
-  val Organization = "org.scalatra"
-  val Name = "Comments collector"
+object ScalachatBuild extends Build {
+  val Organization = "com.example"
+  val Name = "ScalaChat"
   val Version = "0.1.0-SNAPSHOT"
-  val ScalaVersion = "2.10.2"
-  val ScalatraVersion = "2.3.0.M1"
+  val ScalaVersion = "2.10.0"
+  val ScalatraVersion = "2.2.0"
 
   lazy val project = Project (
-    "comments-collector",
+    "scalachat",
     file("."),
     settings = Defaults.defaultSettings ++ ScalatraPlugin.scalatraWithJRebel ++ scalateSettings ++ Seq(
       organization := Organization,
       name := Name,
       version := Version,
       scalaVersion := ScalaVersion,
-      resolvers += Classpaths.typesafeReleases,
+      resolvers += "Sonatype OSS Snapshots" at "http://oss.sonatype.org/content/repositories/snapshots/",
       libraryDependencies ++= Seq(
         "org.scalatra" %% "scalatra" % ScalatraVersion,
+        "org.scalatra" %% "scalatra-atmosphere" % ScalatraVersion,
         "org.scalatra" %% "scalatra-scalate" % ScalatraVersion,
+        "org.json4s" %% "json4s-jackson" % "3.1.0",
         "org.scalatra" %% "scalatra-specs2" % ScalatraVersion % "test",
-        "org.scalatra" %% "scalatra-swagger" % ScalatraVersion,
-        "org.json4s" % "json4s-jackson_2.10" % "3.2.6",
-        "org.mongodb" %% "casbah" % "2.6.0",
         "ch.qos.logback" % "logback-classic" % "1.0.6" % "runtime",
         "org.eclipse.jetty" % "jetty-webapp" % "8.1.8.v20121106" % "container",
+        "org.eclipse.jetty" % "jetty-websocket" % "8.1.8.v20121106" % "container",
         "org.eclipse.jetty.orbit" % "javax.servlet" % "3.0.0.v201112011016" % "container;provided;test" artifacts (Artifact("javax.servlet", "jar", "jar"))
       ),
       scalateTemplateConfig in Compile <<= (sourceDirectory in Compile){ base =>
@@ -37,9 +37,7 @@ object CommentsCollectorBuild extends Build {
           TemplateConfig(
             base / "webapp" / "WEB-INF" / "templates",
             Seq.empty,  /* default imports should be added here */
-            Seq(
-              Binding("context", "_root_.org.scalatra.scalate.ScalatraRenderContext", importMembers = true, isImplicit = true)
-            ),  /* add extra bindings here */
+            Seq.empty,  /* add extra bindings here */
             Some("templates")
           )
         )

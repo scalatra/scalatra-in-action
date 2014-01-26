@@ -1,10 +1,37 @@
 - response.setContentType("text/html")
+- import java.net.URLEncoder.encode
 -@ val title: String
 -@ val body: String
+-@ val urls: Seq[String]
 
 !!!
 %html
   %head
     %title= title
+    %link(rel="stylesheet" href="/css/bootstrap.min.css")
+    %link(rel="stylesheet" href="/css/site.css")
+    %script(src="https://code.jquery.com/jquery-1.10.2.min.js")
+    %script(src="/js/bootstrap.min.js")
   %body
-    != body
+
+    .container
+      .header
+        %ul.nav.nav-pills.pull-right
+          %li
+            %a(href={uri("/")}) Home
+          %li.dropdown
+            %a(href="#" class="dropdown-toggle" data-toggle="dropdown") Explore <b class="caret"></b></a>
+
+            %ul.dropdown-menu
+              - if (urls.size > 0)
+                - for (url <- urls)
+                  %li
+                    %a(href={uri("/"+encode(url, "utf-8"))})= url
+              - else
+                %li.dropdown-header No comments yet
+
+        %h2 comments-collector
+
+      != body
+
+

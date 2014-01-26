@@ -35,6 +35,7 @@ class CommentsApi(comments: CommentsRepository)(implicit val swagger: Swagger) e
       Parameter("body", DataType.String, Some("The main information of the comment"), None, ParamType.Body, required = true)
       ))
 
+  // Provides default conversion formats, see also http://json4s.org/
   // Required to convert an instance of Comment to JSON text
   implicit val jsonFormats = DefaultFormats
 

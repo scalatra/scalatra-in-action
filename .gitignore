@@ -1,0 +1,35 @@
+*~
+lib_managed/
+project/boot/
+project/build/target/
+project/plugins/project/build.properties
+src_managed/
+target/
+*.eml
+*.iml
+*.ipr
+*.iws
+.*.sw?
+.idea
+.DS_Store
+.ensime
+.target
+
+# paulp script #
+/.lib/
+
+# eclipse artifacts
+.settings
+.project
+.classpath
+.cache
+.ensime_lucene
+
+# sublime artifacts
+*.sublime-*
+atlassian-ide-plugin.xml
+.lib
+
+.history
+
+.jvmopts
