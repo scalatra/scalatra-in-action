@@ -1,0 +1,10 @@
+-@ val whom: String
+-@ val lucky: List[Int]
+- attributes("title") = "Hello, "+whom
+
+%h1 Congratulations
+%p You've created your first Scalate view, #{whom}.
+%p Your lucky numbers are:
+%ul
+  - for (number <- lucky)
+    %li #{number}

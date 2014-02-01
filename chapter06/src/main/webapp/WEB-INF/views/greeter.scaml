@@ -1,0 +1,14 @@
+!!! 5
+-@ val whom: String
+-@ val lucky: List[Int]
+%html
+  %head
+    %link(type="text/css" href="/css/style.css" rel="stylesheet")
+    %title Hello, #{whom}
+  %body
+    %h1 Congratulations
+    %p You've created your first Scalate view, #{whom}.
+    %p Your lucky numbers are:
+    %ul
+      - for (number <- lucky)
+        %li #{number}

@@ -1,0 +1,18 @@
+@(whom: String, lucky: List[Int])
+
+<html>
+  <head>
+    <link type="text/css" href="/css/style.css" rel="stylesheet" />
+    <title>Hello, @whom</title>
+  </head>
+  <body>
+    <h1>Congratulations</h1>
+    <p>You've created your first Twirl view, @whom.</p>
+    <p>Your lucky numbers are:</p>
+    <ul>
+    @for(number <- lucky) {
+      <li>@number</li>
+    }
+    </ul>
+  </body>
+</html>
