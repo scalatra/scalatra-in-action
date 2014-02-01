@@ -1,0 +1,7 @@
+<% import com.constructiveproof.hackertracker.models.Hacker %>
+<% import org.squeryl.Query %>
+<%@ val allHackers:Query[Hacker] %>
+
+#for(hacker <- allHackers.toList)
+  <h2><%= hacker.firstName %></h2>
+#end

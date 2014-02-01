@@ -1,0 +1,7 @@
+<form action="/hackers" method="post">
+    <div><label>First name</label><input type="text" name="firstname"></input></div>
+    <div><label>Last name</label><input type="text" name="lastname"></input></div>
+    <div><label>Motto</label><input type="text" name="motto"></input></div>
+    <div><label>Birth year</label><input type="text" name="birthyear"></input></div>
+    <div><input type="submit"/></div>
+</form>
