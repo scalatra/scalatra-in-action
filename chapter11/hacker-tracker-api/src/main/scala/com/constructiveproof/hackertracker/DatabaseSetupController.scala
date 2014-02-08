@@ -1,9 +1,10 @@
 package com.constructiveproof.hackertracker
 
-import com.constructiveproof.hackertracker.models.Db
 import com.constructiveproof.hackertracker.auth.OurBasicAuthenticationSupport
+import com.constructiveproof.hackertracker.models.Db
+import com.constructiveproof.hackertracker.stacks.BrowserStack
 
-class DatabaseSetupController extends HackerTrackerStack with OurBasicAuthenticationSupport {
+class DatabaseSetupController extends BrowserStack with OurBasicAuthenticationSupport {
 
 
   before() {

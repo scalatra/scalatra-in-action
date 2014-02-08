@@ -1,10 +1,11 @@
 package com.constructiveproof.hackertracker
 
-import org.scalatra._
-import com.constructiveproof.hackertracker.models.Hacker
 import com.constructiveproof.hackertracker.auth.AuthenticationSupport
+import com.constructiveproof.hackertracker.models.Hacker
+import com.constructiveproof.hackertracker.stacks.BrowserStack
+import org.scalatra._
 
-class HackersController extends HackerTrackerStack with AuthenticationSupport {
+class HackersController extends BrowserStack with AuthenticationSupport {
 
   before() {
     contentType = "text/html"

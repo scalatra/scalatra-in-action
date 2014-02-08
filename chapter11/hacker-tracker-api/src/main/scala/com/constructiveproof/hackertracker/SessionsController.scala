@@ -1,10 +1,10 @@
 package com.constructiveproof.hackertracker
 
-import com.constructiveproof.hackertracker.models.{Hacker}
 import com.constructiveproof.hackertracker.auth.AuthenticationSupport
+import com.constructiveproof.hackertracker.models.Hacker
+import com.constructiveproof.hackertracker.stacks.BrowserStack
 
-
-class SessionsController extends HackerTrackerStack with AuthenticationSupport {
+class SessionsController extends BrowserStack with AuthenticationSupport {
 
   before("/new") {
     logger.info("SessionsController: checking whether to run RememberMeStrategy: " + !isAuthenticated)

@@ -1,13 +1,11 @@
 package com.constructiveproof.hackertracker
 
-import com.constructiveproof.hackertracker.init.DatabaseSessionSupport
 import com.constructiveproof.hackertracker.models.Hacker
+import com.constructiveproof.hackertracker.stacks.ApiStack
 import org.json4s.{DefaultFormats, Formats}
-import org.scalatra.{BadRequest, MethodOverride, ScalatraServlet}
-import org.scalatra.json._
+import org.scalatra.BadRequest
 
-class ApiController extends ScalatraServlet with MethodOverride
-  with DatabaseSessionSupport with JacksonJsonSupport {
+class ApiController extends ApiStack {
 
   protected implicit val jsonFormats: Formats = DefaultFormats
 
