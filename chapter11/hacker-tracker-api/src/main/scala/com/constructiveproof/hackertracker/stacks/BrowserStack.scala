@@ -1,12 +1,11 @@
 package com.constructiveproof.hackertracker.stacks
 
-import org.scalatra._
-import scalate.ScalateSupport
+import collection.mutable
+import javax.servlet.http.HttpServletRequest
 import org.fusesource.scalate.TemplateEngine
 import org.fusesource.scalate.layout.DefaultLayoutStrategy
-import javax.servlet.http.HttpServletRequest
-import collection.mutable
-import com.constructiveproof.hackertracker.auth.AuthenticationSupport
+import org.scalatra._
+import scalate.ScalateSupport
 
 trait BrowserStack extends HackerCoreStack with ScalateSupport
   with FlashMapSupport {
