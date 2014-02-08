@@ -1,4 +1,4 @@
-package com.constructiveproof.hackertracker
+package com.constructiveproof.hackertracker.stacks
 
 import org.scalatra._
 import scalate.ScalateSupport
@@ -6,10 +6,10 @@ import org.fusesource.scalate.TemplateEngine
 import org.fusesource.scalate.layout.DefaultLayoutStrategy
 import javax.servlet.http.HttpServletRequest
 import collection.mutable
-import com.constructiveproof.hackertracker.init.DatabaseSessionSupport
+import com.constructiveproof.hackertracker.auth.AuthenticationSupport
 
-trait HackerTrackerStack extends ScalatraServlet with ScalateSupport
-  with DatabaseSessionSupport with FlashMapSupport with MethodOverride {
+trait BrowserStack extends HackerCoreStack with ScalateSupport
+  with FlashMapSupport {
 
   /* wire up the precompiled templates */
   override protected def defaultTemplatePath: List[String] = List("/WEB-INF/templates/views")
