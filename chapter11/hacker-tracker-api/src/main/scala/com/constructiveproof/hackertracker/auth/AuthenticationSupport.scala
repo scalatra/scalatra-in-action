@@ -1,10 +1,9 @@
 package com.constructiveproof.hackertracker.auth
 
+import com.constructiveproof.hackertracker.auth.strategies.{RememberMeStrategy, UserPasswordStrategy}
+import com.constructiveproof.hackertracker.models.User
 import org.scalatra.ScalatraBase
 import org.scalatra.auth.{ScentryConfig, ScentrySupport}
-import com.constructiveproof.hackertracker.auth.strategies.UserPasswordStrategy
-import com.constructiveproof.hackertracker.models.User
-import com.constructiveproof.hackertracker.auth.strategies.RememberMeStrategy
 import org.slf4j.LoggerFactory
 
 trait AuthenticationSupport extends ScalatraBase with ScentrySupport[User] {
