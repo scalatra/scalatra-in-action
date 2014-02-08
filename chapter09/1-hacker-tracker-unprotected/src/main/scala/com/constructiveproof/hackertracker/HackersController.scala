@@ -1,8 +1,7 @@
 package com.constructiveproof.hackertracker
 
+import com.constructiveproof.hackertracker.models.Hacker
 import org.scalatra._
-import com.constructiveproof.hackertracker.models.{Db, Hacker}
-import org.squeryl.PrimitiveTypeMode._
 
 class HackersController extends HackerTrackerStack {
 
@@ -21,9 +20,8 @@ class HackersController extends HackerTrackerStack {
    * Show a specific hacker.
    */
   get("/:id") {
-    val id = params.getAs[Int]("id")
-
-    val hacker = Db.hackers.where(h => h.id === id).single
+    val id = params.getAs[Int]("id").getOrElse(0)
+    val hacker = Hacker.get(id)
     ssp("/hackers/show", "hacker" -> hacker, "allHackers" -> Hacker.all)
   }
 

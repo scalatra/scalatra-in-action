@@ -36,6 +36,10 @@ object Hacker {
   def all = {
     from(Db.hackers)(select(_))
   }
+
+  def get(id: Long) = {
+    Db.hackers.where(h => h.id === id).single
+  }
 }
 
 /**
