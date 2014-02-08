@@ -23,8 +23,8 @@ class HackersController extends HackerTrackerStack with AuthenticationSupport {
    * Show a specific hacker.
    */
   get("/:id") {
-    val id = params.getAs[Int]("id")
-    val hacker = Db.hackers.where(h => h.id === id).single
+    val id = params.getAs[Int]("id").getOrElse(0)
+    val hacker = Hacker.get(id)
     ssp("/hackers/show", "hacker" -> hacker, "allHackers" -> Hacker.all, "authenticated" -> isAuthenticated)
   }
 
