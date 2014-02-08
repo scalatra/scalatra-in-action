@@ -45,6 +45,10 @@ object Hacker {
   def get(id: Long) = {
     Db.hackers.where(h => h.id === id).single
   }
+
+  def destroy(id: Long) = {
+    Db.hackers.delete(id)
+  }
 }
 
 /**

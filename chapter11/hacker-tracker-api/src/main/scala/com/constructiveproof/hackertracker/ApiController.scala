@@ -46,4 +46,11 @@ class ApiController extends ScalatraServlet with MethodOverride
     }
   }
 
+  delete("/:id") {
+    val id = params.getAs[Long]("id").getOrElse(
+      halt(BadRequest("Please provide an id to destroy"))
+    )
+    Hacker.destroy(id)
+  }
+
 }
