@@ -39,7 +39,7 @@ class HackersController extends HackerTrackerStack with AuthenticationSupport {
    * Create a new hacker in the database.
    */
   post("/") {
-//    requireLogin
+    requireLogin
     val firstName = params("firstname")
     val lastName = params("lastname")
     val motto = params("motto")
