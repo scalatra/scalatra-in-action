@@ -15,7 +15,7 @@ case class User(val id:String) {
 /**
  * A hacker in the tracker.
  */
-class Hacker(val id: Long, val firstName: String, val lastName: String, val motto: String, val birthYear: Int) extends SquerylRecord {
+case class Hacker(val id: Long, val firstName: String, val lastName: String, val motto: String, val birthYear: Int) extends SquerylRecord {
   def this() = this(0, "Foo", "McBar", "It's better to ask forgiveness than permission", 1950)
 }
 
