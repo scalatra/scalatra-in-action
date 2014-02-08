@@ -27,6 +27,7 @@ object HackerTrackerBuild extends Build {
         "org.scalatra" %% "scalatra-auth" % ScalatraVersion,
         "org.scalatra" %% "scalatra-json" % ScalatraVersion,
         "org.scalatra" %% "scalatra-scalate" % ScalatraVersion,
+        "org.scalatra" %% "scalatra-swagger" % ScalatraVersion,
         "org.scalatra" %% "scalatra-specs2" % ScalatraVersion % "test",
         "com.h2database" % "h2" % "1.2.127",
         "org.squeryl" %% "squeryl" % "0.9.5-6",
