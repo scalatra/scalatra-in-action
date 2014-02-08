@@ -1,0 +1,9 @@
+<% import com.constructiveproof.hackertracker.models.Hacker %>
+<% import org.squeryl.Query %>
+
+<%@ val hacker:Hacker %>
+
+
+<h3><%= hacker.firstName %> <%= hacker.lastName %> <small>born <%= hacker.birthYear.toString %></small></h3>
+
+<h2>&#8220;<%= hacker.motto %>&#8221;</h2>
