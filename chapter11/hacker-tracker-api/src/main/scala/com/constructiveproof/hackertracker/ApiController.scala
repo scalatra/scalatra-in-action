@@ -2,13 +2,10 @@ package com.constructiveproof.hackertracker
 
 import com.constructiveproof.hackertracker.models.Hacker
 import com.constructiveproof.hackertracker.stacks.ApiStack
-import org.json4s.{DefaultFormats, Formats}
 import org.scalatra.BadRequest
-import org.scalatra.swagger.Swagger
+import org.scalatra.swagger.{Swagger, SwaggerSupport}
 
-
-  protected implicit val jsonFormats: Formats = DefaultFormats
-class ApiController()(implicit val swagger: Swagger) extends ApiStack {
+class ApiController()(implicit val swagger: Swagger) extends ApiStack with SwaggerSupport {
 
   before() {
     contentType = formats("json")
