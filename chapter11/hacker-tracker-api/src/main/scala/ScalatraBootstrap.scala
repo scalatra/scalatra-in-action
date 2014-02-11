@@ -10,9 +10,9 @@ class ScalatraBootstrap extends LifeCycle with DatabaseInit {
   "The HackerTracker API",
   "Docs for the HackerTracker API",
   "http://www.constructiveproof.com/hacker-tracker/tos.html",
-  "Dave Hrycyszyn",
+  "apiteam@constructiveproof.com",
   "MIT",
-  "http://constructiveproof.com/hacker-tracker/api/license.html")
+  "http://opensource.org/licenses/MIT")
 
   implicit val swagger = new Swagger("1.2", "1.0.0", apiInfo)
 
