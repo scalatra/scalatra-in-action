@@ -1,13 +1,13 @@
 package com.constructiveproof.hackertracker.auth
 
-import org.scalatra.{BadRequest, ScalatraBase}
+import org.scalatra.{Unauthorized, ScalatraBase}
 
 trait ApiAuthenticationSupport {
   self: ScalatraBase =>
 
   protected def requireValidApiKey() = {
-    if (!validKey(params.getOrElse("apiKey", die))) {
-      die
+    if (!validKey(params.getOrElse("apiKey", unauthorized))) {
+      unauthorized
     }
   }
 
@@ -21,6 +21,6 @@ trait ApiAuthenticationSupport {
     }
   }
 
-  protected def die = halt(BadRequest("Please provide a valid apiKey parameter"))
+  protected def unauthorized = halt(Unauthorized("Please provide a valid apiKey parameter"))
 
 }
