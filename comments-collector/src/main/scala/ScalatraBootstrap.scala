@@ -48,7 +48,7 @@ class ScalatraBootstrap extends LifeCycle {
     val comments = CommentsRepository(mongoColl)
 
     // mount the api + swagger docs
-    context.mount(new CommentsApi(comments), "/comments-collector")
+    context.mount(new CommentsApi(comments), "/api", "api")
     context.mount(new CommentsApiDoc(), "/api-docs")
 
     // mount the html frontend
