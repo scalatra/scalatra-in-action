@@ -11,7 +11,7 @@ class ApiController()(implicit val swagger: Swagger) extends ApiStack with Swagg
 
   before() {
     contentType = formats("json")
-    requireValidApiKey()
+    validateRequest()
   }
 
   // Identifies the controller to swagger

@@ -1,26 +1,21 @@
 package com.constructiveproof.hackertracker.auth
 
-import org.scalatra.{Unauthorized, ScalatraBase}
+import com.constructiveproof.hackertracker.auth.utils.HmacUtils
+import org.scalatra.{ScalatraBase, Unauthorized}
 
-trait ApiAuthenticationSupport {
+trait ApiAuthenticationSupport extends  {
   self: ScalatraBase =>
 
-  protected def requireValidApiKey() = {
-    if (!validKey(params.getOrElse("apiKey", unauthorized))) {
+  protected def validateRequest() = {
+    val secretKey = "thisisthesecretkey"
+    val hmac = params.getOrElse("sig", unauthorized)
+
+    if(!HmacUtils.verify(secretKey, requestPath, hmac)){
       unauthorized
     }
   }
 
-  protected def validKey(apiKey: String):Boolean = {
-    val validKeys = List("foo-key", "bar-key")
+  protected def unauthorized = halt(Unauthorized("Please provide a valid sig parameter"))
 
-    if (validKeys.contains(apiKey)) {
-      true
-    } else {
-      false
-    }
-  }
-
-  protected def unauthorized = halt(Unauthorized("Please provide a valid apiKey parameter"))
 
 }
