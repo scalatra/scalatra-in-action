@@ -6,15 +6,15 @@ import sun.misc.BASE64Encoder
 
 object HmacUtils {
 
-  def verify(secretKey: String, stringToVerify: String, hmac: String): Boolean = {
-    signature(secretKey, stringToVerify) == hmac
+  def verify(secretKey: String, signMe: String, hmac: String): Boolean = {
+    sign(secretKey, signMe) == hmac
   }
 
-  private def signature(secretKey: String, stringToSign: String): String = {
+  def sign(secretKey: String, signMe: String): String = {
     val secret = new SecretKeySpec(secretKey.getBytes(), "HmacSHA1")
     val mac = Mac.getInstance("HmacSHA1")
     mac.init(secret)
-    val hmac = mac.doFinal(stringToSign.getBytes)
+    val hmac = mac.doFinal(signMe.getBytes)
     new BASE64Encoder().encode(hmac)
   }
 
