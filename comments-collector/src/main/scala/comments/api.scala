@@ -13,7 +13,7 @@ class CommentsApiDoc(implicit val swagger: Swagger) extends ScalatraServlet with
 class CommentsApi(comments: CommentsRepository)(implicit val swagger: Swagger) extends ScalatraServlet with JacksonJsonSupport with JValueResult with SwaggerSupport {
 
   // Identifies the application to swagger
-  override protected val applicationName = Some("comments-collector")
+  override protected val applicationName = Some("api")
   protected val applicationDescription = "The comments API. It exposes operations for adding comments and retrieving lists of comments."
 
   // An API description about retrieving comments
