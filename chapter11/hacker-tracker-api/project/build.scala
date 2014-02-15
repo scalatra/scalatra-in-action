@@ -22,7 +22,7 @@ object HackerTrackerBuild extends Build {
       scalaVersion := ScalaVersion,
       resolvers += Classpaths.typesafeReleases,
       libraryDependencies ++= Seq(
-        "org.json4s" %% "json4s-jackson" % "3.2.6",
+        "org.json4s" %% "json4s-jackson" % "3.2.5",
         "org.scalatra" %% "scalatra" % ScalatraVersion,
         "org.scalatra" %% "scalatra-auth" % ScalatraVersion,
         "org.scalatra" %% "scalatra-json" % ScalatraVersion,
