@@ -6,9 +6,7 @@ import org.scalatra.json._
 
 import org.json4s.DefaultFormats
 
-class CommentsApiDoc(implicit val swagger: Swagger) extends ScalatraServlet with JacksonSwaggerBase {
-  override protected implicit val jsonFormats = DefaultFormats
-}
+class CommentsApiDoc(implicit val swagger: Swagger) extends ScalatraServlet with JacksonSwaggerBase 
 
 class CommentsApi(comments: CommentsRepository)(implicit val swagger: Swagger) extends ScalatraServlet with JacksonJsonSupport with JValueResult with SwaggerSupport {
 
