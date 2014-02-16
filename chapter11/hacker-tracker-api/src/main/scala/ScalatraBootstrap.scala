@@ -18,7 +18,7 @@ class ScalatraBootstrap extends LifeCycle with DatabaseInit {
 
   override def init(context: ServletContext) {
     configureDb()
-    context.mount(new ApiController, "/api/hackers")
+    context.mount(new ApiController, "/hackers-api", "/hackers-api")
     context.mount(new HackersSwagger, "/api-docs")
     context.mount(new DatabaseSetupController, "/database")
     context.mount(new HackersController, "/hackers")
