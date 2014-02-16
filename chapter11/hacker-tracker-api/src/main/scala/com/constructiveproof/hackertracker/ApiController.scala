@@ -16,7 +16,6 @@ class ApiController()(implicit val swagger: Swagger) extends ApiStack with Swagg
   }
 
   // Identifies the controller to swagger
-  override protected val applicationName = Some("hackers")
   protected val applicationDescription =
     """The Hacker Tracker API. Exposes operations for adding hackers and retrieving lists of hackers."""
 
