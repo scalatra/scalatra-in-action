@@ -24,24 +24,6 @@ class ScalatraBootstrap extends LifeCycle {
   val mongoClient = MongoClient()
   val mongoColl = mongoClient("comments_collector")("comments")
 
-  // def mountServlet(sc: ServletContext, servlet: HttpServlet, urlPattern: String, loadOnStartup: Int = 0) {
-  //   val name = servlet.getClass.getName
-  //   val reg = Option(sc.getServletRegistration(name)) getOrElse {
-  //     val r = sc.addServlet(name, servlet)
-  //     servlet match {
-  //       case s: HasMultipartConfig =>
-  //         r.setMultipartConfig(s.multipartConfig.toMultipartConfigElement)
-  //       case _ =>
-  //     }
-  //     if (servlet.isInstanceOf[ScalatraAsyncSupport])
-  //       r.setAsyncSupported(true)
-  //     r.setLoadOnStartup(loadOnStartup)
-  //     r
-  //   }
-
-  //   reg.addMapping(urlPattern)
-  // }
-
   override def init(context: ServletContext) {
 
     // create a comments repository using the mongo collection
