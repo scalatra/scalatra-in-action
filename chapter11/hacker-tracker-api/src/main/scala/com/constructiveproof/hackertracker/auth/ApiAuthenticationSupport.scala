@@ -30,8 +30,7 @@ trait ApiAuthenticationSupport extends {
    * Does the halting for unauthorized requests.
    */
   protected def unauthorized = {
-    notifySig()
-    halt(Unauthorized("Please provide a valid sig parameter"))
+    halt(Unauthorized("Please provide a valid sig parameter. " + notifySig()))
   }
 
   /**
@@ -51,7 +50,9 @@ trait ApiAuthenticationSupport extends {
   protected def notifySig() = {
     val base64hmac = HmacUtils.sign(secretKey, signMe)
     val urlEncodedHmac = URLEncoder.encode(base64hmac, "UTF-8")
-    println("Append the following to this request in order to sign it: ?sig=" + urlEncodedHmac)
+    val notification = "Append the following to this request in order to sign it: ?sig=" + urlEncodedHmac
+    println(notification)
+    notification
   }
 
 }
