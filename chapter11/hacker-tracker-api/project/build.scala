@@ -10,7 +10,7 @@ object HackerTrackerBuild extends Build {
   val Name = "Hacker Tracker"
   val Version = "0.1.0-SNAPSHOT"
   val ScalaVersion = "2.10.3"
-  val ScalatraVersion = "2.3.0-SNAPSHOT"
+  val ScalatraVersion = "2.3.0.M1"
 
   lazy val project = Project (
     "hacker-tracker-protected",
@@ -21,9 +21,8 @@ object HackerTrackerBuild extends Build {
       version := Version,
       scalaVersion := ScalaVersion,
       resolvers += Classpaths.typesafeReleases,
-      resolvers += "Sonatype OSS Snapshots" at "https://oss.sonatype.org/content/repositories/snapshots/",
       libraryDependencies ++= Seq(
-        "org.json4s" %% "json4s-jackson" % "3.2.6",
+        "org.json4s" %% "json4s-jackson" % "3.2.5",
         "org.scalatra" %% "scalatra" % ScalatraVersion,
         "org.scalatra" %% "scalatra-auth" % ScalatraVersion,
         "org.scalatra" %% "scalatra-json" % ScalatraVersion,
