@@ -23,7 +23,7 @@ object HackerTrackerBuild extends Build {
       resolvers += Classpaths.typesafeReleases,
       resolvers += "Sonatype OSS Snapshots" at "https://oss.sonatype.org/content/repositories/snapshots/",
       libraryDependencies ++= Seq(
-        "org.json4s" %% "json4s-jackson" % "3.2.5",
+        "org.json4s" %% "json4s-jackson" % "3.2.6",
         "org.scalatra" %% "scalatra" % ScalatraVersion,
         "org.scalatra" %% "scalatra-auth" % ScalatraVersion,
         "org.scalatra" %% "scalatra-json" % ScalatraVersion,
