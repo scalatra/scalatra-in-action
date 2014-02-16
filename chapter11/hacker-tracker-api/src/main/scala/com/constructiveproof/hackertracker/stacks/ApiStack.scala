@@ -1,7 +1,7 @@
 package com.constructiveproof.hackertracker.stacks
 
 import org.scalatra.json.JacksonJsonSupport
-import org.scalatra.swagger.{SwaggerSupport, JacksonSwaggerBase}
+import org.scalatra.swagger.JacksonSwaggerBase
 import com.constructiveproof.hackertracker.auth.ApiAuthenticationSupport
 import org.json4s.DefaultFormats
 
