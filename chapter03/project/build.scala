@@ -7,7 +7,7 @@ object Chapter03Build extends Build {
   val Name = "chapter03"
   val Version = "0.1.0-SNAPSHOT"
   val ScalaVersion = "2.10.3"
-  val ScalatraVersion = "2.3.0.M1"
+  val ScalatraVersion = "2.3.0.RC1"
 
   import java.net.URL
   import com.earldouglas.xsbtwebplugin.PluginKeys.port
