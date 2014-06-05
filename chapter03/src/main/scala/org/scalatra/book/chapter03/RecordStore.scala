@@ -43,7 +43,6 @@ class RecordStore extends ScalatraServlet {
     }
   }
 
-  /*
   head("/artists/:name/info") {
     status =
       if (Artist.exists(params("name").replace('_', ' '))) 200
@@ -59,7 +58,6 @@ class RecordStore extends ScalatraServlet {
   options() {
     status = 403
   }
-  */
 
   private val DownloadPath = config.getInitParameter("download-path")
 
