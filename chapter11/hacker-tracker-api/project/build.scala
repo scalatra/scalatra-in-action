@@ -10,7 +10,7 @@ object HackerTrackerBuild extends Build {
   val Name = "Hacker Tracker"
   val Version = "0.1.0-SNAPSHOT"
   val ScalaVersion = "2.10.3"
-  val ScalatraVersion = "2.3.0.M1"
+  val ScalatraVersion = "2.3.0"
 
   lazy val project = Project (
     "hacker-tracker-protected",
