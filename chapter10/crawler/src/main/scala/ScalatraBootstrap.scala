@@ -1,8 +1,8 @@
-import akka.actor.ActorSystem
+import javax.servlet.ServletContext
 
+import akka.actor.ActorSystem
 import com.constructiveproof.crawler._
 import org.scalatra._
-import javax.servlet.ServletContext
 
 class ScalatraBootstrap extends LifeCycle {
 
