@@ -19,6 +19,9 @@ class RememberMeStrategy(protected val app: ScalatraBase)(implicit request: Http
 
   /***
     * Determine whether the strategy should be run for the current request.
+    *
+    * TODO: THIS NEEDS TO GO IN THE BOOK, IT'S NOT THERE TO THE GREAT DETRIMENT
+    * OF THE EXPLANATION - IT'S IMPOSSIBLE TO LOG IN GIVEN THE CODE EXAMPLE.
     */
   override def isValid(implicit request: HttpServletRequest):Boolean = {
     logger.info("RememberMeStrategy: determining isValid: " + (tokenVal != "").toString())
