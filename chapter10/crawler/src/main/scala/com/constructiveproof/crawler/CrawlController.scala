@@ -3,15 +3,14 @@ package com.constructiveproof.crawler
 import java.net.URL
 import java.nio.charset.StandardCharsets
 
-import akka.actor.ActorSystem
 import org.scalatra._
 
 import scala.concurrent.{ExecutionContext, Future}
 import scala.io.Source
 
-class CrawlController(system: ActorSystem) extends CrawlerStack with FutureSupport {
+class CrawlController extends CrawlerStack with FutureSupport {
 
-  protected implicit def executor: ExecutionContext = system.dispatcher
+  protected implicit def executor: ExecutionContext = ExecutionContext.global
 
   get("/") {
     contentType = "text/html"
