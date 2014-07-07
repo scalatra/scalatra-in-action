@@ -3,12 +3,11 @@ package com.constructiveproof.crawler
 import java.net.URL
 import java.nio.charset.StandardCharsets
 
-import _root_.akka.actor.ActorSystem
+import akka.actor.ActorSystem
+import org.scalatra._
 
 import scala.concurrent.{ExecutionContext, Future}
 import scala.io.Source
-
-import org.scalatra._
 
 class CrawlController(system: ActorSystem) extends CrawlerStack with FutureSupport {
 
