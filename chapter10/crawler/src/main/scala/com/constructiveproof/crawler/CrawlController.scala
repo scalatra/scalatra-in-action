@@ -3,25 +3,26 @@ package com.constructiveproof.crawler
 import java.net.URL
 import java.nio.charset.StandardCharsets
 
-import scala.concurrent.ExecutionContext
 import scala.io.Source
 
 class CrawlController extends CrawlerStack {
 
-  protected implicit def executor: ExecutionContext = ExecutionContext.global
-
   get("/") {
     contentType = "text/html"
-    Grabber.grab(new URL("https://constructiveproof.com"))
+    Grabber.evaluate(new URL(params("url")))
   }
 }
 
 object Grabber {
 
-  def grab(url: URL)(implicit ctx: ExecutionContext): String = {
-    Source.fromURL(
-      new URL("https://constructiveproof.com"), StandardCharsets.UTF_8.name()
+  def evaluate(url: URL): String = {
+    val content = Source.fromURL(
+      url, StandardCharsets.UTF_8.name()
     ).mkString
+    content.contains("Scala") match {
+      case true => "It's a Scala site, very cool."
+      case false => "Whoops, you've made some sort of mistake in your reading choices."
+    }
   }
 
 }
