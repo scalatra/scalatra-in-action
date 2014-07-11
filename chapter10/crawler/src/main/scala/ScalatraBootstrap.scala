@@ -1,6 +1,6 @@
 import javax.servlet.ServletContext
 
-import _root_.akka.actor.{Props, ActorSystem}
+import akka.actor.{ActorSystem, Props}
 import com.constructiveproof.crawler._
 import com.constructiveproof.crawler.actors.GrabActor
 import org.scalatra._
