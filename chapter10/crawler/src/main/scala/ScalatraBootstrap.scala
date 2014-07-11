@@ -1,16 +1,17 @@
 import javax.servlet.ServletContext
 
-import akka.actor.ActorSystem
+import _root_.akka.actor.{Props, ActorSystem}
 import com.constructiveproof.crawler._
+import com.constructiveproof.crawler.actors.GrabActor
 import org.scalatra._
 
 class ScalatraBootstrap extends LifeCycle {
 
-
-  // Get a handle to an ActorSystem and a reference to one of your actors
   val system = ActorSystem()
+  val grabActor = system.actorOf(Props[GrabActor])
 
   override def init(context: ServletContext) {
     context.mount(new CrawlController, "/*")
+    context.mount(new AkkaCrawler(system, grabActor), "/akka/*")
   }
 }

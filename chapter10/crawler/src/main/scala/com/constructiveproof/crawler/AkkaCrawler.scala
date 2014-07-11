@@ -5,16 +5,15 @@ import java.net.URL
 import akka.actor.{ActorRef, ActorSystem}
 import akka.pattern.ask
 import akka.util.Timeout
-import org.scalatra.AsyncResult
-import scala.concurrent.duration._
+import org.scalatra.{AsyncResult, FutureSupport}
 
 import scala.concurrent.ExecutionContext
+import scala.concurrent.duration._
 
 /**
  * Created by dave on 11/07/2014.
  */
-class AkkaCrawler(system: ActorSystem, grabActor: ActorRef) extends CrawlerStack {
-
+class AkkaCrawler(system: ActorSystem, grabActor: ActorRef) extends CrawlerStack with FutureSupport {
 
   protected implicit def executor: ExecutionContext = system.dispatcher
 
