@@ -23,6 +23,7 @@ object CrawlerBuild extends Build {
       scalaVersion := ScalaVersion,
       resolvers += Classpaths.typesafeReleases,
       libraryDependencies ++= Seq(
+        "org.apache.spark" %% "spark-core" % "1.0.0",
         "com.typesafe.akka" %% "akka-actor" % "2.3.4",
         "org.scalatra" %% "scalatra" % ScalatraVersion,
         "org.scalatra" %% "scalatra-scalate" % ScalatraVersion,
