@@ -20,9 +20,9 @@ class GrabActor extends Actor {
       url, StandardCharsets.UTF_8.name()
     ).mkString
 
-    content.contains("Scala") match {
-      case true => sender ! "It's a Scala site, very cool."
-      case false => sender ! "Whoops, you've made some sort of " +
+    content.contains("Akka") match {
+      case true => sender ! "It's an Akka-related site , very cool."
+      case false => sender ! "No Akka here, you've made some sort of " +
         "mistake in your reading choices."
     }
   }
