@@ -11,6 +11,7 @@ object CrawlerBuild extends Build {
   val Version = "0.1.0-SNAPSHOT"
   val ScalaVersion = "2.10.3"
   val ScalatraVersion = "2.3.0"
+  lazy val scalacOptions = Seq ("-feature")
 
   lazy val project = Project (
     "crawler",
