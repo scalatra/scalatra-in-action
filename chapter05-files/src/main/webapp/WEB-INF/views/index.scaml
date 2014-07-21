@@ -1,3 +1,17 @@
-- attributes("title") = "DocumentStorage"
+- import org.scalatra.book.chapter05.Document
 
-Hello, Scalate!
+- attributes("title") = "DocumentStorage"
+-@ val files: Map[Long, Document]
+
+Hello, Upload!
+%div
+  -for ((id, doc) <- files)
+    %div
+      %a(href={uri(f"/documents/$id")})= doc.name
+
+%div#upload-form
+  %h2 Upload a document
+  %form(enctype="multipart/form-data" method="post" action="/documents")
+    %input(type="file" name="file")
+    %input(type="hidden" name="coffee" value="babe")
+    %input(type="submit")

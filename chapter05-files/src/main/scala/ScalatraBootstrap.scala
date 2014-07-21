@@ -1,10 +1,17 @@
 import org.scalatra._
 import javax.servlet.ServletContext
 
-import org.scalatra.book.chapter05.DocumentStorage
+import org.scalatra.book.chapter05.{DocumentStore, DocumentsApp}
 
 class ScalatraBootstrap extends LifeCycle {
+
   override def init(context: ServletContext) {
-    context.mount(new DocumentStorage, "/*")
+
+    val store = DocumentStore("data")
+
+    val app = new DocumentsApp(store)
+
+    context.mount(app, "/*")
+
   }
 }
