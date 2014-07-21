@@ -50,6 +50,12 @@ class DocumentsApp(store: DocumentStore) extends ScalatraServlet with FileUpload
 
   configureMultipartHandling(MultipartConfig(maxFileSize = Some(10 * 1024 * 1024)))
 
+  get("/sample") {
+    contentType = "image/jpeg"
+    response.setHeader("Content-Disposition", "attachment; filename=first_sample.jpg")
+    new File("data/sample.jpg")
+  }
+
   get("/") {
     contentType = "text/html"
     scaml("index.scaml", "files" -> store.list)
