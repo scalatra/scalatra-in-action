@@ -1,6 +1,6 @@
 package org.scalatra.book.chapter05
 
-import java.io.{File, IOException}
+import java.io.{FileInputStream, File, IOException}
 
 import org.scalatra.ScalatraServlet
 import org.scalatra.scalate.ScalateSupport
@@ -13,22 +13,8 @@ class DocumentsApp(store: DocumentStore) extends ScalatraServlet with FileUpload
     maxRequestSize = Some(100 * 1024 * 1024),
   ))
 
-  // a sample file route
-  get("/sample") {
-    // contentType = "image/jpeg"
-    // response.setHeader("Content-Disposition", "attachment; filename=first_sample.jpg")
-    new File("data/sample.jpg")
-  }
-
-  post("/sample") {
-    val file = fileParams("sample")
-    val desc = fileParams("description")
-    <div>
-      <h1>Received {file.getSize} bytes</h1>
-      <p>Description: {desc}</p>
-    </div>
-  }
-  // ---
+  // add a sample file for serving
+  store.add("sample.jpg", new FileInputStream(new File("data/sample.jpg")), Some("application/jpeg"))
 
   // renders the user interface
   get("/") {
@@ -74,6 +60,23 @@ class DocumentsApp(store: DocumentStore) extends ScalatraServlet with FileUpload
       e.printStackTrace()
       halt(500, "Server denied me my meal, thanks anyway.", reason="unknown")
   }
+
+  // sample routes
+  get("/sample") {
+    // contentType = "image/jpeg"
+    // response.setHeader("Content-Disposition", "attachment; filename=first_sample.jpg")
+    new File("data/sample.jpg")
+  }
+
+  post("/sample") {
+    val file = fileParams("sample")
+    val desc = fileParams("description")
+    <div>
+      <h1>Received {file.getSize} bytes</h1>
+      <p>Description: {desc}</p>
+    </div>
+  }
+  // ---
 
 
 
