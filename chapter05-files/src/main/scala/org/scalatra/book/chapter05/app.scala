@@ -9,8 +9,8 @@ import org.scalatra.servlet._
 class DocumentsApp(store: DocumentStore) extends ScalatraServlet with FileUploadSupport with ScalateSupport {
 
   configureMultipartHandling(MultipartConfig(
-    maxFileSize = Some(10 * 1024 * 1024),
-    maxRequestSize = Some(30 * 1024 * 1024),
+    maxFileSize = Some(30 * 1024 * 1024),
+    maxRequestSize = Some(100 * 1024 * 1024),
   ))
 
   // a sample file route
@@ -19,6 +19,16 @@ class DocumentsApp(store: DocumentStore) extends ScalatraServlet with FileUpload
     // response.setHeader("Content-Disposition", "attachment; filename=first_sample.jpg")
     new File("data/sample.jpg")
   }
+
+  post("/sample") {
+    val file = fileParams("sample")
+    val desc = fileParams("description")
+    <div>
+      <h1>Received {file.getSize} bytes</h1>
+      <p>Description: {desc}</p>
+    </div>
+  }
+  // ---
 
   // renders the user interface
   get("/") {
