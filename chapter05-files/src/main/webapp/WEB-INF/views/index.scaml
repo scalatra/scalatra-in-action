@@ -1,17 +1,22 @@
 - import org.scalatra.book.chapter05.Document
 
 - attributes("title") = "DocumentStorage"
--@ val files: Map[Long, Document]
+-@ val files: List[Document]
 
 Hello, Upload!
 %div
-  -for ((id, doc) <- files)
-    %div
-      %a(href={uri(f"/documents/$id")})= doc.name
+  %table
+    -for (doc <- files)
+      %tr
+        %td= doc.id
+        %td
+          %a(href={uri(f"/documents/${doc.id}")})= doc.name
+        %td= doc.description
 
 %div#upload-form
   %h2 Upload a document
   %form(enctype="multipart/form-data" method="post" action="/documents")
     %input(type="file" name="file")
+    %input(type="text" name="description" value="...")
     %input(type="hidden" name="coffee" value="babe")
     %input(type="submit")
