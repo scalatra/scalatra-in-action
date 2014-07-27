@@ -14,7 +14,7 @@ case class DocumentStore(base: String) {
 
   def add(name: String, in: InputStream, contentType: Option[String]): Long = {
     val id = idCounter.getAndIncrement
-    val out = new FileOutputStream(toFile(id))
+    val out = new FileOutputStream(getFile(id))
     // Files.copy(in, out)
     copyStream(in, out)
     fileNameIndex(id) = Document(id, name, contentType)
@@ -25,13 +25,13 @@ case class DocumentStore(base: String) {
     fileNameIndex.get(id)
   }
 
-  def toFile(id: Long): File = new File(f"$base/$id")
+  def getFile(id: Long): File = new File(f"$base/$id")
 
   def list: Map[Long, Document] = {
     fileNameIndex.toMap
   }
 
-  def copyStream(input: InputStream, output: OutputStream) {
+  private def copyStream(input: InputStream, output: OutputStream) {
     val buffer = Array.ofDim[Byte](1024)
     var bytesRead: Int = 0
     while (bytesRead != -1) {

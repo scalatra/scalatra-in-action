@@ -10,7 +10,7 @@ class DocumentsApp(store: DocumentStore) extends ScalatraServlet with FileUpload
 
   configureMultipartHandling(MultipartConfig(
     maxFileSize = Some(30 * 1024 * 1024),
-    maxRequestSize = Some(100 * 1024 * 1024),
+    maxRequestSize = Some(100 * 1024 * 1024)
   ))
 
   // add a sample file for serving
@@ -41,7 +41,9 @@ class DocumentsApp(store: DocumentStore) extends ScalatraServlet with FileUpload
       case Some(doc) =>
         doc.contentType foreach { ct => contentType = ct }
         response.setHeader("Content-Disposition", f"""attachment; filename="${doc.name}"""")
-        store.toFile(id)
+//        response.setHeader("Content-Disposition", f"""inline; filename="${doc.name}"""")
+//        response.setHeader("Content-Disposition", f"""inline"""")
+        store.getFile(id)
       case None =>
         halt(404, reason = "could not find document")
     }
