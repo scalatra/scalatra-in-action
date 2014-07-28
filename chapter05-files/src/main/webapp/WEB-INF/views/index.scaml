@@ -1,7 +1,7 @@
 - import org.scalatra.book.chapter05.Document
 
 - attributes("title") = "DocumentStorage"
--@ val files: List[Document]
+-@ val files: Seq[Document]
 
 Hello, Upload!
 %div
@@ -10,7 +10,7 @@ Hello, Upload!
       %tr
         %td= doc.id
         %td
-          %a(href={uri(f"/documents/${doc.id}")})= doc.name
+          %a(href={uri("/documents/" + doc.id)})= doc.name
         %td= doc.description
 
 %div#upload-form

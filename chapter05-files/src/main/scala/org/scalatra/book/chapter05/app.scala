@@ -14,7 +14,8 @@ class DocumentsApp(store: DocumentStore) extends ScalatraServlet with FileUpload
   ))
 
   // add a sample file for serving
-  store.add("sample.jpg", new FileInputStream(new File("data/sample.jpg")), Some("application/jpeg"), "a round of minesweeper")
+  store.add("strategy.jpg", new FileInputStream(new File("data/strategy.jpg")), Some("application/jpeg"), "bulletproof business strategy")
+  store.add("manual.pdf", new FileInputStream(new File("data/manual.pdf")), Some("application/pdf"), "the manual about foos")
 
   // renders the user interface
   get("/") {
@@ -37,10 +38,9 @@ class DocumentsApp(store: DocumentStore) extends ScalatraServlet with FileUpload
     val id = params.as[Long]("documentId")
     val doc = store.getDocument(id) getOrElse halt(404, reason = "could not find document")
     doc.contentType foreach { ct => contentType = ct }
-    response.setHeader("Content-Disposition", f"""attachment; filename="${doc.name}"""")
     response.setHeader("Content-Description", doc.description)
-    // response.setHeader("Content-Disposition", f"""inline; filename="${doc.name}"""")
-    // response.setHeader("Content-Disposition", f"""inline"""")
+    response.setHeader("Content-Disposition", f"""inline; filename="${doc.name}"""")
+    // response.setHeader("Content-Disposition", f"""attachment; filename="${doc.name}"""")
     store.getFile(id)
   }
 
@@ -62,7 +62,7 @@ class DocumentsApp(store: DocumentStore) extends ScalatraServlet with FileUpload
   get("/sample") {
     // contentType = "image/jpeg"
     // response.setHeader("Content-Disposition", "attachment; filename=first_sample.jpg")
-    new File("data/sample.jpg")
+    new File("data/strategy.jpg")
   }
 
   post("/sample") {
