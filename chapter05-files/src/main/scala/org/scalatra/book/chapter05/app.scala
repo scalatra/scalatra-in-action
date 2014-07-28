@@ -58,6 +58,11 @@ class DocumentsApp(store: DocumentStore) extends ScalatraServlet with FileUpload
       halt(500, "Server denied me my meal, thanks anyway.", reason="unknown")
   }
 
+  notFound {
+    contentType = null
+    serveStaticResource() getOrElse halt(404, <h1>Not found.</h1>)
+  }
+
   // sample routes
   get("/sample") {
     // contentType = "image/jpeg"
