@@ -3,20 +3,30 @@
 - attributes("title") = "DocumentStorage"
 -@ val files: Seq[Document]
 
-Hello, Upload!
-%div
-  %table
-    -for (doc <- files)
+.row
+  .col-lg-8
+    %h4 Download a document
+    %table.table
       %tr
-        %td= doc.id
-        %td
-          %a(href={uri("/documents/" + doc.id)})= doc.name
-        %td= doc.description
+        %th #
+        %th Name
+        %th Description
+        %th Download
+      -for (doc <- files)
+        %tr
+          %td= doc.id
+          %td= doc.name
+          %td= doc.description
+          %td
+            %a(href={uri("/documents/" + doc.id)}) download
 
-%div#upload-form
-  %h2 Upload a document
-  %form(enctype="multipart/form-data" method="post" action="/documents")
-    %input(type="file" name="file")
-    %input(type="text" name="description" value="...")
-    %input(type="hidden" name="coffee" value="babe")
-    %input(type="submit")
+  .col-lg-4
+    %h4 Create a new document
+    %form(enctype="multipart/form-data" method="post" action="/documents")
+      %div.form-group
+        %label File:
+        %input(type="file" name="file")
+      %div.form-group
+        %label Description:
+        %input.form-control(type="text" name="description" value="")
+      %input.btn.btn-default(type="submit")
