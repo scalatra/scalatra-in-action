@@ -50,17 +50,18 @@ class DocumentsApp(store: DocumentStore) extends ScalatraServlet with FileUpload
   }
 
   error {
-    case e: SizeConstraintExceededException =>
-      halt(500, "too much!", reason="too much!")
-    case e: IOException =>
-      println(e.getMessage)
-      e.printStackTrace()
-      halt(500, "Server denied me my meal, thanks anyway.", reason="unknown")
+    case e: SizeConstraintExceededException => halt(500, "Too much!")
+    case e: IOException => halt(500, "Server denied me my meal, thanks anyway.")
+  }
+
+  get("/css/*") {
+    serveStaticResource() getOrElse halt(404, <h1>Not found.</h1>)
   }
 
   notFound {
     contentType = null
     serveStaticResource() getOrElse halt(404, <h1>Not found.</h1>)
+    halt(404, <h1>Not found.</h1>)
   }
 
   // sample routes
@@ -72,7 +73,7 @@ class DocumentsApp(store: DocumentStore) extends ScalatraServlet with FileUpload
 
   post("/sample") {
     val file = fileParams("sample")
-    val desc = fileParams("description")
+    val desc = params("description")
     <div>
       <h1>Received {file.getSize} bytes</h1>
       <p>Description: {desc}</p>
