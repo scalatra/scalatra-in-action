@@ -1,0 +1,19 @@
+-@ val title: String
+-@ val body: String
+
+!!!
+%html
+  %head
+    %title= title
+    %link(rel="stylesheet" href={uri("css/bootstrap.min.css")})
+  %body
+
+
+    .container
+      .row
+        .col-lg-12
+          %h2 Document Storage
+
+      != body
+
+
