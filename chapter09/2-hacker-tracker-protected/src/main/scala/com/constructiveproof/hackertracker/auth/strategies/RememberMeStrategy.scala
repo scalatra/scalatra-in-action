@@ -14,7 +14,7 @@ class RememberMeStrategy(protected val app: ScalatraBase)(implicit request: Http
 
   val logger = LoggerFactory.getLogger(getClass)
 
-  val COOKIE_KEY = "rememberMe"
+  val CookieKey = "rememberMe"
   private val oneWeek = 7 * 24 * 3600
 
   /***
@@ -32,7 +32,7 @@ class RememberMeStrategy(protected val app: ScalatraBase)(implicit request: Http
     * Grab the value of the rememberMe cookie token.
     */
   private def tokenVal = {
-    app.cookies.get(COOKIE_KEY) match {
+    app.cookies.get(CookieKey) match {
       case Some(token) => token
       case None => ""
     }
@@ -63,7 +63,7 @@ class RememberMeStrategy(protected val app: ScalatraBase)(implicit request: Http
       (winningStrategy == "UserPassword" && checkbox2boolean(app.params.get("rememberMe").getOrElse("").toString))) {
 
       val token = "foobar"
-      app.cookies.set(COOKIE_KEY, token)(CookieOptions(maxAge = oneWeek, path = "/"))
+      app.cookies.set(CookieKey, token)(CookieOptions(maxAge = oneWeek, path = "/"))
     }
   }
 
@@ -75,7 +75,7 @@ class RememberMeStrategy(protected val app: ScalatraBase)(implicit request: Http
     if (user != null){
       user.forgetMe
     }
-    app.cookies.delete(COOKIE_KEY)(CookieOptions(path = "/"))
+    app.cookies.delete(CookieKey)(CookieOptions(path = "/"))
   }
 
 
