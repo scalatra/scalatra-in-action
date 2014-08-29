@@ -17,12 +17,12 @@ class PagesController extends ScalatraCmsStack {
 case class Page(slug: String, title: String, summary: String, body: String)
 
 object PageDao {
-  val pages = List(
-    Page("bacon-ipsum",
-      "Bacon ipsum dolor sit amet hamburger",
-      """Shankle pancetta turkey ullamco exercitation laborum ut
+
+  val page1 = Page("bacon-ipsum",
+    "Bacon ipsum dolor sit amet hamburger",
+    """Shankle pancetta turkey ullamco exercitation laborum ut
         officia corned beef voluptate.""",
-      """Fugiat mollit, spare ribs pork belly flank voluptate ground
+    """Fugiat mollit, spare ribs pork belly flank voluptate ground
         round do sunt laboris jowl. Meatloaf excepteur hamburger pork
         chop fatback drumstick frankfurter pork aliqua.
         Pork belly meatball meatloaf labore. Exercitation commodo nisi
@@ -32,12 +32,15 @@ object PageDao {
         jowl ut beef.Tempor do boudin, pariatur nisi biltong id elit
         dolore non sunt proident sed. Boudin consectetur jowl ut dolor
         sunt consequat tempor pork chop capicola pastrami mollit short
-        loin."""),
-    Page("veggie-ipsum",
-      "Arugula prairie turnip desert raisin sierra leone",
-      """Veggies sunt bona vobis, proinde vos postulo esse magis napa
+        loin.""")
+
+  val page2 = Page("veggie-ipsum",
+    "Arugula prairie turnip desert raisin sierra leone",
+    """Veggies sunt bona vobis, proinde vos postulo esse magis napa
       cabbage beetroot dandelion radicchio.""",
-      """Brussels sprout mustard salad jícama grape nori chickpea
+    """Brussels sprout mustard salad jícama grape nori chickpea
       dulse tatsoi. Maize broccoli rabe collard greens jícama wattle
-      seed nori garbanzo epazote coriander mustard."""))
+      seed nori garbanzo epazote coriander mustard.""")
+
+  val pages = List(page1, page2)
 }
