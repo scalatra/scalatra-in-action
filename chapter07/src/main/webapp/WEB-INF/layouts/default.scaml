@@ -1,0 +1,9 @@
+!!! 5
+-@ val body: String
+-@ val title: String = "foo"
+%html
+  %head
+    %link(type="text/css" href="/css/style.css" rel="stylesheet")
+    %title= title
+  %body
+    != body
