@@ -1,0 +1,27 @@
+- import chapter09._
+-@ val areas: Seq[Area]
+- attributes("title") = "Areas"
+
+.row
+  .col-lg-12
+    h2
+      Areas
+
+
+  - for (area <- areas)
+    .col-lg-12.comment
+      span.title= area.name
+      p= area.description
+
+  .col-lg-12
+    h2 Post comment
+    form(method="post")
+      label
+        Title
+        input(type="text" name="title")
+      br
+      label
+        Body
+        textarea(name="body")
+      br
+      input(type="submit" value="Submit")

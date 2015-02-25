@@ -1,0 +1,26 @@
+- import chapter09._
+-@ val area: Area
+-@ val routes: Seq[Route]
+- attributes("title") = area.name
+
+.row
+  .col-lg-12
+    h2 Routes
+
+  - for (route <- routes)
+    .col-lg-12.comment
+      span.title= route.routeName
+      p= route.description
+
+  .col-lg-12
+    h2 Post comment
+    form(method="post")
+      label
+        Title
+        input(type="text" name="title")
+      br
+      label
+        Body
+        textarea(name="body")
+      br
+      input(type="submit" value="Submit")
