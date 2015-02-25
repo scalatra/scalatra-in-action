@@ -1,4 +1,4 @@
-package org.scalatra.book.chapter13
+package org.scalatra.book.chapter09
 
 import org.scalatra.test.specs2._
 
@@ -9,7 +9,7 @@ class Chapter13Spec extends ScalatraSpec { def is =
     "/scalate should render a template"         ! scalate ^
                                                 end
 
-  addServlet(classOf[Chapter13], "/*")
+  addServlet(classOf[Chapter09], "/*")
 
   def action = get("/") {
     status must_== 200

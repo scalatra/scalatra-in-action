@@ -1,4 +1,4 @@
-package org.scalatra.book.chapter13
+package org.scalatra.book.chapter09
 
 import org.scalatra._
 import scalate.ScalateSupport
@@ -7,7 +7,7 @@ import org.fusesource.scalate.layout.DefaultLayoutStrategy
 import javax.servlet.http.HttpServletRequest
 import collection.mutable
 
-trait Chapter13Stack extends ScalatraServlet with ScalateSupport {
+trait Chapter09Stack extends ScalatraServlet with ScalateSupport {
 
   /* wire up the precompiled templates */
   override protected def defaultTemplatePath: List[String] = List("/WEB-INF/templates/views")

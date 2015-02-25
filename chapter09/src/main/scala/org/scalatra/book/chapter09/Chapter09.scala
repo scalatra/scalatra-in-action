@@ -1,9 +1,9 @@
-package org.scalatra.book.chapter13
+package org.scalatra.book.chapter09
 
-class Chapter13 extends Chapter13Stack {
+class Chapter09 extends Chapter09Stack {
 
   get("/?") {
     f"Hello, from action! (isDevelopment = ${isDevelopmentMode}, serverHost = ${serverHost}, forceSsl = ${needsHttps}})"
   }
-  
+
 }
