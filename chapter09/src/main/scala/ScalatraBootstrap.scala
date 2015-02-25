@@ -1,8 +1,6 @@
 import org.scalatra.book.chapter09._
-import org.scalatra._
-import org.scalatra.ScalatraBase.{PortKey, HostNameKey, ForceHttpsKey}
+import org.scalatra.LifeCycle
 
-import com.typesafe.config.ConfigFactory
 import javax.servlet.ServletContext
 
 class ScalatraBootstrap extends LifeCycle {
