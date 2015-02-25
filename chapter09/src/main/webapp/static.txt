@@ -1,1 +1,1 @@
-this is static text!
+this is static text file!
