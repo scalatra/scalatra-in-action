@@ -15,12 +15,12 @@ import com.mojolly.scalate.ScalatePlugin.ScalateKeys._
 import com.earldouglas.xsbtwebplugin.PluginKeys._
 import com.earldouglas.xsbtwebplugin.WebPlugin._
 
-object Chapter13Build extends Build {
+object Chapter09Build extends Build {
   val Organization = "org.scalatra"
   val Name = "chapter13"
   val Version = "0.1.0-SNAPSHOT"
-  val ScalaVersion = "2.10.2"
-  val ScalatraVersion = "2.2.1"
+  val ScalaVersion = "2.11.4"
+  val ScalatraVersion = "2.3.0"
 
   val myProjectSettings = Seq(
     organization := Organization,

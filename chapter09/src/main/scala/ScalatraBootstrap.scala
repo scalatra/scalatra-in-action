@@ -1,4 +1,4 @@
-import org.scalatra.book.chapter13._
+import org.scalatra.book.chapter09._
 import org.scalatra._
 import org.scalatra.ScalatraBase.{PortKey, HostNameKey, ForceHttpsKey}
 
@@ -19,7 +19,7 @@ class ScalatraBootstrap extends LifeCycle {
     context.initParameters(PortKey) = config.port.toString
     context.initParameters(ForceHttpsKey) = config.forceHttps.toString
 
-    context.mount(new Chapter13, "/*")
+    context.mount(new Chapter09, "/*")
   }
 
 }
