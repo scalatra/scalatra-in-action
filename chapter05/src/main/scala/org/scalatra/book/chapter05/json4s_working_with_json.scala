@@ -51,10 +51,6 @@ object json4s_working_with_json {
   val jsObject2: JValue = ("details" -> RecipeDetails("italian", true, None))
   // jsObject2: org.json4s.JValue = JObject(List((details,JObject(List((cuisine,JString(italian)), (vegetarian,JBool(true)))))))
 
-  val recipeRepository: RecipeRepository = new MemoryRecipeRepository
-  val recipeJson2 = recipeRepository.byTitle("Foo bars") map Extraction.decompose
-  // res
-
 
   // consuming JSON
 

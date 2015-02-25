@@ -8,29 +8,3 @@ case class RecipeDetails(cuisine: String, vegetarian: Boolean,
 
 case class IngredientLine(label: String, quantity: String)
 
-trait RecipeRepository {
-
-  def create(title: String,
-    details: RecipeDetails,
-    ingredients: List[IngredientLine],
-    steps: List[String]): Recipe
-
-  def byTitle(title: String): Option[Recipe]
-
-}
-
-class MemoryRecipeRepository  extends RecipeRepository {
-
-  private val store = collection.mutable.Map[String, Recipe]()
-
-  def create(title: String, details: RecipeDetails,
-    ingredients: List[IngredientLine],
-    steps: List[String]): Recipe = {
-    val recipe = Recipe(title, details, ingredients, steps)
-    store(title) = recipe
-    recipe
-  }
-
-  def byTitle(title: String): Option[Recipe] = store.get(title)
-
-}
