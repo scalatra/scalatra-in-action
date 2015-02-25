@@ -2,11 +2,10 @@ package org.scalatra.book.chapter09
 
 import org.scalatra.test.specs2._
 
-class Chapter13Spec extends ScalatraSpec { def is =
-  "Chapter13"                     ^
+class Chapter09Spec extends ScalatraSpec { def is =
+  "Chapter09"                     ^
     "/ should should execute an action"         ! action ^
     "/static.txt should return static file"     ! staticFile ^
-    "/scalate should render a template"         ! scalate ^
                                                 end
 
   addServlet(classOf[Chapter09], "/*")
@@ -17,13 +16,7 @@ class Chapter13Spec extends ScalatraSpec { def is =
 
   def staticFile = get("/static.txt") {
     status must_== 200
-    body must_== "this is static text!"
-  }
-
-  def scalate = get("/scalate") {
-    status must_== 200
-    body must_== """<p>Hello, Scalate!</p>
-"""
+    body must_== "this is static text!!"
   }
 
 }
