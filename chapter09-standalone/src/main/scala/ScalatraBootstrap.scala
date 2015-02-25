@@ -1,5 +1,5 @@
 import org.scalatra.book.chapter09._
-import org.scalatra._
+import org.scalatra.LifeCycle
 
 import javax.servlet.ServletContext
 
@@ -12,7 +12,6 @@ class ScalatraBootstrap extends LifeCycle {
 
     val app = new Chapter09(conf)
     context.mount(app, "/*")
-
   }
 
 }
