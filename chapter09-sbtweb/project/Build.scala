@@ -1,17 +1,21 @@
 import sbt._
 import Keys._
 
+import com.earldouglas.xwp.XwpPlugin._
+import com.slidingautonomy.sbt.filter.Import._
+import com.typesafe.sbt.web.Import.WebKeys._
+import com.typesafe.sbt.web.Import._
+import com.typesafe.sbt.web.SbtWeb
+
 import org.scalatra.sbt._
-import org.scalatra.sbt.DistPlugin._
-import org.scalatra.sbt.DistPlugin.DistKeys._
 
 import com.mojolly.scalate._
 import com.mojolly.scalate.ScalatePlugin._
 import com.mojolly.scalate.ScalatePlugin.ScalateKeys._
 
-object Chapter09StandaloneBuild extends Build {
+object Chapter09SbtWebBuild extends Build {
   val Organization = "org.scalatra"
-  val Name = "chapter09-standalone"
+  val Name = "chapter09-sbtweb"
   val Version = "0.1.0-SNAPSHOT"
   val ScalaVersion = "2.11.4"
   val ScalatraVersion = "2.4.0.M2"
@@ -50,21 +54,32 @@ object Chapter09StandaloneBuild extends Build {
       }
     )
 
-  val myDistSettings =
-    DistPlugin.distSettings ++ Seq(
-      mainClass in Dist := Some("ScalatraLauncher"),
-      memSetting in Dist := "2g",
-      permGenSetting in Dist := "256m",
-      envExports in Dist := Seq("LC_CTYPE=en_US.UTF-8", "LC_ALL=en_US.utf-8"),
-      javaOptions in Dist ++= Seq("-Xss4m",
-        "-Dfile.encoding=UTF-8",
-        "-Dlogback.configurationFile=logback.production.xml",
-        "-Dorg.scalatra.environment=production")
-    )
+  val webProductionSettings = Seq(
+    // webappSrc in webapp := (resourceDirectory in Assets).value,
+    // webappDest in webapp := stagingDirectory.value,   // in webapp scope is not respected by dist (!)
+    webappSrc := (resourceDirectory in Assets).value,
+    webappDest := stagingDirectory.value, // check
+    includeFilter in filter := "*.less" || "*.css.map",
+    pipelineStages := Seq(filter)
+  )
 
-  lazy val project = Project("chapter09-standalone", file("."))
+  // a development SBT environment, which does not run the full asset pipeline
+  val webDevelopmentSettings = Seq(
+    webappSrc := (resourceDirectory in Assets).value,
+    webappDest := stagingDirectory.value, // check
+    pipelineStages := Seq()
+  )
+
+  val env = sys.props.getOrElse("env", "production")
+  val webSettings = {
+    if (env == "dev") webDevelopmentSettings
+    else webProductionSettings
+  }
+
+  lazy val project = Project("chapter09-sbtweb", file("."))
+    .enablePlugins(SbtWeb)
     .settings(mySettings: _*)
     .settings(myScalateSettings: _*)
-    .settings(myDistSettings: _*)
+    .settings(webSettings: _*)
 
 }

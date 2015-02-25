@@ -6,11 +6,10 @@ class Chapter09Spec extends ScalatraSpec { def is =
   "Chapter09"                     ^
     "/ should should execute an action"         ! action ^
     "/static.txt should return static file"     ! staticFile ^
+    "/scalate should render a template"         ! scalate ^
                                                 end
 
-  val conf = AppConfig.load
-
-  addServlet(new Chapter09(conf), "/*")
+  addServlet(classOf[Chapter09], "/*")
 
   def action = get("/") {
     status must_== 200
@@ -19,6 +18,12 @@ class Chapter09Spec extends ScalatraSpec { def is =
   def staticFile = get("/static.txt") {
     status must_== 200
     body must_== "this is static text!"
+  }
+
+  def scalate = get("/scalate") {
+    status must_== 200
+    body must_== """<p>Hello, Scalate!</p>
+"""
   }
 
 }
