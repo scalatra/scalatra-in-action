@@ -5,7 +5,7 @@ import org.scalatra.scalate.ScalateSupport
 
 import slick.jdbc.JdbcBackend.Database
 
-case class Chapter09App(db: Database, repo: ClimbingRoutesRepository) extends ScalatraServlet with ScalateSupport {
+case class Chapter10App(db: Database, repo: ClimbingRoutesRepository) extends ScalatraServlet with ScalateSupport {
 
   before("/*") {
     contentType = "text/html"
@@ -72,12 +72,12 @@ case class Chapter09App(db: Database, repo: ClimbingRoutesRepository) extends Sc
   }
 
 
-  get("/search") {
-    val q = params("q")
-    db withTransaction { implicit session =>
-      <ul>{for (r <- repo.areasByName(q)) yield <li>{r}</li>}</ul>
-    }
-  }
+  //  get("/search") {
+  //    val q = params("q")
+  //    db withTransaction { implicit session =>
+  //      <ul>{for (r <- repo.areasByName(q)) yield <li>{r}</li>}</ul>
+  //    }
+  //  }
 
 }
 

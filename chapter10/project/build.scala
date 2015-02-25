@@ -36,5 +36,6 @@ object Chapter10Build extends Build {
     )
 
   lazy val project = Project("chapter10", file("."))
+    .settings(mySettings:_*)
 
 }

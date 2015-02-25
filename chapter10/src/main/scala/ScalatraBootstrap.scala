@@ -1,5 +1,5 @@
 import com.mchange.v2.c3p0.ComboPooledDataSource
-import org.scalatra.book.chapter10.{Chapter09App, ClimbingRoutesRepository}
+import org.scalatra.book.chapter10.{DbSetup, Chapter10App, ClimbingRoutesRepository}
 import org.slf4j.LoggerFactory
 
 import org.scalatra._
@@ -20,7 +20,7 @@ class ScalatraBootstrap extends LifeCycle {
     // Build database, repository & application
     val db = slick.jdbc.JdbcBackend.Database.forDataSource(cpds)
     val repo = new ClimbingRoutesRepository(slickDriver)
-    val app = Chapter09App(db, repo)
+    val app = Chapter10App(db, repo)
 
     db withTransaction { implicit session =>
       DbSetup.createDatabase

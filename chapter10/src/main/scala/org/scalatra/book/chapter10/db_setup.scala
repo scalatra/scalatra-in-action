@@ -1,3 +1,5 @@
+package org.scalatra.book.chapter10
+
 import scala.slick.jdbc.JdbcBackend._
 import scala.slick.jdbc.StaticQuery
 

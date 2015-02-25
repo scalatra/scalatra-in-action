@@ -2,6 +2,7 @@ package org.scalatra.book.chapter10
 
 import slick.driver.JdbcDriver
 import slick.jdbc.GetResult
+import slick.jdbc.{StaticQuery => Q}
 import Tables._
 
 // TODO
@@ -12,6 +13,7 @@ trait ClimbingRoutesRepositoryPlainSQL {
   // import query language: Session type
   val driver: JdbcDriver
   import driver.simple._
+  import Q.interpolation
 
   // type conversion
   implicit val getRouteResult =
