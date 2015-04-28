@@ -1,6 +1,6 @@
 import sbt._
 import Keys._
-import twirl.sbt.TwirlPlugin._
+import play.twirl.sbt.SbtTwirl
 
 object Chapter06Build extends Build {
   val Organization = "org.scalatra"
@@ -20,7 +20,7 @@ object Chapter06Build extends Build {
   lazy val project = Project (
     Name,
     file("."),
-    settings = Defaults.defaultSettings ++ webSettings ++ Twirl.settings ++ Seq(
+    settings = webSettings ++ Seq(
       organization := Organization,
       name := Name,
       version := Version,
@@ -36,6 +36,8 @@ object Chapter06Build extends Build {
       browseTask
     )
   )
+
+  project.enablePlugins(SbtTwirl) // TODO: this doesn't seem to quite cut it. What's missing? Any ideas, Stefan?
 
   val browse = TaskKey[Unit]("browse", "open web browser to localhost on container:port")
   val browseTask = browse <<= (streams, port in container.Configuration) map { (streams, port) =>
