@@ -1,0 +1,10 @@
+
+--a93f5485f279c0
+content-disposition: form-data; name="sample"; filename="foobar.txt"
+
+FOOBAZ
+--a93f5485f279c0
+content-disposition: form-data; name="description"
+
+A document about foos.
+--a93f5485f279c0--

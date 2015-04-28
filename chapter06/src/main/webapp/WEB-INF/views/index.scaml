@@ -1,0 +1,32 @@
+- import org.scalatra.book.chapter05.Document
+
+- attributes("title") = "DocumentStorage"
+-@ val files: Seq[Document]
+
+.row
+  .col-lg-6
+    %h4 Download a document
+    %table.table
+      %tr
+        %th #
+        %th Name
+        %th Description
+        %th Download
+      -for (doc <- files)
+        %tr
+          %td= doc.id
+          %td= doc.name
+          %td= doc.description
+          %td
+            %a(href={uri("/documents/" + doc.id)}) download
+
+  .col-lg-3
+    %h4 Create a new document
+    %form(enctype="multipart/form-data" method="post" action="/documents")
+      %div.form-group
+        %label File:
+        %input(type="file" name="file")
+      %div.form-group
+        %label Description:
+        %input.form-control(type="text" name="description" value="")
+      %input.btn.btn-default(type="submit")

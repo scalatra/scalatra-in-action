@@ -1,0 +1,28 @@
+-@ val title: String
+-@ val body: String
+
+!!!
+html
+  head
+    title= title
+    link(rel="stylesheet" href={uri("/css/bootstrap.min.css")})
+    link(rel="stylesheet" href={uri("/css/site.css")})
+  body
+
+    .container
+      .header
+        ul.nav.nav-pills.pull-right
+          li
+            a(href={uri("/")}) Home
+          li.dropdown
+            a(href="#" class="dropdown-toggle" data-toggle="dropdown") Explore <b class="caret"></b></a>
+
+            ul.dropdown-menu
+              li.dropdown-header No comments yet
+              li.dropdown-header No comments yet
+              li.dropdown-header No comments yet
+              li.dropdown-header No comments yet
+
+        h2 comments-collector
+
+      != body
