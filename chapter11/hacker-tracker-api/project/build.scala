@@ -9,7 +9,7 @@ object HackerTrackerBuild extends Build {
   val Organization = "com.constructiveproof"
   val Name = "Hacker Tracker"
   val Version = "0.1.0-SNAPSHOT"
-  val ScalaVersion = "2.10.3"
+  val ScalaVersion = "2.11.1"
   val ScalatraVersion = "2.3.0"
 
   lazy val project = Project (
@@ -22,7 +22,7 @@ object HackerTrackerBuild extends Build {
       scalaVersion := ScalaVersion,
       resolvers += Classpaths.typesafeReleases,
       libraryDependencies ++= Seq(
-        "org.json4s" %% "json4s-jackson" % "3.2.5",
+        "org.json4s" %% "json4s-jackson" % "3.2.9",
         "org.scalatra" %% "scalatra" % ScalatraVersion,
         "org.scalatra" %% "scalatra-auth" % ScalatraVersion,
         "org.scalatra" %% "scalatra-json" % ScalatraVersion,
@@ -30,7 +30,7 @@ object HackerTrackerBuild extends Build {
         "org.scalatra" %% "scalatra-swagger" % ScalatraVersion,
         "org.scalatra" %% "scalatra-specs2" % ScalatraVersion % "test",
         "com.h2database" % "h2" % "1.2.127",
-        "org.squeryl" %% "squeryl" % "0.9.5-6",
+        "org.squeryl" %% "squeryl" % "0.9.5-7",
         "c3p0" % "c3p0" % "0.9.1.2",
         "ch.qos.logback" % "logback-classic" % "1.0.6" % "runtime",
         "org.eclipse.jetty" % "jetty-webapp" % "8.1.8.v20121106" % "container",
