@@ -8,23 +8,26 @@ class ClimbingRoutesRepository {
 
   def allAreas: DBIO[Seq[Area]] = areas.result
 
-  val areaInsertQuery = areas
-    .map(r => (r.name, r.location, r.latitude, r.longitude, r.description))
-    .returning(areas.map(_.id))
-
-  val routeInsertQuery = routes
-    .map(r => (r.areaId, r.routeName, r.latitude, r.longitude, r.description, r.mountainName))
-    .returning(routes.map(_.id))
-
   // create an area and return its id
   def createArea(name: String, location: String, latitude: Double, longitude: Double, description: String): DBIO[Int] = {
+
+    val areaInsertQuery = areas
+      .map(r => (r.name, r.location, r.latitude, r.longitude, r.description))
+      .returning(areas.map(_.id))
+
     areaInsertQuery += (name, location, latitude, longitude, description)
-    // areas += (name, location, latitude, longitude, description)
+
   }
 
   // create a route and returns its id
   def createRoute(areaId: Int, routeName: String, latitude: Double, longitude: Double, description: String, mountainName: Option[String] = None): DBIO[Int] = {
+
+    val routeInsertQuery = routes
+      .map(r => (r.areaId, r.routeName, r.latitude, r.longitude, r.description, r.mountainName))
+      .returning(routes.map(_.id))
+
     routeInsertQuery += (areaId, routeName, latitude, longitude, description, mountainName)
+
   }
 
   // update a route
