@@ -7,18 +7,9 @@ import scala.concurrent.{Future, ExecutionContext}
 
 import slick.jdbc.JdbcBackend.Database
 
-import scalaz._, Scalaz._
-
 case class Chapter10App(db: Database, repo: ClimbingRoutesRepository) extends ScalatraServlet with ScalateSupport with FutureSupport {
 
   override protected implicit def executor: ExecutionContext = scala.concurrent.ExecutionContext.Implicits.global
-
-  // be able to handle scalaz' \/
-  override def renderPipeline: RenderPipeline = ({
-    case \/-(r) => r
-    case -\/(l) => l
-  }: RenderPipeline) orElse super.renderPipeline
-
 
   before("/*") {
     contentType = "text/html"
@@ -54,22 +45,6 @@ case class Chapter10App(db: Database, repo: ClimbingRoutesRepository) extends Sc
     val description  = params.get("description") getOrElse halt(BadRequest())
 
     db.run(repo.createArea(name, location, latitude, longitude, description))
-  }
-
-  post("/areas/:areaId/routes") {
-
-    // using scalaz \/
-    for {
-      areaId <- params.getAs[Int]("areaId") \/> BadRequest()
-      routeName <- params.get("routeName") \/> BadRequest()
-      latitude <- params.getAs[Double]("latitude") \/> BadRequest()
-      longitude <- params.getAs[Double]("longitude") \/> BadRequest()
-      description <- params.get("description") \/> BadRequest()
-      mountainName = params.get("mountainName")
-    } yield {
-      db.run(repo.createRoute(areaId, routeName, latitude, longitude, description, mountainName))
-    }
-
   }
 
   put("/routes/:routeId") {

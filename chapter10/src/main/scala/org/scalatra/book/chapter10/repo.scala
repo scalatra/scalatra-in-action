@@ -19,17 +19,6 @@ class ClimbingRoutesRepository {
 
   }
 
-  // create a route and returns its id
-  def createRoute(areaId: Int, routeName: String, latitude: Double, longitude: Double, description: String, mountainName: Option[String] = None): DBIO[Int] = {
-
-    val routeInsertQuery = routes
-      .map(r => (r.areaId, r.routeName, r.latitude, r.longitude, r.description, r.mountainName))
-      .returning(routes.map(_.id))
-
-    routeInsertQuery += (areaId, routeName, latitude, longitude, description, mountainName)
-
-  }
-
   // update a route
   def updateRoute(routeId: Int, routeName: String, description: String): DBIO[Int] = {
 

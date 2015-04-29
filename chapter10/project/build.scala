@@ -29,7 +29,6 @@ object Chapter10Build extends Build {
         "com.typesafe.slick" %% "slick" % "3.0.0-RC3",
         "com.h2database" % "h2" % "1.4.181",
         "com.mchange" % "c3p0" % "0.9.2",
-        "org.scalaz" %% "scalaz-core" % "7.1.0",
         "org.eclipse.jetty" % "jetty-webapp" % JettyVersion % "compile;container",
         "org.eclipse.jetty" % "jetty-plus" % JettyVersion % "compile;container",
         "org.eclipse.jetty.orbit" % "javax.servlet" % "3.0.0.v201112011016" % "container;provided;test" artifacts (Artifact("javax.servlet", "jar", "jar"))
