@@ -1,6 +1,6 @@
 package org.scalatra.book.chapter10
 
-import slick.driver.JdbcDriver.simple._
+import slick.driver.JdbcDriver.api._
 
 object Tables {
 

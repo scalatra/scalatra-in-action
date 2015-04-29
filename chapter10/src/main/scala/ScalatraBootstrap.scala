@@ -19,7 +19,7 @@ class ScalatraBootstrap extends LifeCycle {
 
     // Build database, repository & application
     val db = slick.jdbc.JdbcBackend.Database.forDataSource(cpds)
-    val repo = new ClimbingRoutesRepository(slickDriver)
+    val repo = new ClimbingRoutesRepository
     val app = Chapter10App(db, repo)
 
     db withTransaction { implicit session =>
