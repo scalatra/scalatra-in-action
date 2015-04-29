@@ -26,7 +26,7 @@ object Chapter10Build extends Build {
         "org.scalatra" %% "scalatra-scalate" % ScalatraVersion,
         "org.scalatra" %% "scalatra-specs2" % ScalatraVersion % "test",
         "ch.qos.logback" % "logback-classic" % "1.0.6", //% "runtime",
-        "com.typesafe.slick" %% "slick" % "2.1.0",
+        "com.typesafe.slick" %% "slick" % "3.0.0-RC3",
         "com.h2database" % "h2" % "1.4.181",
         "com.mchange" % "c3p0" % "0.9.2",
         "org.eclipse.jetty" % "jetty-webapp" % JettyVersion % "compile;container",
