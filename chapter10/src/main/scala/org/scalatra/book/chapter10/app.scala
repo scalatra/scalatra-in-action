@@ -17,13 +17,19 @@ case class Chapter10App(db: Database, repo: ClimbingRoutesRepository) extends Sc
 
   get("/areas") {
 
-    // run database action loading the areas
-    val res: Future[Seq[Area]] = db.run(repo.allAreas)
+    // ensure that the request/response implicits are not read from the ThreadLocal
+    new AsyncResult {
+      val is = {
 
-    // map the result rendering a template
-    // TODO request/response are bound to thread
-    res map { areas =>
-      jade("areas.jade", "areas" -> areas)
+        // run database action loading the areas
+        val res: Future[Seq[Area]] = db.run(repo.allAreas)
+
+        // map the result rendering a template
+        res map { areas =>
+          jade("areas.jade", "areas" -> areas)
+        }
+
+      }
     }
 
   }
