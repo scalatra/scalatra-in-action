@@ -1,10 +1,11 @@
 package org.scalatra.book.chapter10
 
-// import query language
-import slick.driver.JdbcDriver.api._
+import slick.driver.H2Driver.api._
 import Tables._
 
-class ClimbingRoutesRepository {
+import scala.concurrent.ExecutionContext
+
+object ClimbingRoutesRepository {
 
   def allAreas: DBIO[Seq[Area]] = areas.result
 
@@ -31,23 +32,39 @@ class ClimbingRoutesRepository {
   }
 
   def deleteRoute(route: Route): DBIO[Int] = {
-    routes.filter(_.id === route.id).delete
+    // routes.filter(_.id === route.id).delete
+    ???
   }
 
   def findRoute(routeId: Int): DBIO[Option[Route]] = {
     routes.filter(_.id === routeId).result.headOption
   }
 
-//  def areaWithRoutesByAreaId(areaId: Int): DBIO[Option[(Area, Seq[Route])]] = {
-//
-//    val joinQuery = for {
-//      a <- areas if a.id === areaId
-//      r <- routes if r.areaId === a.id
-//    } yield (a, r)
-//
-//    joinQuery.groupBy(_._1).map { case (a, xs) => (a, xs.map(_._2)) }.result.headOption
-//
-//  }
+  def areaWithRoutesByAreaId(areaId: Int)(implicit ec: ExecutionContext): DBIO[Option[(Area, Seq[Route])]] = {
+
+    //    val joinQuery = for {
+    //      a <- areas if a.id === areaId
+    //      r <- routes if r.areaId === a.id
+    //    } yield (a, r)
+
+
+    //    for {
+    //      res <- (areas.filter(_.id === areaId) joinLeft routes)
+    //    } yield {
+    //      res groupBy (_._1) map { case (a, xs) => (a, xs.flatMap(_._2)) }
+    //    }
+
+
+    // query a Seq[(Area, Option[Route])] UU (nested relations are not possible, need to be built on the query result)
+    // query composition
+    val areaById = areas filter(_.id === areaId)
+    val joinQuery = areaById joinLeft routes on (_.id === _.areaId)  // on clause
+
+    // aggregate the result
+    joinQuery.result map { xs =>
+      xs.groupBy(_._1).map { case (a, xs) => (a, xs.flatMap(_._2)) }.headOption
+    }
+
+  }
 
 }
-

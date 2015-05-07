@@ -1,6 +1,6 @@
 package org.scalatra.book.chapter10
 
-import slick.driver.JdbcDriver.api._
+import slick.driver.H2Driver.api._
 
 object Tables {
 
@@ -14,7 +14,6 @@ object Tables {
 
     def * = (id, name, location, longitude, latitude, description) <> (Area.tupled, Area.unapply)
   }
-  val areas = TableQuery[Areas]
 
   class Routes(tag: Tag) extends Table[Route](tag, "ROUTES") {
     def id            = column[Int]("ID", O.PrimaryKey, O.AutoInc)
@@ -29,6 +28,9 @@ object Tables {
 
     def area = foreignKey("FK_ROUTE_AREA", areaId, areas)(_.id)
   }
+
+  val areas = TableQuery[Areas]
+
   val routes = TableQuery[Routes]
 
 }
