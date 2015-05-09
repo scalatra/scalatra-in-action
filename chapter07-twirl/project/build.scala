@@ -35,9 +35,7 @@ object Chapter06Build extends Build {
       ),
       browseTask
     )
-  )
-
-  project.enablePlugins(SbtTwirl) // TODO: this doesn't seem to quite cut it. What's missing? Any ideas, Stefan?
+  ).enablePlugins(SbtTwirl) 
 
   val browse = TaskKey[Unit]("browse", "open web browser to localhost on container:port")
   val browseTask = browse <<= (streams, port in container.Configuration) map { (streams, port) =>
