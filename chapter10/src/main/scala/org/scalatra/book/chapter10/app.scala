@@ -1,29 +1,34 @@
 package org.scalatra.book.chapter10
 
 import org.scalatra._
+import org.scalatra.book.chapter10.ClimbingRoutesDAO._
 import org.scalatra.scalate.ScalateSupport
-import slick.dbio.DBIO
-import scala.concurrent.{Future, ExecutionContext}
-
 import slick.driver.H2Driver.api._
 
-import ClimbingRoutesRepository._
+import scalaz._, Scalaz._
 
-case class Chapter10App(db: Database) extends ScalatraServlet with ScalateSupport with FutureSupport {
+class Chapter10App(db: Database) extends ScalatraServlet with ScalateSupport with FutureSupport {
 
-  override protected implicit def executor: ExecutionContext = scala.concurrent.ExecutionContext.Implicits.global
+  override protected implicit def executor = scala.concurrent.ExecutionContext.global
 
   before("/*") {
     contentType = "text/html"
   }
 
+  // return all areas
   get("/areas") {
+    val req = request  // TODO remove
+    val res = response
+
     db.run(allAreas) map { areas =>
-      jade("areas.jade", "areas" -> areas)
+      jade("areas.jade", "areas" -> areas)(req, res)
     }
   }
 
+  // create a new area
   post("/areas") {
+    val req = request  // TODO remove
+    val res = response
 
     val name         = params.get("name") getOrElse halt(BadRequest())
     val location     = params.get("location") getOrElse halt(BadRequest())
@@ -31,48 +36,47 @@ case class Chapter10App(db: Database) extends ScalatraServlet with ScalateSuppor
     val longitude    = params.getAs[Double]("longitude") getOrElse halt(BadRequest())
     val description  = params.get("description") getOrElse halt(BadRequest())
 
-    db.run(createArea(name, location, latitude, longitude, description)) map { areaId =>
-
-      Found(f"/areas/$areaId")
-      redirect(f"/areas/$areaId")
-
-      // TOOD check if transaction is rolled back!
+    db.run(createArea(name, location, latitude, longitude, description)) map { area =>
+      Found(f"/areas/${area.id}")
     }
   }
 
-
+  // return an area and their routes
   get("/areas/:areaId") {
     val areaId = params.getAs[Int]("areaId") getOrElse halt(BadRequest())
 
-    // naming
-    db.run(areaWithRoutesByAreaId(areaId).transactionally) map {
+    db.run(findAreaWithRoutes(areaId).transactionally) map {
       case Some((area, routes)) => jade("area.jade", "area" -> area, "routes" -> routes)
-      case None => NotFound()  // does tx roll back?
+      case None => NotFound()
     }
   }
 
+  // update name and description of a route
   put("/routes/:routeId") {
 
-    // partial update
-    val routeId      = params.getAs[Int]("routeId") getOrElse halt(BadRequest())
-    val routeName    = params.get("routeName") getOrElse halt(BadRequest())
-    val description  = params.get("description") getOrElse halt(BadRequest())
+    // validation
+    def checkRouteName(s: String): ActionResult \/ Unit = {
+      if (s.length < 250) ().right else BadRequest("Route name is too long.").left
+    }
 
-    db.run(updateRoute(routeId, routeName, description).transactionally)
+    // uses scalaz \/ for parameter validation
+    for {
+      routeId      <- params.getAs[Int]("routeId") \/> BadRequest()
+      routeName    <- params.getAs[String]("routeName") \/> BadRequest()
+      description  <- params.getAs[String]("description") \/> BadRequest()
+      _            <- checkRouteName(routeName)
+    } yield {
+      db.run(updateRoute(routeId, routeName, description))
+    }
 
   }
 
+  // delete a route if it exists
   delete("/routes/:routeId") {
 
-    val routeId = params.getAs[Int]("areaId") getOrElse halt(400)
+    val routeId = params.getAs[Int]("areaId") getOrElse halt(BadRequest())
 
-    // composing actions
-    val updateAction = findRoute(routeId) flatMap {
-      case Some(route) => deleteRoute(route)
-      case None => DBIO.successful(NotFound())  // ...
-    }
-
-    db.run(updateAction.transactionally)
+    db.run(deleteRouteIfExists(routeId))
 
   }
 
@@ -84,5 +88,6 @@ case class Chapter10App(db: Database) extends ScalatraServlet with ScalateSuppor
   //      <ul>{for (r <- areasByName(q)) yield <li>{r}</li>}</ul>
   //    }
   //  }
+
 }
 

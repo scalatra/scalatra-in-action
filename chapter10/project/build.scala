@@ -25,6 +25,7 @@ object Chapter10Build extends Build {
         "org.scalatra" %% "scalatra" % ScalatraVersion,
         "org.scalatra" %% "scalatra-scalate" % ScalatraVersion,
         "org.scalatra" %% "scalatra-specs2" % ScalatraVersion % "test",
+        "org.scalaz" %% "scalaz-core" % "7.1.0",
         "ch.qos.logback" % "logback-classic" % "1.0.6", //% "runtime",
         "com.typesafe.slick" %% "slick" % "3.0.0",
         "com.h2database" % "h2" % "1.4.181",
