@@ -27,9 +27,6 @@ class Chapter10App(db: Database) extends ScalatraServlet with ScalateSupport wit
 
   // create a new area
   post("/areas") {
-    val req = request  // TODO remove
-    val res = response
-
     val name         = params.get("name") getOrElse halt(BadRequest())
     val location     = params.get("location") getOrElse halt(BadRequest())
     val latitude     = params.getAs[Double]("latitude") getOrElse halt(BadRequest())
@@ -43,10 +40,13 @@ class Chapter10App(db: Database) extends ScalatraServlet with ScalateSupport wit
 
   // return an area and their routes
   get("/areas/:areaId") {
+    val req = request  // TODO remove
+    val res = response
+
     val areaId = params.getAs[Int]("areaId") getOrElse halt(BadRequest())
 
     db.run(findAreaWithRoutes(areaId).transactionally) map {
-      case Some((area, routes)) => jade("area.jade", "area" -> area, "routes" -> routes)
+      case Some((area, routes)) => jade("area.jade", "area" -> area, "routes" -> routes)(req, res)
       case None => NotFound()
     }
   }
