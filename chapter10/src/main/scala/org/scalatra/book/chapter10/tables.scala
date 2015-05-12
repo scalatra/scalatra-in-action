@@ -81,6 +81,7 @@ object Tables {
 
     val distinctAreaIds = query.groupBy(_.areaId).map(_._1)
 
+    val withAreas = query join areas on (_.areaId === _.id)
 
   }
 

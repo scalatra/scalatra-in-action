@@ -63,6 +63,14 @@ object dbio_actions_database_driver extends App with db_setup {
 // tables, table queries, schema, queries, inserts
 object tables_table_queries_schema_queries_inserts extends App with db_setup {
 
+  class Foos(tag: Tag) extends Table[(Int, String)](tag, "FOOS") {
+    def id = column[Int]("INT")
+    def name = column[String]("NAME")
+
+    def * = (id, name)
+  }
+
+
   // manage schema
   
   val createTables: DBIO[Unit] = (routes.schema ++ areas.schema).create
