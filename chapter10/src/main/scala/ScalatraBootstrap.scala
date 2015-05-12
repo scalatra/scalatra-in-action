@@ -1,42 +1,32 @@
-import com.mchange.v2.c3p0.ComboPooledDataSource
-import org.scalatra.book.chapter10.{DbSetup, Chapter10App, ClimbingRoutesRepository}
-import org.slf4j.LoggerFactory
+import javax.servlet.ServletContext
 
 import org.scalatra._
-import javax.servlet.ServletContext
+import org.scalatra.book.chapter10.{Chapter10App, DbSetup}
+import slick.driver.H2Driver.api._
+
+import scala.concurrent.Await
+import scala.concurrent.duration.Duration
 
 class ScalatraBootstrap extends LifeCycle {
 
-  val logger = LoggerFactory.getLogger(getClass)
+  val jdbcUrl = "jdbc:h2:mem:chapter10;DB_CLOSE_DELAY=-1"
+  val jdbcDriverClass = "org.h2.Driver"
+  val db = Database.forURL(jdbcUrl, driver = jdbcDriverClass)
 
-  logger.info("Creating c3p0 connection pool")
-  val cpds = new ComboPooledDataSource
+  val app = new Chapter10App(db)
 
-  override def init(context: ServletContext) {
+  override def init(context: ServletContext): Unit = {
 
-    // Slick driver
-    val slickDriver = slick.driver.H2Driver
+    val res = db.run(DbSetup.createDatabase)
 
-    // Build database, repository & application
-    val db = slick.jdbc.JdbcBackend.Database.forDataSource(cpds)
-    val repo = new ClimbingRoutesRepository(slickDriver)
-    val app = Chapter10App(db, repo)
-
-    db withTransaction { implicit session =>
-      DbSetup.createDatabase
-    }
+    Await.result(res, Duration(5, "seconds"))
 
     context.mount(app, "/*")
+
   }
 
-  override def destroy(context: ServletContext) {
-    super.destroy(context)
-    logger.info("Closing c3po connection pool")
-    cpds.close
+  override def destroy(context: ServletContext): Unit = {
+    db.close()
   }
 
 }
-
-
-
-

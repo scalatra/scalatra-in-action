@@ -1,0 +1,14 @@
+- import org.scalatra.book.chapter10._
+-@ val area: Area
+-@ val routes: Seq[Route]
+- attributes("title") = "Area"
+
+.row
+  .col-lg-12
+    h2 Areas #{area.name}
+
+  - for (route <- routes)
+    .col-lg-12.comment
+      span.title= route.routeName
+      p= route.description
+

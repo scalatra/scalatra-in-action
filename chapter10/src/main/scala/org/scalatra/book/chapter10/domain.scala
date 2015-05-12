@@ -4,8 +4,8 @@ case class Area(
   id: Int,
   name: String,
   location: String,
-  lat: Double,
-  long: Double,
+  latitude: Double,
+  longitude: Double,
   description: String)
 
 case class Route(
@@ -13,6 +13,6 @@ case class Route(
   areaId: Int,
   mountainName: Option[String],
   routeName: String,
-  lat: Double,
-  long: Double,
+  latitude: Double,
+  longitude: Double,
   description: String)

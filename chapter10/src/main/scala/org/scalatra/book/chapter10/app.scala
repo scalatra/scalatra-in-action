@@ -1,81 +1,91 @@
 package org.scalatra.book.chapter10
 
-import org.scalatra.ScalatraServlet
+import org.scalatra._
+import org.scalatra.book.chapter10.ClimbingRoutesDAO._
 import org.scalatra.scalate.ScalateSupport
+import slick.driver.H2Driver.api._
 
-import slick.jdbc.JdbcBackend.Database
+import scalaz._, Scalaz._
 
-case class Chapter10App(db: Database, repo: ClimbingRoutesRepository) extends ScalatraServlet with ScalateSupport {
+class Chapter10App(db: Database) extends ScalatraServlet with ScalateSupport with FutureSupport {
+
+  override protected implicit def executor = scala.concurrent.ExecutionContext.global
 
   before("/*") {
     contentType = "text/html"
   }
 
+  // return all areas
   get("/areas") {
-    db withTransaction { implicit session =>
-      val areas = repo.allAreas
-      jade("areas.jade", "areas" -> areas)
+    val req = request  // TODO remove
+    val res = response
+
+    db.run(allAreas) map { areas =>
+      jade("areas.jade", "areas" -> areas)(req, res)
     }
   }
 
-  get("/areas/:areaId") {
-    val areaId = params.as[Int]("areaId")
-    db withTransaction { implicit session =>
-      val (area, routes) = repo.areaWithRoutesByAreaId(areaId) getOrElse halt(404) // -> tx rolls back
-      jade("area.jade", "area" -> area, "routes" -> routes)
-    }
-  }
-
+  // create a new area
   post("/areas") {
-    db withTransaction { implicit session =>
-      val name         = params.getAs[String]("name") getOrElse halt(400)
-      val location     = params.getAs[String]("location") getOrElse halt(400)
-      val latitude     = params.getAs[Double]("latitude") getOrElse halt(400)
-      val longitude    = params.getAs[Double]("longitude") getOrElse halt(400)
-      val description  = params.getAs[String]("description") getOrElse halt(400)
+    val name         = params.get("name") getOrElse halt(BadRequest())
+    val location     = params.get("location") getOrElse halt(BadRequest())
+    val latitude     = params.getAs[Double]("latitude") getOrElse halt(BadRequest())
+    val longitude    = params.getAs[Double]("longitude") getOrElse halt(BadRequest())
+    val description  = params.get("description") getOrElse halt(BadRequest())
 
-      repo.createArea(name, location, latitude, longitude, description)
+    db.run(createArea(name, location, latitude, longitude, description)) map { area =>
+      Found(f"/areas/${area.id}")
     }
   }
 
-  post("/areas/:areaId/routes") {
-    db withTransaction { implicit session =>
-      val areaId       = params.getAs[Int]("areaId") getOrElse halt(400)
-      val routeName    = params.getAs[String]("routeName") getOrElse halt(400)
-      val latitude     = params.getAs[Double]("latitude") getOrElse halt(400)
-      val longitude    = params.getAs[Double]("longitude") getOrElse halt(400)
-      val description  = params.getAs[String]("description") getOrElse halt(400)
-      val mountainName = params.getAs[String]("mountainName")
+  // return an area and their routes
+  get("/areas/:areaId") {
+    val req = request  // TODO remove
+    val res = response
 
-      repo.createRoute(areaId, routeName, latitude, longitude, description, mountainName)
+    val areaId = params.getAs[Int]("areaId") getOrElse halt(BadRequest())
+
+    db.run(findAreaWithRoutes(areaId).transactionally) map {
+      case Some((area, routes)) => jade("area.jade", "area" -> area, "routes" -> routes)(req, res)
+      case None => NotFound()
     }
   }
 
+  // update name and description of a route
   put("/routes/:routeId") {
-    db withTransaction { implicit session =>
-      val routeId      = params.getAs[Int]("routeId") getOrElse halt(400)
-      val routeName    = params.getAs[String]("routeName") getOrElse halt(400)
-      val latitude     = params.getAs[Double]("latitude") getOrElse halt(400)
-      val longitude    = params.getAs[Double]("longitude") getOrElse halt(400)
-      val description  = params.getAs[String]("description") getOrElse halt(400)
-      val mountainName = params.getAs[String]("mountainName")
 
-      repo.updateRoute(routeId, routeName, latitude, longitude, description, mountainName)
+    // validation
+    def checkRouteName(s: String): ActionResult \/ Unit = {
+      if (s.length < 250) ().right else BadRequest("Route name is too long.").left
     }
+
+    // uses scalaz \/ for parameter validation
+    for {
+      routeId      <- params.getAs[Int]("routeId") \/> BadRequest()
+      routeName    <- params.getAs[String]("routeName") \/> BadRequest()
+      description  <- params.getAs[String]("description") \/> BadRequest()
+      _            <- checkRouteName(routeName)
+    } yield {
+      db.run(updateRoute(routeId, routeName, description))
+    }
+
   }
 
+  // delete a route if it exists
   delete("/routes/:routeId") {
-    db withTransaction { implicit session =>
-      val routeId = params.getAs[Int]("areaId") getOrElse halt(400)
-      repo.deleteRoute(routeId)
-    }
+
+    val routeId = params.getAs[Int]("areaId") getOrElse halt(BadRequest())
+
+    db.run(deleteRouteIfExists(routeId))
+
   }
 
+  // ----
 
   //  get("/search") {
   //    val q = params("q")
   //    db withTransaction { implicit session =>
-  //      <ul>{for (r <- repo.areasByName(q)) yield <li>{r}</li>}</ul>
+  //      <ul>{for (r <- areasByName(q)) yield <li>{r}</li>}</ul>
   //    }
   //  }
 
