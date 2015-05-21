@@ -9,15 +9,17 @@ import org.slf4j.LoggerFactory
 trait DatabaseInit {
   val logger = LoggerFactory.getLogger(getClass)
 
-  val databaseConnection = "jdbc:h2:file:~/db/hackertracker.db"
+  val databaseUsername = "root"
+  val databasePassword = ""
+  val databaseConnection = "jdbc:h2:mem:hackerTracker"
 
   var cpds = new ComboPooledDataSource
 
   def configureDb() {
-    logger.info("Configuring H2 database")
-
     cpds.setDriverClass("org.h2.Driver")
     cpds.setJdbcUrl(databaseConnection)
+    cpds.setUser(databaseUsername)
+    cpds.setPassword(databasePassword)
 
     cpds.setMinPoolSize(1)
     cpds.setAcquireIncrement(1)
