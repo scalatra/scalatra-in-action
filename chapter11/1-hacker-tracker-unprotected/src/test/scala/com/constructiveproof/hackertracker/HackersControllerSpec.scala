@@ -1,16 +1,26 @@
 package com.constructiveproof.hackertracker
 
-import org.scalatra.test.specs2._
+import com.constructiveproof.hackertracker.init.DatabaseInit
+import com.constructiveproof.hackertracker.models.Db
+import org.scalatest.{BeforeAndAfterAll, BeforeAndAfter, FunSuite}
+import org.scalatra.test.scalatest.ScalatraSuite
 
-// For more on Specs2, see http://etorreborre.github.com/specs2/guide/org.specs2.guide.QuickStart.html
-class HackersControllerSpec extends ScalatraSpec { def is =
-  "GET / on HackersController"                     ^
-    "should return status 200"                  ! root200^
-                                                end
+class HackersControllerSpec extends FunSuite with ScalatraSuite with DatabaseInit with BeforeAndAfter with BeforeAndAfterAll {
 
   addServlet(classOf[HackersController], "/*")
 
-  def root200 = get("/") {
-    status must_== 200
+  before {
+    configureDb()
+    Db.init
+  }
+
+  after {
+    closeDbConnection()
+  }
+
+  test("simple get") {
+    get("/new") {
+      status should equal(200)
+    }
   }
 }
