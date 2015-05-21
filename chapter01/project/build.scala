@@ -7,7 +7,7 @@ import ScalateKeys._
 
 object MyScalatraWebAppBuild extends Build {
   val Organization = "com.example"
-  val Name = "My Scalatra Web App"
+  val Name = "Chapter 1 - My Scalatra Web App"
   val Version = "0.1.0-SNAPSHOT"
   val ScalaVersion = "2.11.6"
   val ScalatraVersion = "2.4.0.RC1"
