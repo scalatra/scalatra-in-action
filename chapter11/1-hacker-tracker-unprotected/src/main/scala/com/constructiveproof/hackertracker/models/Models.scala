@@ -16,6 +16,13 @@ case class Hacker(val id: Long, val firstName: String, val lastName: String, val
  * The BlogDb object acts as a cross between a Dao and a Schema definition file.
  */
 object Db extends Schema {
+
+  def init = {
+    inTransaction {
+      Db.create
+    }
+  }
+
   val hackers = table[Hacker]("hackers")
   on(hackers)(a => declare(
     a.id is(autoIncremented)))
