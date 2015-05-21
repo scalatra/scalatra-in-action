@@ -63,7 +63,7 @@ class RecordStore extends ScalatraServlet {
 
   get("/downloads/*") {
     val path = params("splat")
-    new File(DownloadPath, params("splat"))
+    new File(DownloadPath, path)
   }
 
   get("""/best-of/(\d{4})""".r) {

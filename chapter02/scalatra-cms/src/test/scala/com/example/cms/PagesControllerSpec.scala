@@ -3,7 +3,7 @@ package com.example.cms
 import org.scalatra.test.specs2._
 
 class PagesControllerSpec extends ScalatraSpec { def is =
-  "GET /pages/:slug on ChatController"          ^
+  "GET /pages/:slug on PagesController"          ^
     "should return status 200"                  ! pagesWork^
     "shows the word 'Bacon' in the body"        ! containsBacon^
                                                 end

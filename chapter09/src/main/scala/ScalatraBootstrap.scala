@@ -1,25 +1,18 @@
 import org.scalatra.book.chapter09._
 import org.scalatra._
-import org.scalatra.ScalatraBase.{PortKey, HostNameKey, ForceHttpsKey}
 
-import com.typesafe.config.ConfigFactory
 import javax.servlet.ServletContext
 
 class ScalatraBootstrap extends LifeCycle {
 
-  def environment(context: ServletContext): String = {
-    sys.props.get(EnvironmentKey) orElse Option(context.getInitParameter(EnvironmentKey)) getOrElse ("development")
-  }
-
   override def init(context: ServletContext) {
 
-    val config = AppConfig(ConfigFactory.load(environment(context)))
+    val conf = AppConfig.load
+    sys.props(org.scalatra.EnvironmentKey) = AppEnvironment.asString(conf.env)
 
-    context.initParameters(HostNameKey) = config.hostname
-    context.initParameters(PortKey) = config.port.toString
-    context.initParameters(ForceHttpsKey) = config.forceHttps.toString
+    val app = new Chapter09(conf)
+    context.mount(app, "/*")
 
-    context.mount(new Chapter09, "/*")
   }
 
 }
