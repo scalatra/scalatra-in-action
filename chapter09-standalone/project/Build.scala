@@ -11,7 +11,7 @@ import com.mojolly.scalate.ScalatePlugin.ScalateKeys._
 
 object Chapter09StandaloneBuild extends Build {
   val Organization = "org.scalatra"
-  val Name = "chapter09-standalone"
+  val Name = "Chapter 9 - Standalone"
   val Version = "0.1.0-SNAPSHOT"
   val ScalaVersion = "2.11.4"
   val ScalatraVersion = "2.4.0.M2"

@@ -4,7 +4,7 @@ import Keys._
 
 object Chapter03Build extends Build {
   val Organization = "org.scalatra"
-  val Name = "chapter03"
+  val Name = "Chapter 3"
   val Version = "0.1.0-SNAPSHOT"
   val ScalaVersion = "2.10.3"
   val ScalatraVersion = "2.3.0.RC1"

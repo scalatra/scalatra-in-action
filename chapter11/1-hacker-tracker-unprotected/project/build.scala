@@ -7,7 +7,7 @@ import ScalateKeys._
 
 object HackerTrackerBuild extends Build {
   val Organization = "com.constructiveproof"
-  val Name = "Hacker Tracker"
+  val Name = "Chapter 11 - Hacker Tracker (Unprotected)"
   val Version = "0.1.0-SNAPSHOT"
   val ScalaVersion = "2.10.3"
   val ScalatraVersion = "2.3.0.M1"

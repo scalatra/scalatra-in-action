@@ -5,10 +5,10 @@ import Keys._
 object Chapter05Build extends Build {
 
   val Organization = "org.scalatra"
-  val Name = "chapter05"
+  val Name = "Chapter 5"
   val Version = "0.1.0-SNAPSHOT"
   val ScalaVersion = "2.11.5"
-  val ScalatraVersion = "2.4.0.M2"
+  val ScalatraVersion = "2.4.0.RC1"
 
   val mySettings = Defaults.defaultConfigs ++
     ScalatraPlugin.scalatraWithDist ++

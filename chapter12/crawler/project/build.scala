@@ -7,7 +7,7 @@ import ScalateKeys._
 
 object CrawlerBuild extends Build {
   val Organization = "com.constructiveproof"
-  val Name = "crawler"
+  val Name = "Chapter 12 - Crawler"
   val Version = "0.1.0-SNAPSHOT"
   val ScalaVersion = "2.10.3"
   val ScalatraVersion = "2.3.0"

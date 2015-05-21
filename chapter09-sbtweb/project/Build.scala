@@ -15,7 +15,7 @@ import com.mojolly.scalate.ScalatePlugin.ScalateKeys._
 
 object Chapter09SbtWebBuild extends Build {
   val Organization = "org.scalatra"
-  val Name = "chapter09-sbtweb"
+  val Name = "Chapter 9 - SBT web"
   val Version = "0.1.0-SNAPSHOT"
   val ScalaVersion = "2.11.4"
   val ScalatraVersion = "2.4.0.M2"

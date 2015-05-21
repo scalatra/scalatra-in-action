@@ -7,7 +7,7 @@ import ScalateKeys._
 
 object ScalatraCmsBuild extends Build {
   val Organization = "com.example"
-  val Name = "Scalatra CMS"
+  val Name = "Chapter 2 - Scalatra CMS"
   val Version = "0.1.0-SNAPSHOT"
   val ScalaVersion = "2.10.3"
   val ScalatraVersion = "2.3.0"

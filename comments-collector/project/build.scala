@@ -7,7 +7,7 @@ import ScalateKeys._
 
 object CommentsCollectorBuild extends Build {
   val Organization = "org.scalatra"
-  val Name = "Comments collector"
+  val Name = "Comments Collector"
   val Version = "0.1.0-SNAPSHOT"
   val ScalaVersion = "2.10.2"
   val ScalatraVersion = "2.3.0.M1"

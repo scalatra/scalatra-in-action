@@ -2,9 +2,9 @@ import sbt._
 import Keys._
 
 
-object Chapter06Build extends Build {
+object Chapter07Build extends Build {
   val Organization = "org.scalatra"
-  val Name = "chapter06"
+  val Name = "Chapter 7"
   val Version = "0.1.0-SNAPSHOT"
   val ScalaVersion = "2.10.3"
   val ScalatraVersion = "2.3.0.M1"

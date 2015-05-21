@@ -6,7 +6,7 @@ import com.mojolly.scalate.ScalatePlugin._
 object Chapter10Build extends Build {
 
   val Organization = "org.scalatra"
-  val Name = "chapter10"
+  val Name = "Chapter 10"
   val Version = "0.1.0-SNAPSHOT"
   val ScalaVersion = "2.11.5"
   val ScalatraVersion = "2.4.0.M2"

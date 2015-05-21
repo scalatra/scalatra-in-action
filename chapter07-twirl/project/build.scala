@@ -2,9 +2,9 @@ import sbt._
 import Keys._
 import play.twirl.sbt.SbtTwirl
 
-object Chapter06Build extends Build {
+object Chapter07TwirlBuild extends Build {
   val Organization = "org.scalatra"
-  val Name = "chapter06-twirl"
+  val Name = "Chapter 7 - Twirl"
   val Version = "0.1.0-SNAPSHOT"
   val ScalaVersion = "2.10.3"
   val ScalatraVersion = "2.3.0.M1"
