@@ -21,7 +21,7 @@ class GrabActor extends Actor {
     ).mkString
 
     content.contains("Akka") match {
-      case true => sender ! "It's an Akka-related site , very cool."
+      case true => sender ! "It's an Akka-related site, very cool."
       case false => sender ! "No Akka here, you've made some sort of " +
         "mistake in your reading choices."
     }

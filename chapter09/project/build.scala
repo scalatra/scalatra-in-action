@@ -9,7 +9,7 @@ import com.mojolly.scalate.ScalatePlugin.ScalateKeys._
 
 object Chapter09Build extends Build {
   val Organization = "org.scalatra"
-  val Name = "Chapter 9"
+  val Name = "Chapter9"
   val Version = "0.1.0-SNAPSHOT"
   val ScalaVersion = "2.11.4"
   val ScalatraVersion = "2.4.0.M2"
