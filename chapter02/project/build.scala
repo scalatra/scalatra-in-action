@@ -16,7 +16,7 @@ object ScalatraCmsBuild extends Build {
   lazy val project = Project (
     "scalatra-cms",
     file("."),
-    settings = Defaults.defaultSettings ++ ScalatraPlugin.scalatraWithJRebel ++ scalateSettings ++ Seq(
+    settings = Defaults.defaultConfigs ++ ScalatraPlugin.scalatraSettings ++ scalateSettings ++ Seq(
       organization := Organization,
       name := Name,
       version := Version,
@@ -27,10 +27,8 @@ object ScalatraCmsBuild extends Build {
         "org.scalatra" %% "scalatra" % ScalatraVersion,
         "org.scalatra" %% "scalatra-scalate" % ScalatraVersion,
         "org.scalatra" %% "scalatra-specs2" % ScalatraVersion % "test",
-        "ch.qos.logback" % "logback-classic" % "1.0.6" % "runtime",
-        "org.eclipse.jetty" % "jetty-webapp" % JettyVersion % "container",
-        "org.eclipse.jetty" % "jetty-plus" % JettyVersion % "container",
-        "javax.servlet" % "javax.servlet-api" % "3.1.0"
+        "ch.qos.logback" % "logback-classic" % "1.1.3" % "runtime",
+        "javax.servlet" % "javax.servlet-api" % "3.1.0" % "provided"
       ),
       scalateTemplateConfig in Compile <<= (sourceDirectory in Compile){ base =>
         Seq(
