@@ -15,6 +15,14 @@ class Chapter10App(db: Database) extends ScalatraServlet with ScalateSupport wit
     contentType = "text/html"
   }
 
+  before("/css/*") {
+    contentType = "text/css"
+  }
+
+  get("/") {
+    redirect("/areas")
+  }
+
   // return all areas
   get("/areas") {
     val req = request  // TODO remove
