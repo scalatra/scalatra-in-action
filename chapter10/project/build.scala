@@ -26,14 +26,11 @@ object Chapter10Build extends Build {
         "org.scalatra" %% "scalatra" % ScalatraVersion,
         "org.scalatra" %% "scalatra-scalate" % ScalatraVersion,
         "org.scalatra" %% "scalatra-scalatest" % ScalatraVersion % "test",
-        "org.scalaz" %% "scalaz-core" % "7.1.0",
-        "ch.qos.logback" % "logback-classic" % "1.0.6", //% "runtime",
+        "org.scalaz" %% "scalaz-core" % "7.1.2",
+        "ch.qos.logback" % "logback-classic" % "1.1.3" % "runtime",
         "com.typesafe.slick" %% "slick" % "3.0.0",
-        "com.h2database" % "h2" % "1.4.181",
-        "com.mchange" % "c3p0" % "0.9.2",
-        "org.eclipse.jetty" % "jetty-webapp" % JettyVersion % "compile;container",
-        "org.eclipse.jetty" % "jetty-plus" % JettyVersion % "container",
-        "javax.servlet" % "javax.servlet-api" % "3.1.0"        
+        "com.h2database" % "h2" % "1.4.187",
+        "javax.servlet" % "javax.servlet-api" % "3.1.0" % "provided"
       )
     )
 
