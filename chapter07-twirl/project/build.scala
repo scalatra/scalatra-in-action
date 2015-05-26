@@ -1,6 +1,8 @@
-import org.scalatra.sbt.ScalatraPlugin
 import sbt._
 import Keys._
+
+import org.scalatra.sbt.ScalatraPlugin
+
 import play.twirl.sbt.SbtTwirl
 
 object Chapter07TwirlBuild extends Build {
@@ -23,7 +25,7 @@ object Chapter07TwirlBuild extends Build {
         "org.scalatra" %% "scalatra" % ScalatraVersion,
         "org.scalatra" %% "scalatra-scalatest" % ScalatraVersion % "test",
         "ch.qos.logback" % "logback-classic" % "1.1.3" % "runtime",
-        "javax.servlet" % "javax.servlet-api" % "3.1.0"
+        "javax.servlet" % "javax.servlet-api" % "3.1.0" % "provided"
       )
     )
   ).settings(ScalatraPlugin.scalatraSettings:_*)
