@@ -10,7 +10,7 @@ class Chapter09(appConfig: AppConfig) extends ScalatraServlet with ScalateSuppor
   }
 
   get("/shorten-url") {
-    val token = scala.util.Random.nextString(8)
+    val token = UrlShortener.nextFreeToken
     f"${appConfig.webBase}/$token"
   }
 
