@@ -9,7 +9,6 @@ object Chapter10Build extends Build {
   val Version = "0.1.0-SNAPSHOT"
   val ScalaVersion = "2.11.6"
   val ScalatraVersion = "2.4.0.RC1"
-  val JettyVersion = "9.1.3.v20140225"
 
   val mySettings = Defaults.defaultConfigs ++
     ScalatraPlugin.scalatraSettings ++
