@@ -9,10 +9,10 @@ import com.mojolly.scalate.ScalatePlugin.ScalateKeys._
 
 object Chapter09Build extends Build {
   val Organization = "org.scalatra"
-  val Name = "Chapter9"
+  val Name = "Chapter 9"
   val Version = "0.1.0-SNAPSHOT"
-  val ScalaVersion = "2.11.4"
-  val ScalatraVersion = "2.4.0.M2"
+  val ScalaVersion = "2.11.6"
+  val ScalatraVersion = "2.4.0.RC1"
 
   val mySettings =
     ScalatraPlugin.scalatraSettings ++ Seq(
@@ -25,8 +25,8 @@ object Chapter09Build extends Build {
         "org.scalatra" %% "scalatra" % ScalatraVersion,
         "org.scalatra" %% "scalatra-scalate" % ScalatraVersion,
         "org.scalatra" %% "scalatra-specs2" % ScalatraVersion % "test",
-        "com.typesafe" % "config" % "1.0.2",
-        "ch.qos.logback" % "logback-classic" % "1.1.2" % "runtime",
+        "com.typesafe" % "config" % "1.2.1",
+        "ch.qos.logback" % "logback-classic" % "1.1.3" % "runtime",
         "javax.servlet" % "javax.servlet-api" % "3.1.0" % "provided")
     )
 
