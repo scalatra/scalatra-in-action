@@ -15,7 +15,7 @@ object HackerTrackerBuild extends Build {
   lazy val project = Project (
     "hacker-tracker-unprotected",
     file("."),
-    settings = ScalatraPlugin.scalatraWithJRebel ++ scalateSettings ++ Seq(
+    settings = ScalatraPlugin.scalatraSettings ++ scalateSettings ++ Seq(
       organization := Organization,
       name := Name,
       version := Version,
