@@ -6,8 +6,8 @@ object Chapter07TwirlBuild extends Build {
   val Organization = "org.scalatra"
   val Name = "Chapter7Twirl"
   val Version = "0.1.0-SNAPSHOT"
-  val ScalaVersion = "2.10.3"
-  val ScalatraVersion = "2.3.0.M1"
+  val ScalaVersion = "2.11.5"
+  val ScalatraVersion = "2.4.0.RC1"
 
   import java.net.URL
   import com.earldouglas.xsbtwebplugin.PluginKeys.port
