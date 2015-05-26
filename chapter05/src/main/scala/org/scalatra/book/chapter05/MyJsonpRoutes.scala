@@ -10,17 +10,6 @@ trait MyJsonpRoutes extends ScalatraBase with JacksonJsonSupport {
 
   override def jsonpCallbackParameterNames = Seq("callback")
 
-  // implicit val jsonFormats = DefaultFormats
-
-  get("/foods/foo_bar") {
-    val productJson =
-      ("label" -> "Foo bar") ~
-        ("fairTrade" -> true) ~
-        ("tags" -> List("bio", "chocolate"))
-
-    productJson
-  }
-
 }
 
 

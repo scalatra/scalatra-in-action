@@ -8,8 +8,6 @@ import org.json4s.JsonDSL._
 
 trait MyJsonRoutes extends ScalatraBase with JacksonJsonSupport {
 
-  // implicit val jsonFormats = DefaultFormats
-
   get("/foods/foo_bar") {
     val productJson =
       ("label" -> "Foo bar") ~

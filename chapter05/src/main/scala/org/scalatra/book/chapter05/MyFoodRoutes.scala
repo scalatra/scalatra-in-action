@@ -7,9 +7,6 @@ import org.json4s._
 
 trait MyFoodRoutes extends ScalatraBase with JacksonJsonSupport {
 
-  //  implicit val jsonFormats = DefaultFormats +
-  //    new NutritionFactsSerializer
-
   get("/foods/foo_bar/facts") {
     val facts = NutritionFacts(
       Energy(2050), Carbohydrate(36.2), Fat(33.9), Protein(7.9))
