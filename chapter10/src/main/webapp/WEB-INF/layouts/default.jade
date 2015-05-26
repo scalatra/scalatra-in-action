@@ -5,24 +5,17 @@
 html
   head
     title= title
-    link(rel="stylesheet" href={uri("/css/bootstrap.min.css")})
-    link(rel="stylesheet" href={uri("/css/site.css")})
+    link(rel="stylesheet" href="/css/bootstrap.min.css")
   body
 
     .container
-      .header
-        ul.nav.nav-pills.pull-right
-          li
-            a(href={uri("/")}) Home
-          li.dropdown
-            a(href="#" class="dropdown-toggle" data-toggle="dropdown") Explore <b class="caret"></b></a>
+      .row
+        .col-md-8
+          p
+            ul.nav.nav-pills
+              li
+                a(href="/") Home
 
-            ul.dropdown-menu
-              li.dropdown-header No comments yet
-              li.dropdown-header No comments yet
-              li.dropdown-header No comments yet
-              li.dropdown-header No comments yet
-
-        h2 Scalatra in Action - Chapter 10
+          h2= title
 
       != body

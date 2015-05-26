@@ -1,27 +1,15 @@
 - import org.scalatra.book.chapter10._
 -@ val areas: Seq[Area]
+
 - attributes("title") = "Areas"
 
 .row
-  .col-lg-12
-    h2
-      Areas
+  .col-md-8
+    - for (area <- areas)
+      .panel.panel-default
+        .panel-heading
+          | Area: #{area.name}
+          a.pull-right(href={"/areas/" + area.id}) show
+        .panel-body
+          div= area.description
 
-
-  - for (area <- areas)
-    .col-lg-12.comment
-      span.title= area.name
-      p= area.description
-
-  .col-lg-12
-    h2 Post comment
-    form(method="post")
-      label
-        Title
-        input(type="text" name="title")
-      br
-      label
-        Body
-        textarea(name="body")
-      br
-      input(type="submit" value="Submit")
