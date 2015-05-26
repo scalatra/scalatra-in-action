@@ -37,7 +37,8 @@ object ClimbingRoutesDAO {
   def findAreaWithRoutes(areaId: Int)(implicit ec: ExecutionContext): DBIO[Option[(Area, Seq[Route])]] = {
 
     // compose a query
-    val query = areas.byId(areaId).withRoutes
+    // val query = areas.byId(areaId).withRoutes
+    val query = areas.byId(areaId).joinLeft(routes).on(_.id === _.areaId)
 
     // aggregate the result
     query.result map { xs =>
