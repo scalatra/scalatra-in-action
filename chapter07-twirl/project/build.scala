@@ -28,7 +28,7 @@ object Chapter07TwirlBuild extends Build {
       port in Conf := jettyPort,
       libraryDependencies ++= Seq(
         "org.scalatra" %% "scalatra" % ScalatraVersion,
-        "org.scalatra" %% "scalatra-specs2" % ScalatraVersion,
+        "org.scalatra" %% "scalatra-scalatest" % ScalatraVersion % "test",
         "ch.qos.logback" % "logback-classic" % "1.0.6" % "runtime",
         "org.eclipse.jetty" % "jetty-webapp" % "9.1.5.v20140505" % "container",
         "org.eclipse.jetty" % "jetty-plus" % "9.1.5.v20140505" % "container",
