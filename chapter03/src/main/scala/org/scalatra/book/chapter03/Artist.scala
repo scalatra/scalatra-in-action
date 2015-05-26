@@ -6,9 +6,9 @@ import scala.collection.concurrent.TrieMap
 case class Artist(name: String, nationality: String, isActive: Boolean) {
   def toXml: Node =
     <artist>
-      <name>${name}</name>
-      <nationality>${nationality}</nationality>
-      <is-active>${isActive}</is-active>
+      <name>{name}</name>
+      <nationality>{nationality}</nationality>
+      <is-active>{isActive}</is-active>
     </artist>
 
   def toJson: String = ??? // Left as an exercise to the JSON chapter.

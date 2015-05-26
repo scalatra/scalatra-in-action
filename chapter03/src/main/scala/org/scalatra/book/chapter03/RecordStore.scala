@@ -4,9 +4,9 @@ import org.scalatra.ScalatraServlet
 import javax.servlet.http.HttpServletRequest
 import java.io.File
 
-class RecordStore extends ScalatraServlet {
+class RecordStore(downloadPath: String) extends ScalatraServlet {
   get("/artists/?") {
-    <artists>${Artist.fetchAll().map(_.toXml)}</artists>
+    <artists>{Artist.fetchAll().map(_.toXml)}</artists>
   }
 
   get("/artists/:name/info.?:format?") {
@@ -59,11 +59,9 @@ class RecordStore extends ScalatraServlet {
     status = 403
   }
 
-  private val DownloadPath = config.getInitParameter("download-path")
-
   get("/downloads/*") {
     val path = params("splat")
-    new File(DownloadPath, path)
+    new File(downloadPath, path)
   }
 
   get("""/best-of/(\d{4})""".r) {
