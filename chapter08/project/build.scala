@@ -24,7 +24,7 @@ object Chapter08Build extends Build {
         "org.scalatra" %% "scalatra" % ScalatraVersion,
         "org.scalatra" %% "scalatra-specs2" % ScalatraVersion % "test",
         "org.scalatra" %% "scalatra-scalatest" % ScalatraVersion % "test",
-        "ch.qos.logback" % "logback-classic" % "1.0.6" % "runtime",        
+        "ch.qos.logback" % "logback-classic" % "1.1.3" % "runtime",
         "javax.servlet" % "javax.servlet-api" % "3.1.0" % "provided"
       )
     )
