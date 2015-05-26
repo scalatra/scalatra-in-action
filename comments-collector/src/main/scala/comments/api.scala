@@ -6,9 +6,11 @@ import org.scalatra.json._
 
 import org.json4s.DefaultFormats
 
+import scalaz._, Scalaz._
+
 class CommentsApiDoc(implicit val swagger: Swagger) extends ScalatraServlet with JacksonSwaggerBase 
 
-class CommentsApi(comments: CommentsRepository)(implicit val swagger: Swagger) extends ScalatraServlet with JacksonJsonSupport with JValueResult with SwaggerSupport {
+class CommentsApi(comments: CommentsRepository)(implicit val swagger: Swagger) extends ScalatraServlet with JacksonJsonSupport with JValueResult with SwaggerSupport with ScalazSupport {
 
   // Identifies the application to swagger
   protected val applicationDescription = "The comments API. It exposes operations for adding comments and retrieving lists of comments."
@@ -34,7 +36,7 @@ class CommentsApi(comments: CommentsRepository)(implicit val swagger: Swagger) e
 
   // Provides default conversion formats, see also http://json4s.org/
   // Required to convert an instance of Comment to JSON text
-  implicit val jsonFormats = DefaultFormats
+  implicit lazy val jsonFormats = DefaultFormats
 
   before("/*") {
     contentType = formats("json")
@@ -51,9 +53,9 @@ class CommentsApi(comments: CommentsRepository)(implicit val swagger: Swagger) e
   // Creates a new comment
   post("/comments", operation(addComment)) {
     for {
-      url <- params.get("url")
-      title <- params.get("title")
-      body <- params.get("body")
+      url <- params.get("url") \/> BadRequest()
+      title <- params.get("title") \/> BadRequest()
+      body <- params.get("body") \/> BadRequest()
     } {
       comments.create(url, title, body)
     }

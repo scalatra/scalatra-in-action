@@ -9,13 +9,13 @@ object CommentsCollectorBuild extends Build {
   val Organization = "org.scalatra"
   val Name = "Comments Collector"
   val Version = "0.1.0-SNAPSHOT"
-  val ScalaVersion = "2.10.2"
-  val ScalatraVersion = "2.3.0.M1"
+  val ScalaVersion = "2.11.6"
+  val ScalatraVersion = "2.4.0.RC1"
 
   lazy val project = Project (
     "comments-collector",
     file("."),
-    settings = Defaults.defaultSettings ++ ScalatraPlugin.scalatraWithJRebel ++ scalateSettings ++ Seq(
+    settings = Defaults.defaultConfigs ++ ScalatraPlugin.scalatraSettings ++ scalateSettings ++ Seq(
       organization := Organization,
       name := Name,
       version := Version,
@@ -26,11 +26,11 @@ object CommentsCollectorBuild extends Build {
         "org.scalatra" %% "scalatra-scalate" % ScalatraVersion,
         "org.scalatra" %% "scalatra-specs2" % ScalatraVersion % "test",
         "org.scalatra" %% "scalatra-swagger" % ScalatraVersion,
-        "org.json4s" % "json4s-jackson_2.10" % "3.2.5",
-        "org.mongodb" %% "casbah" % "2.6.0",
-        "ch.qos.logback" % "logback-classic" % "1.0.6" % "runtime",
-        "org.eclipse.jetty" % "jetty-webapp" % "8.1.8.v20121106" % "container",
-        "org.eclipse.jetty.orbit" % "javax.servlet" % "3.0.0.v201112011016" % "container;provided;test" artifacts (Artifact("javax.servlet", "jar", "jar"))
+        "org.json4s"   %% "json4s-jackson" % "3.3.0.RC2",
+        "org.scalaz" %% "scalaz-core" % "7.1.2",
+        "org.mongodb" %% "casbah" % "2.8.1",
+        "ch.qos.logback" % "logback-classic" % "1.1.3" % "runtime",
+        "javax.servlet" % "javax.servlet-api" % "3.1.0" % "provided"
       ),
       scalateTemplateConfig in Compile <<= (sourceDirectory in Compile){ base =>
         Seq(
