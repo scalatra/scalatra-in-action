@@ -1,7 +1,6 @@
 import sbt._
 import Keys._
 import org.scalatra.sbt._
-import com.mojolly.scalate.ScalatePlugin._
 
 object Chapter10Build extends Build {
 
@@ -14,7 +13,6 @@ object Chapter10Build extends Build {
 
   val mySettings = Defaults.defaultConfigs ++
     ScalatraPlugin.scalatraSettings ++
-    scalateSettings ++
     Seq(
       organization := Organization,
       name := Name,
