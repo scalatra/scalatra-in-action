@@ -8,6 +8,7 @@ object Chapter07TwirlBuild extends Build {
   val Version = "0.1.0-SNAPSHOT"
   val ScalaVersion = "2.11.6"
   val ScalatraVersion = "2.4.0.RC1"
+  val JettyVersion = "9.1.3.v20140225"
 
   import java.net.URL
   import com.earldouglas.xsbtwebplugin.PluginKeys.port
@@ -26,12 +27,14 @@ object Chapter07TwirlBuild extends Build {
       version := Version,
       scalaVersion := ScalaVersion,
       port in Conf := jettyPort,
+      resolvers += Classpaths.typesafeReleases,
+      resolvers += "Scalaz Bintray Repo" at "http://dl.bintray.com/scalaz/releases",
       libraryDependencies ++= Seq(
         "org.scalatra" %% "scalatra" % ScalatraVersion,
         "org.scalatra" %% "scalatra-scalatest" % ScalatraVersion % "test",
         "ch.qos.logback" % "logback-classic" % "1.0.6" % "runtime",
-        "org.eclipse.jetty" % "jetty-webapp" % "9.1.5.v20140505" % "container",
-        "org.eclipse.jetty" % "jetty-plus" % "9.1.5.v20140505" % "container",
+        "org.eclipse.jetty" % "jetty-webapp" % JettyVersion % "container",
+        "org.eclipse.jetty" % "jetty-plus" % JettyVersion % "container",
         "javax.servlet" % "javax.servlet-api" % "3.1.0"
       ),
       browseTask

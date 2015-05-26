@@ -9,8 +9,9 @@ object HackerTrackerBuild extends Build {
   val Organization = "com.constructiveproof"
   val Name = "Chapter 4 - Hacker Tracker"
   val Version = "0.1.0-SNAPSHOT"
-  val ScalaVersion = "2.11.1"
-  val ScalatraVersion = "2.3.0"
+  val ScalaVersion = "2.11.6"
+  val ScalatraVersion = "2.4.0.RC1"
+  val JettyVersion = "9.1.3.v20140225"
 
   lazy val project = Project (
     "hacker-tracker",
@@ -21,13 +22,15 @@ object HackerTrackerBuild extends Build {
       version := Version,
       scalaVersion := ScalaVersion,
       resolvers += Classpaths.typesafeReleases,
+      resolvers += "Scalaz Bintray Repo" at "http://dl.bintray.com/scalaz/releases",
       libraryDependencies ++= Seq(
         "org.scalatra" %% "scalatra" % ScalatraVersion,
         "org.scalatra" %% "scalatra-scalate" % ScalatraVersion,
         "org.scalatra" %% "scalatra-specs2" % ScalatraVersion % "test",
         "ch.qos.logback" % "logback-classic" % "1.0.6" % "runtime",
-        "org.eclipse.jetty" % "jetty-webapp" % "8.1.8.v20121106" % "container",
-        "org.eclipse.jetty.orbit" % "javax.servlet" % "3.0.0.v201112011016" % "container;provided;test" artifacts (Artifact("javax.servlet", "jar", "jar"))
+        "org.eclipse.jetty" % "jetty-webapp" % JettyVersion % "container",
+        "org.eclipse.jetty" % "jetty-plus" % JettyVersion % "container",
+        "javax.servlet" % "javax.servlet-api" % "3.1.0"
       ),
       scalateTemplateConfig in Compile <<= (sourceDirectory in Compile){ base =>
         Seq(

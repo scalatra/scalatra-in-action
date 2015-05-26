@@ -11,6 +11,7 @@ object HackerTrackerBuild extends Build {
   val Version = "0.1.0-SNAPSHOT"
   val ScalaVersion = "2.11.6"
   val ScalatraVersion = "2.4.0.RC1"
+  val JettyVersion = "9.1.3.v20140225"
 
   lazy val project = Project (
     "hacker-tracker-unprotected",
@@ -30,8 +31,8 @@ object HackerTrackerBuild extends Build {
         "org.squeryl" %% "squeryl" % "0.9.5-7",
         "c3p0" % "c3p0" % "0.9.1.2",
         "ch.qos.logback" % "logback-classic" % "1.0.6" % "runtime",
-        "org.eclipse.jetty" % "jetty-webapp" % "9.1.5.v20140505" % "container",
-        "org.eclipse.jetty" % "jetty-plus" % "9.1.5.v20140505" % "container",
+        "org.eclipse.jetty" % "jetty-webapp" % JettyVersion % "container",
+        "org.eclipse.jetty" % "jetty-plus" % JettyVersion % "container",
         "javax.servlet" % "javax.servlet-api" % "3.1.0"
       ),
       scalateTemplateConfig in Compile <<= (sourceDirectory in Compile){ base =>
