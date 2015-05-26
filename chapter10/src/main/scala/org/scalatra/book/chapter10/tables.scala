@@ -39,7 +39,7 @@ object Tables {
 
   // add some useful queries to areas and routes queries
 
-  implicit class AreasQueryExtensions(query: Query[Areas, Area, Seq]) {
+  implicit class AreasQueryExtensions[C[_]](query: Query[Areas, Area, C]) {
 
     val insertTuple = query
       .map(r => (r.name, r.location, r.latitude, r.longitude, r.description))
@@ -55,7 +55,7 @@ object Tables {
 
   }
 
-  implicit class RoutesQueryExtensions(query: Query[Routes, Route, Seq]) {
+  implicit class RoutesQueryExtensions[C[_]](query: Query[Routes, Route, C]) {
 
     val lessRoutes = query.drop(3).take(10)
 
@@ -84,6 +84,5 @@ object Tables {
     val withAreas = query join areas on (_.areaId === _.id)
 
   }
-
 
 }
