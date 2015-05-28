@@ -8,6 +8,7 @@ class Chapter09Spec extends MutableScalatraSpec {
   val conf = AppConfig.load
   sys.props(org.scalatra.EnvironmentKey) = AppEnvironment.asString(conf.env)
 
+  // set target/web/stage as resourceBase
   override lazy val servletContextHandler = {
     val handler = new ServletContextHandler(ServletContextHandler.SESSIONS)
     handler.setContextPath(contextPath)
@@ -19,6 +20,12 @@ class Chapter09Spec extends MutableScalatraSpec {
 
   "/ should should execute an action" in {
     get("/") {
+      status must_== 200
+    }
+  }
+
+  "/shorten-url should should execute an action" in {
+    get("/shorten-url") {
       status must_== 200
     }
   }
