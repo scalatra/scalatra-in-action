@@ -8,7 +8,10 @@ class Chapter09Spec extends ScalatraSpec { def is =
     "/static.txt should return static file"     ! staticFile ^
                                                 end
 
-  addServlet(classOf[Chapter09], "/*")
+  val conf = AppConfig.load
+  sys.props(org.scalatra.EnvironmentKey) = AppEnvironment.asString(conf.env)
+
+  addServlet(new Chapter09(conf), "/*")
 
   def action = get("/") {
     status must_== 200
@@ -16,7 +19,7 @@ class Chapter09Spec extends ScalatraSpec { def is =
 
   def staticFile = get("/static.txt") {
     status must_== 200
-    body must_== "this is static text!!"
+    body must_== "this is static text!"
   }
 
 }
