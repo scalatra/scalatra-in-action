@@ -17,8 +17,8 @@ object Chapter09SbtWebBuild extends Build {
   val Organization = "org.scalatra"
   val Name = "Chapter9SBTweb"
   val Version = "0.1.0-SNAPSHOT"
-  val ScalaVersion = "2.11.4"
-  val ScalatraVersion = "2.4.0.M2"
+  val ScalaVersion = "2.11.6"
+  val ScalatraVersion = "2.4.0.RC1"
 
   val mySettings =
     ScalatraPlugin.scalatraSettings ++ Seq(
@@ -43,7 +43,7 @@ object Chapter09SbtWebBuild extends Build {
       scalateTemplateConfig in Compile <<= (sourceDirectory in Compile) { base =>
         Seq(
           TemplateConfig(
-            base / "webapp" / "WEB-INF" / "templates",
+            base / "public" / "WEB-INF" / "templates",      // use /src/main/public
             Seq.empty, /* default imports should be added here */
             Seq(
               Binding("context", "_root_.org.scalatra.scalate.ScalatraRenderContext", importMembers = true, isImplicit = true)
@@ -55,10 +55,8 @@ object Chapter09SbtWebBuild extends Build {
     )
 
   val webProductionSettings = Seq(
-    // webappSrc in webapp := (resourceDirectory in Assets).value,
-    // webappDest in webapp := stagingDirectory.value,   // in webapp scope is not respected by dist (!)
     webappSrc := (resourceDirectory in Assets).value,
-    webappDest := stagingDirectory.value, // check
+    webappDest := stagingDirectory.value,
     includeFilter in filter := "*.less" || "*.css.map",
     pipelineStages := Seq(filter)
   )
@@ -66,11 +64,15 @@ object Chapter09SbtWebBuild extends Build {
   // a development SBT environment, which does not run the full asset pipeline
   val webDevelopmentSettings = Seq(
     webappSrc := (resourceDirectory in Assets).value,
-    webappDest := stagingDirectory.value, // check
+    webappDest := stagingDirectory.value,
     pipelineStages := Seq()
   )
 
-  val env = sys.props.getOrElse("env", "production")
+  val env = sys.props.getOrElse("env", "dev")
+
+  // may be safer...
+  // val env = sys.props.getOrElse("env", "production")
+
   val webSettings = {
     if (env == "dev") webDevelopmentSettings
     else webProductionSettings
