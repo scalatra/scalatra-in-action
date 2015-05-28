@@ -35,7 +35,10 @@ object Chapter09SbtWebBuild extends Build {
         "ch.qos.logback" % "logback-classic" % "1.1.2" % "runtime",
         "org.eclipse.jetty" % "jetty-webapp" % "9.2.3.v20140905",
         "javax.servlet" % "javax.servlet-api" % "3.1.0" % "provided"
-      )
+      ),
+      webappSrc := (resourceDirectory in Assets).value,
+      webappDest := stagingDirectory.value,
+      (test in Test) <<= (test in Test) dependsOn (stage in Assets)
     )
 
   val myScalateSettings =
@@ -55,16 +58,12 @@ object Chapter09SbtWebBuild extends Build {
     )
 
   val webProductionSettings = Seq(
-    webappSrc := (resourceDirectory in Assets).value,
-    webappDest := stagingDirectory.value,
     includeFilter in filter := "*.less" || "*.css.map",
     pipelineStages := Seq(filter)
   )
 
   // a development SBT environment, which does not run the full asset pipeline
   val webDevelopmentSettings = Seq(
-    webappSrc := (resourceDirectory in Assets).value,
-    webappDest := stagingDirectory.value,
     pipelineStages := Seq()
   )
 
