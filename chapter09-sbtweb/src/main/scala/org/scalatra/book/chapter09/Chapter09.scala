@@ -9,6 +9,11 @@ class Chapter09(appConfig: AppConfig) extends ScalatraServlet with ScalateSuppor
     f"Hello, from action! (isDevelopment = ${isDevelopmentMode}})"
   }
 
+  get("/shorten-url") {
+    val token = UrlShortener.nextFreeToken
+    f"${appConfig.webBase}/$token"
+  }
+
   notFound {
     // remove content type in case it was set through an action
     contentType = null
