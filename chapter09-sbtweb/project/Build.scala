@@ -38,7 +38,8 @@ object Chapter09SbtWebBuild extends Build {
       ),
       webappSrc := (resourceDirectory in Assets).value,
       webappDest := stagingDirectory.value,
-      (test in Test) <<= (test in Test) dependsOn (stage in Assets)
+      (test in Test) <<= (test in Test) dependsOn (stage in Assets),
+      (start in container) <<= (start in container) dependsOn (stage in Assets)
     )
 
   val myScalateSettings =
