@@ -10,7 +10,7 @@ import scala.concurrent.{Await, Future}
 // database setup
 trait db_setup {
 
-  val jdbcUrl = "jdbc:h2:mem:chapter09;DB_CLOSE_DELAY=-1"
+  val jdbcUrl = "jdbc:h2:mem:chapter10;DB_CLOSE_DELAY=-1"
   val jdbcDriverClass = "org.h2.Driver"
   val db = Database.forURL(jdbcUrl, driver = jdbcDriverClass)
 
