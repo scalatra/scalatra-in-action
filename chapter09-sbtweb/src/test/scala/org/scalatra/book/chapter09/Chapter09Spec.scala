@@ -8,7 +8,7 @@ class Chapter09Spec extends MutableScalatraSpec {
   val conf = AppConfig.load
   sys.props(org.scalatra.EnvironmentKey) = AppEnvironment.asString(conf.env)
 
-  // set target/web/stage as resourceBase
+  // use target/web/stage as resourceBase
   override lazy val servletContextHandler = {
     val handler = new ServletContextHandler(ServletContextHandler.SESSIONS)
     handler.setContextPath(contextPath)

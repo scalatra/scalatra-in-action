@@ -31,13 +31,12 @@ object Chapter09SbtWebBuild extends Build {
         "org.scalatra" %% "scalatra" % ScalatraVersion,
         "org.scalatra" %% "scalatra-scalate" % ScalatraVersion,
         "org.scalatra" %% "scalatra-specs2" % ScalatraVersion % "test",
-        "com.typesafe" % "config" % "1.0.2",
+        "com.typesafe" % "config" % "1.2.1",
         "ch.qos.logback" % "logback-classic" % "1.1.2" % "runtime",
-        "org.eclipse.jetty" % "jetty-webapp" % "9.2.3.v20140905",
         "javax.servlet" % "javax.servlet-api" % "3.1.0" % "provided"
       ),
       webappSrc := (resourceDirectory in Assets).value,
-      webappDest := stagingDirectory.value,
+      webappDest := (stagingDirectory in Assets).value,
       (test in Test) <<= (test in Test) dependsOn (stage in Assets),
       (start in container) <<= (start in container) dependsOn (stage in Assets)
     )
@@ -47,7 +46,7 @@ object Chapter09SbtWebBuild extends Build {
       scalateTemplateConfig in Compile <<= (sourceDirectory in Compile) { base =>
         Seq(
           TemplateConfig(
-            base / "public" / "WEB-INF" / "templates",      // use /src/main/public
+            base / "public" / "WEB-INF" / "templates",      // use src/main/public
             Seq.empty, /* default imports should be added here */
             Seq(
               Binding("context", "_root_.org.scalatra.scalate.ScalatraRenderContext", importMembers = true, isImplicit = true)
@@ -68,9 +67,10 @@ object Chapter09SbtWebBuild extends Build {
     pipelineStages := Seq()
   )
 
+  // default to the dev environment
   val env = sys.props.getOrElse("env", "dev")
 
-  // may be safer...
+  // default to the production environment
   // val env = sys.props.getOrElse("env", "production")
 
   val webSettings = {
