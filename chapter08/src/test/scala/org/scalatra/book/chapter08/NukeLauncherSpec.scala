@@ -1,4 +1,4 @@
-package org.scalatra.book.chapter07
+package org.scalatra.book.chapter08
 
 import org.scalatra.test.specs2._
 import org.specs2.mutable.After
