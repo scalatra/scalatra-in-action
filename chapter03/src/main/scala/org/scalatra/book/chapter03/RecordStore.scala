@@ -1,6 +1,6 @@
 package org.scalatra.book.chapter03
 
-import org.scalatra.ScalatraServlet
+import org.scalatra._
 import javax.servlet.http.HttpServletRequest
 import java.io.File
 
@@ -16,38 +16,48 @@ class RecordStore(downloadPath: String) extends ScalatraServlet {
           case Some("json") => artist.toJson
           case _ => artist.toXml
     	  }
-      case None => status = 404
+      case None => NotFound()
+    }
+  }
+
+  get("/artists/:name/info.?:format?") {
+    Artist.find(params("name")) match {
+      case Some(artist) =>
+        params.get("format") match {
+          case Some("json") => artist.toJson
+          case _ => artist.toXml
+    	  }
+      case None => NotFound()
     }
   }
 
   post("/artists/new") {
     val artist = parseArtist(request)
     Artist.save(artist)
-    status = 201
-    response.setHeader("Location", s"/artist/${artist.name}")
+    val location = s"/artists/${artist.name}"
+    Created(artist, headers = Map("Location" -> location))
   }
 
   put("/artists/:name") {
     val artist = parseArtist(request)
     Artist.update(artist)
-    status = 204
+    NoContent()
   }
 
   delete("/artists/:name") {
     val name = params("name")
-    if (name == "Frank_Zappa")
-      status = 405
-    else {
-      Artist.delete(name)
-      status = 204
-    }
+    if (name == "Frank Zappa")
+      MethodNotAllowed()
+    else if (Artist.delete(name).isDefined)
+      NoContent()
+    else
+      NotFound()
   }
 
   head("/artists/:name/info") {
-    status =
-      if (Artist.exists(params("name").replace('_', ' '))) 200
-      else 404
     contentType = "application/xml"
+    if (Artist.exists(params("name").replace('_', ' '))) Ok()
+    else NotFound()
   }
 
   options("/artists/Frank_Zappa") {
@@ -56,7 +66,7 @@ class RecordStore(downloadPath: String) extends ScalatraServlet {
 
   /* Uncomment to forbid all options requests */
   options() {
-    status = 403
+    Forbidden()
   }
 
   get("/downloads/*") {
@@ -82,11 +92,18 @@ class RecordStore(downloadPath: String) extends ScalatraServlet {
     // stream desktop
   }
 
+  get("/artists/:name/albums/:album") {
+    Albums.findByName(artist = params("name"), name = params("album"))
+  }
+
+  get("/artists/The_:name/*") {
+    redirect("/artists/%s/%s".format(params("name"), params("splat")))
+  }
+
   def isMobile(request: HttpServletRequest): Boolean = {
     val lower = request.getHeader("User-Agent").toLowerCase
     lower.contains("android") || lower.contains("iphone")
   }
-
 
   def parseArtist(implicit request: HttpServletRequest): Artist =
     Artist(

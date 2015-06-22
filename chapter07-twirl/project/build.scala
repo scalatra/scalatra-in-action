@@ -30,5 +30,4 @@ object Chapter07TwirlBuild extends Build {
     )
   ).settings(ScalatraPlugin.scalatraSettings:_*)
    .enablePlugins(SbtTwirl)
-
 }
