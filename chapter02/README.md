@@ -3,7 +3,7 @@
 ## Build & Run ##
 
 ```sh
-$ cd scalatra-cms
+$ cd Scalatra_CMS
 $ ./sbt
 > container:start
 > browse
