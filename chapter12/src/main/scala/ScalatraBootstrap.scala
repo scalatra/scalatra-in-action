@@ -16,7 +16,7 @@ class ScalatraBootstrap extends LifeCycle {
 
     context.mount(new CrawlController, "/*")
     context.mount(new AkkaCrawler(system, grabActor), "/akka/*")
-    context.mount(new Spark ExampleController(sc), "/spark/*")
+    context.mount(new SparkExampleController(sc), "/spark/*")
   }
 
   override def destroy(context: ServletContext) {
