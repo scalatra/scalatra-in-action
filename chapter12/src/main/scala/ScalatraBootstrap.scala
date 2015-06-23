@@ -1,10 +1,9 @@
-import javax.servlet.ServletContext
-
-import akka.actor.{ActorSystem, Props}
+import _root_.akka.actor.{Props, ActorSystem}
 import com.constructiveproof.crawler._
 import com.constructiveproof.crawler.actors.GrabActor
 import org.apache.spark.SparkContext
 import org.scalatra._
+import javax.servlet.ServletContext
 
 class ScalatraBootstrap extends LifeCycle {
 

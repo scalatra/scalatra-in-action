@@ -5,7 +5,7 @@ import org.scalatra.sbt.PluginKeys._
 import com.mojolly.scalate.ScalatePlugin._
 import ScalateKeys._
 
-object CrawlerBuild extends Build {
+object Chapter12CrawlerBuild extends Build {
   val Organization = "com.constructiveproof"
   val Name = "Chapter 12 - Crawler"
   val Version = "0.1.0-SNAPSHOT"
@@ -13,9 +13,9 @@ object CrawlerBuild extends Build {
   val ScalatraVersion = "2.4.0.RC1"
 
   lazy val project = Project (
-    "crawler",
+    "chapter-12---crawler",
     file("."),
-    settings = ScalatraPlugin.scalatraSettings ++ scalateSettings ++ Seq(
+    settings = ScalatraPlugin.scalatraWithJRebel ++ scalateSettings ++ Seq(
       organization := Organization,
       name := Name,
       version := Version,
@@ -28,8 +28,10 @@ object CrawlerBuild extends Build {
         "org.scalatra" %% "scalatra" % ScalatraVersion,
         "org.scalatra" %% "scalatra-scalate" % ScalatraVersion,
         "org.scalatra" %% "scalatra-scalatest" % ScalatraVersion % "test",
-        "ch.qos.logback" % "logback-classic" % "1.1.3" % "runtime",
-        "javax.servlet" % "javax.servlet-api" % "3.1.0" % "provided"
+        "ch.qos.logback" % "logback-classic" % "1.1.2" % "runtime",
+        "org.eclipse.jetty" % "jetty-webapp" % "9.1.5.v20140505" % "container",
+        "org.eclipse.jetty" % "jetty-plus" % "9.1.5.v20140505" % "container",
+        "javax.servlet" % "javax.servlet-api" % "3.1.0"
       ),
       scalateTemplateConfig in Compile <<= (sourceDirectory in Compile){ base =>
         Seq(

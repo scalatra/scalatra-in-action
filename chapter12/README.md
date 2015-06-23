@@ -1,9 +1,9 @@
-# crawler #
+# Chapter 12 - Crawler #
 
 ## Build & Run ##
 
 ```sh
-$ cd crawler
+$ cd chapter12
 $ ./sbt
 > container:start
 > browse

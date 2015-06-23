@@ -3,11 +3,10 @@ package com.constructiveproof.crawler
 import java.net.URL
 import java.nio.charset.StandardCharsets
 
-import org.scalatra.{AsyncResult, FutureSupport}
+import org.scalatra._
 
 import scala.concurrent.{ExecutionContext, Future}
 import scala.io.Source
-
 
 class CrawlController extends CrawlerStack with FutureSupport {
 
@@ -15,10 +14,12 @@ class CrawlController extends CrawlerStack with FutureSupport {
 
   get("/") {
     contentType = "text/html"
-    new AsyncResult { val is =
-      Grabber.evaluate(new URL(params("url")))
+    new AsyncResult {
+      val is =
+        Grabber.evaluate(new URL(params("url")))
     }
   }
+
 }
 
 object Grabber {
