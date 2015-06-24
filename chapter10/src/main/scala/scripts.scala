@@ -40,10 +40,10 @@ object dbio_actions_database_driver extends App with db_setup {
   )
 
   // runs the action
-  val run0: Future[Unit] = db.run(composedAction.transactionally)
+  val run: Future[Unit] = db.run(composedAction.transactionally)
 
   // wait for the query to be finished and the result being available
-  Await.result(run0, Duration(5, "seconds"))
+  Await.result(run, Duration(5, "seconds"))
 
 
   val composedAction0: DBIO[Seq[String]] = for {
