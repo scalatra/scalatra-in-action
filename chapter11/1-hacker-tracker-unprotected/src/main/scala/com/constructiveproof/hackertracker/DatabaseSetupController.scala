@@ -13,7 +13,7 @@ class DatabaseSetupController extends HackerTrackerStack {
    * Create a new database.
    */
   get("/create") {
-    Db.create
+    Db.init
     flash("notice") = "Database created"
     redirect("/hackers/new")
   }

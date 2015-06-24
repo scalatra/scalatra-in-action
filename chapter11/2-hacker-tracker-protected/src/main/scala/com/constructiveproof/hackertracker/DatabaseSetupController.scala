@@ -15,7 +15,7 @@ class DatabaseSetupController extends HackerTrackerStack with OurBasicAuthentica
    * Create a new database.
    */
   get("/create") {
-    Db.create
+    Db.init
     flash("notice") = "Database created!"
     redirect("/hackers/new")
   }
