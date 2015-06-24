@@ -21,7 +21,7 @@ class SparkExampleController(sc: SparkContext) extends CrawlerStack with FutureS
 object WordCounter  {
 
   def count(word: String, sc: SparkContext) = {
-    val data = "/Users/dave/Desktop/data.csv" // <-- Change this to match your file location and name
+    val data = "/path/to/data.csv" // <-- Change this to match your file location and name
     val lines = sc.textFile(data)
     lines.filter(line => line.contains(word)).cache().count()
   }
