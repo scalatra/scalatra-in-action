@@ -23,7 +23,7 @@ class DocumentsApp(store: DocumentStore) extends ScalatraServlet with FileUpload
     scaml("index.scaml", "files" -> store.list)
   }
 
-  // create a new document
+  // creates a new document
   post("/documents") {
     val file = fileParams.get("file") getOrElse halt(400, reason = "no file in request")
     val desc = params.get("description") getOrElse halt(400, reason = "no description given")
@@ -33,7 +33,7 @@ class DocumentsApp(store: DocumentStore) extends ScalatraServlet with FileUpload
     redirect("/")
   }
 
-  // returns a specific documents
+  // returns a specific document
   get("/documents/:documentId") {
     val id = params.as[Long]("documentId")
     val doc = store.getDocument(id) getOrElse halt(404, reason = "could not find document")
