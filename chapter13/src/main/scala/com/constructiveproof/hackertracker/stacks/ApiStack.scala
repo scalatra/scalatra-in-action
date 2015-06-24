@@ -8,6 +8,6 @@ import org.json4s.DefaultFormats
 trait ApiStack extends HackerCoreStack with ApiAuthenticationSupport
   with JacksonJsonSupport {
 
-  override protected implicit val jsonFormats = DefaultFormats
+  override protected implicit lazy val jsonFormats = DefaultFormats
 
 }
