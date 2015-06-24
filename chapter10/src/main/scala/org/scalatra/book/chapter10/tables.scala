@@ -24,6 +24,8 @@ object Tables {
     def latitude      = column[Double]("LATITUDE")
     def longitude     = column[Double]("LONGITUDE")
 
+    def columns = (id, areaId, mountainName, routeName, latitude, longitude, description)
+
     def * = (id, areaId, mountainName, routeName, latitude, longitude, description) <> (Route.tupled, Route.unapply)
 
     def area = foreignKey("FK_ROUTE_AREA", areaId, areas)(_.id)
