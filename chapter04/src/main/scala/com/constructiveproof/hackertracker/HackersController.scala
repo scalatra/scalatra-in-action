@@ -59,9 +59,12 @@ class HackersController extends HackerTrackerStack {
   }
 
   get("/hackers/tagged") {
+    println(params("tag"))
+    for(x <- multiParams("tag")) {
+      println(x) }
     val tags = multiParams("tag")
-    println(tags)
-    // retrieve and display hackers matching all the given tags
+    // retrieve hackers matching all the given tags
+    // display hackers matching all the given tags
   }
 }
 
