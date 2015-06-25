@@ -35,7 +35,7 @@ class HackersController extends HackerTrackerStack {
     println(name)
     println(motto)
 
-    if(birthYear >= 1970) {
+    if (birthYear >= 1970) {
       println("Adding a hacker who was born within the Unix epoch.")
     } else {
       println("Adding a classical hacker.")
