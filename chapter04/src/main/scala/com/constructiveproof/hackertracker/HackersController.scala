@@ -16,7 +16,7 @@ class HackersController extends HackerTrackerStack {
   }
 
   before() {
-    contentType="text/html"
+    contentType = "text/html"
     DataBase.connect
   }
 
