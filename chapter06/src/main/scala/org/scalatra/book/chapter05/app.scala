@@ -40,7 +40,7 @@ class DocumentsApp(store: DocumentStore) extends ScalatraServlet with FileUpload
     doc.contentType foreach { ct => contentType = ct }
     response.setHeader("Content-Description", doc.description)
     response.setHeader("Content-Disposition", f"""inline; filename="${doc.name}"""")
-    // response.setHeader("Content-Disposition", f"""attachment; filename="${doc.name}"""")
+    // response.setHeader("Content-Disposition", f"""attachment; filename="${doc.name}"""") // <-- use this if you want to trigger a download prompt in most browsers
     store.getFile(id)
   }
 
