@@ -51,11 +51,11 @@ class HackersController extends HackerTrackerStack {
   }
 
   get("/results") {
-    val searchQuery = params("search_query")
-    val originalQuery = params("oq")
-    println(searchQuery)
-    println(originalQuery)
-    // search for and display matching hackers
+    val search_query = params.getOrElse("search_query",
+      halt(200, "Please provide a search query"))
+    "You searched for '" + search_query + "'"
+    // search for matching hackers
+    // display information about matching hackers
   }
 
   get("/hackers/tagged") {
@@ -72,9 +72,11 @@ object DataBase {
   def connect = {
     println("Connecting to database.")
   }
+
   def disconnect = {
     println("Disconnecting from database.")
   }
+
   def insert(message: String) {
     println("Inserting '" + message + "' into the database")
   }
