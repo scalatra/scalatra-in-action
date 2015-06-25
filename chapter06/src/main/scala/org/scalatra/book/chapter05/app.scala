@@ -61,7 +61,6 @@ class DocumentsApp(store: DocumentStore) extends ScalatraServlet with FileUpload
   notFound {
     contentType = null
     serveStaticResource() getOrElse halt(404, <h1>Not found.</h1>)
-    halt(404, <h1>Not found.</h1>)
   }
 
   // sample routes
