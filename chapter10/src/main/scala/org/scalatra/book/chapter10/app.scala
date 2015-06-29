@@ -25,37 +25,45 @@ class Chapter10App(db: Database) extends ScalatraServlet with ScalateSupport wit
 
   // return all areas
   get("/areas") {
-    val req = request  // TODO remove
-    val res = response
+    new AsyncResult {
+      val is = {
 
-    db.run(allAreas) map { areas =>
-      jade("areas.jade", "areas" -> areas)(req, res)
+        db.run(allAreas) map { areas =>
+          jade("areas.jade", "areas" -> areas)
+        }
+
+      }
     }
   }
 
   // create a new area
   post("/areas") {
-    val name         = params.get("name") getOrElse halt(BadRequest())
-    val location     = params.get("location") getOrElse halt(BadRequest())
-    val latitude     = params.getAs[Double]("latitude") getOrElse halt(BadRequest())
-    val longitude    = params.getAs[Double]("longitude") getOrElse halt(BadRequest())
-    val description  = params.get("description") getOrElse halt(BadRequest())
+
+    val name = params.get("name") getOrElse halt(BadRequest())
+    val location = params.get("location") getOrElse halt(BadRequest())
+    val latitude = params.getAs[Double]("latitude") getOrElse halt(BadRequest())
+    val longitude = params.getAs[Double]("longitude") getOrElse halt(BadRequest())
+    val description = params.get("description") getOrElse halt(BadRequest())
 
     db.run(createArea(name, location, latitude, longitude, description)) map { area =>
       Found(f"/areas/${area.id}")
     }
+
   }
 
   // return an area and their routes
   get("/areas/:areaId") {
-    val req = request  // TODO remove
-    val res = response
+    new AsyncResult {
+      val is = {
 
-    val areaId = params.getAs[Int]("areaId") getOrElse halt(BadRequest())
+        val areaId = params.getAs[Int]("areaId") getOrElse halt(BadRequest())
 
-    db.run(findAreaWithRoutes(areaId).transactionally) map {
-      case Some((area, routes)) => jade("area.jade", "area" -> area, "routes" -> routes)(req, res)
-      case None => NotFound()
+        db.run(findAreaWithRoutes(areaId).transactionally) map {
+          case Some((area, routes)) => jade("area.jade", "area" -> area, "routes" -> routes)
+          case None => NotFound()
+        }
+
+      }
     }
   }
 
@@ -87,15 +95,6 @@ class Chapter10App(db: Database) extends ScalatraServlet with ScalateSupport wit
     db.run(deleteRouteIfExists(routeId))
 
   }
-
-  // ----
-
-  //  get("/search") {
-  //    val q = params("q")
-  //    db withTransaction { implicit session =>
-  //      <ul>{for (r <- areasByName(q)) yield <li>{r}</li>}</ul>
-  //    }
-  //  }
 
 }
 
