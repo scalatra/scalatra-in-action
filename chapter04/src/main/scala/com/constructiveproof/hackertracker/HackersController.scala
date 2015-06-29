@@ -16,7 +16,7 @@ class HackersController extends HackerTrackerStack {
   }
 
   before() {
-    contentType="text/html"
+    contentType = "text/html"
     DataBase.connect
   }
 
@@ -35,7 +35,7 @@ class HackersController extends HackerTrackerStack {
     println(name)
     println(motto)
 
-    if(birthYear >= 1970) {
+    if (birthYear >= 1970) {
       println("Adding a hacker who was born within the Unix epoch.")
     } else {
       println("Adding a classical hacker.")
@@ -51,17 +51,20 @@ class HackersController extends HackerTrackerStack {
   }
 
   get("/results") {
-    val searchQuery = params("search_query")
-    val originalQuery = params("oq")
-    println(searchQuery)
-    println(originalQuery)
-    // search for and display matching hackers
+    val search_query = params.getOrElse("search_query",
+      halt(200, "Please provide a search query"))
+    "You searched for '" + search_query + "'"
+    // search for matching hackers
+    // display information about matching hackers
   }
 
   get("/hackers/tagged") {
+    println(params("tag"))
+    for(x <- multiParams("tag")) {
+      println(x) }
     val tags = multiParams("tag")
-    println(tags)
-    // retrieve and display hackers matching all the given tags
+    // retrieve hackers matching all the given tags
+    // display hackers matching all the given tags
   }
 }
 
@@ -69,9 +72,11 @@ object DataBase {
   def connect = {
     println("Connecting to database.")
   }
+
   def disconnect = {
     println("Disconnecting from database.")
   }
+
   def insert(message: String) {
     println("Inserting '" + message + "' into the database")
   }
