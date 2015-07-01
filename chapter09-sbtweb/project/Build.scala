@@ -39,7 +39,7 @@ object Chapter09SbtWebBuild extends Build {
       webappDest := (stagingDirectory in Assets).value,
       (test in Test) <<= (test in Test) dependsOn (stage in Assets),
       (start in container) <<= (start in container) dependsOn (stage in Assets)
-    )
+    ) // ++ jetty(port = 8090) // <-- uncomment if you want to change the port.
 
   val myScalateSettings =
     ScalatePlugin.scalateSettings ++ Seq(
