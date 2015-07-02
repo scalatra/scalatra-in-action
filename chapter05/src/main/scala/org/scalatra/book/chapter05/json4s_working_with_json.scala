@@ -3,7 +3,7 @@ package org.scalatra.book.chapter05
 import org.json4s._
 import org.json4s.JsonDSL._
 
-object json4s_working_with_json {
+object json4s_working_with_json extends App {
 
   // producing JSON
 
@@ -15,10 +15,9 @@ object json4s_working_with_json {
 
 
   val detailsJson =
-    ("cuisine" ->  "italian") ~ ("vegetarian" ->  true) ~
-      ("diet" ->  null)
+    ("cuisine" ->  "italian") ~ ("vegetarian" ->  true)
   // detailsJson: org.json4s.JsonAST.JObject =
-  //   JObject(List((cuisine,JString(italian)), (vegetarian,JBool(true)), (diet,null)))
+  //   JObject(List((cuisine,JString(italian)), (vegetarian,JBool(true))))
 
   val tags: JValue = List("higher", "cuisine")
 
@@ -43,7 +42,7 @@ object json4s_working_with_json {
   // <console>:23: error: No implicit view available from RecipeDetails => org.json4s.JsonAST.JValue.
   //         val jsObject: JValue = ("details" -> RecipeDetails("italian", true, None))
 
-  implicit val formats = DefaultFormats
+  implicit lazy val formats = DefaultFormats
 
   implicit def details2jvalue(rd: RecipeDetails): JValue =
     Extraction.decompose(rd)
@@ -54,55 +53,48 @@ object json4s_working_with_json {
 
   // consuming JSON
 
-  recipeJson \ "title"
+  assert(recipeJson \ "title" == JString("Penne with cocktail tomatoes, Rucola and Goat cheese"))
   // res: JString(Penne with cocktail tomatoes, Rucola and Goat cheese)
 
 
-  recipeJson \ "details" \ "cuisine"
+  assert(recipeJson \ "details" \ "cuisine" == JString("italian"))
   // res: JString(italian)
 
 
   recipeJson \ "ingredients" \ "label"
   // res: JArray(List(JString(Penne), JString(Cocktail tomatoes), ...))
 
-  recipeJson \\ "label"
-  // res: JArray(List(JString(250g), JString(300g), ...))
+  assert(recipeJson \\ "cuisine" == JString("italian"))
+  // res: JString(italian)
 
-  recipeJson \\ "cuisine"
-  // res: Jarray(List(JString(italian)))
-
-  recipeJson \ "details" \ "prerequisites"
+  assert(recipeJson \ "details" \ "prerequisites" == JNothing)
   // res: JNothing
-  // there are no prerequisites, returns JNothing
-
-  recipeJson \ "details" \ "diet"
-  // JNull
 
 
   // extracting values from JSON
 
-  (recipeJson \ "title").extract[String]
+  assert((recipeJson \ "title").extract[String] == "Penne with cocktail tomatoes, Rucola and Goat cheese")
   // res: String = Penne with cocktail tomatoes, Rucola and Goat cheese
 
-  (recipeJson \ "steps").extract[List[String]]
+  assert((recipeJson \ "steps").extract[List[String]].size == 5)
   // res: List[String] = List(Cook noodles until aldente., ...)
 
-  (recipeJson \ "details").extract[RecipeDetails]
+  assert((recipeJson \ "details").extract[RecipeDetails] == RecipeDetails("italian", true, None))
   // res: RecipeDetails = RecipeDetails(italian,true,None)
 
 
   // extracting optional values from JSON
 
-  JString("foo").extractOpt[String]
+  assert(JString("foo").extractOpt[String] == Some("foo"))
   // res: Option[String] = Some(foo)
 
-  JString("foo").extractOpt[Boolean]
+  assert(JString("foo").extractOpt[Boolean] == None)
   // res: Option[Boolean] = None
 
-  JNull.extractOpt[String]
+  assert(JNull.extractOpt[String] == None)
   // res: Option[String] = None
 
-  JNothing.extractOpt[String]
+  assert(JNothing.extractOpt[String] == None)
   // res: Option[String] = None
 
 }
