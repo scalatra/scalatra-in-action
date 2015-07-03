@@ -17,9 +17,9 @@ trait MyJsonScalazRoutes extends ScalatraBase with JacksonJsonSupport {
   post("/foods_alt") {
 
     for {
-      label <- ((parsedBody \ "label").extractOpt[String]) \/> BadRequest()
-      fairTrade <- ((parsedBody \ "fairTrade").extractOpt[Boolean]) \/> BadRequest()
-      tags <- ((parsedBody \ "tags").extractOpt[List[String]]) \/> BadRequest()
+      label <- (parsedBody \ "label").extractOpt[String] \/> BadRequest()
+      fairTrade <- (parsedBody \ "fairTrade").extractOpt[Boolean] \/> BadRequest()
+      tags <- (parsedBody \ "tags").extractOpt[List[String]] \/> BadRequest()
     } yield (label, fairTrade, tags)
 
   }
