@@ -57,7 +57,7 @@ object Chapter09Docker extends Build {
     mainClass := Some("ScalatraLauncher"),
 
     exportJars := true,
-    docker <<= docker.dependsOn(`package`),
+    docker <<= docker.dependsOn(sbt.Keys.`package`),
 
     imageNames in docker := Seq(DockerImageName),
 
@@ -74,8 +74,6 @@ object Chapter09Docker extends Build {
       new Dockerfile {
 
         from("ubuntu:14.04")
-
-        maintainer("...")
 
         // Install packages
         runRaw("apt-get update")
