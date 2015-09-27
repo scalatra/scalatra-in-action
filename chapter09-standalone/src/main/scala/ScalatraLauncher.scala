@@ -21,7 +21,7 @@ object ScalatraLauncher extends App {
 
   val webAppContext = new WebAppContext
   webAppContext.setContextPath("/")
-  webAppContext.setResourceBase(conf.webappBase)
+  webAppContext.setResourceBase(conf.assetsDirectory)
   webAppContext.setEventListeners(Array(new ScalatraListener))
   server.setHandler(webAppContext)
 

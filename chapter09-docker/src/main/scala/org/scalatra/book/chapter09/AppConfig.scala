@@ -5,7 +5,7 @@ import com.typesafe.config.ConfigFactory
 case class AppConfig(
   port: Int,
   webBase: String,
-  webappBase: String,
+  assetsDirectory: String,
   env: AppEnvironment,
   mailConfig: MailConfig) {
 
@@ -49,7 +49,7 @@ object AppConfig {
   def load: AppConfig = {
     val cfg = ConfigFactory.load
 
-    val webappBase = cfg.getString("webappBase")
+    val assetsDirectory = cfg.getString("assetsDirectory")
     val webBase = cfg.getString("webBase")
     val port = cfg.getInt("port")
     val env = AppEnvironment.fromString(cfg.getString("environment"))
@@ -59,6 +59,6 @@ object AppConfig {
       cfg.getString("email.host"),
       cfg.getString("email.sender"))
 
-    AppConfig(port, webBase, webappBase, env, mailConfig)
+    AppConfig(port, webBase, assetsDirectory, env, mailConfig)
   }
 }
