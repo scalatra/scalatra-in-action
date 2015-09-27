@@ -3,7 +3,9 @@ package org.scalatra.book.chapter09
 import com.typesafe.config.ConfigFactory
 
 case class AppConfig(
+  port: Int,
   webBase: String,
+  webappBase: String,
   env: AppEnvironment,
   mailConfig: MailConfig) {
 
@@ -47,7 +49,9 @@ object AppConfig {
   def load: AppConfig = {
     val cfg = ConfigFactory.load
 
+    val webappBase = cfg.getString("webappBase")
     val webBase = cfg.getString("webBase")
+    val port = cfg.getInt("port")
     val env = AppEnvironment.fromString(cfg.getString("environment"))
     val mailConfig = MailConfig(
       cfg.getString("email.user"),
@@ -55,6 +59,6 @@ object AppConfig {
       cfg.getString("email.host"),
       cfg.getString("email.sender"))
 
-    AppConfig(webBase, env, mailConfig)
+    AppConfig(port, webBase, webappBase, env, mailConfig)
   }
 }
