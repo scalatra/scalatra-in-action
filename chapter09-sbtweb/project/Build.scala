@@ -39,7 +39,7 @@ object Chapter09SbtWebBuild extends Build {
       webappDest := (stagingDirectory in Assets).value,
       (test in Test) <<= (test in Test) dependsOn (stage in Assets),
       (start in container) <<= (start in container) dependsOn (stage in Assets)
-    ) // ++ jetty(port = 8090) // <-- uncomment if you want to change the port.
+    )
 
   val myScalateSettings =
     ScalatePlugin.scalateSettings ++ Seq(
@@ -62,16 +62,13 @@ object Chapter09SbtWebBuild extends Build {
     pipelineStages := Seq(filter)
   )
 
-  // a development SBT environment, which does not run the full asset pipeline
+  // a light-weight development SBT environment, does not run the full asset pipeline
   val webDevelopmentSettings = Seq(
     pipelineStages := Seq()
   )
 
-  // default to the dev environment
+  // choose between settings: dev or env
   val env = sys.props.getOrElse("env", "dev")
-
-  // default to the production environment
-  // val env = sys.props.getOrElse("env", "production")
 
   val webSettings = {
     if (env == "dev") webDevelopmentSettings
