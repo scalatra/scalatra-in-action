@@ -52,6 +52,7 @@ object Chapter09StandaloneBuild extends Build {
 
   val myDistSettings =
     DistPlugin.distSettings ++ Seq(
+      exportJars := true,
       mainClass in Dist := Some("ScalatraLauncher"),
       memSetting in Dist := "2g",
       permGenSetting in Dist := "256m",
