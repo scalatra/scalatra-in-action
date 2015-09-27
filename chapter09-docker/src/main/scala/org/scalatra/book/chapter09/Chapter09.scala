@@ -6,7 +6,7 @@ import org.scalatra.scalate.ScalateSupport
 class Chapter09(appConfig: AppConfig) extends ScalatraServlet with ScalateSupport {
 
   get("/") {
-    f"Hoi!"
+    f"Greetings! (isDevelopment = ${isDevelopmentMode})"
   }
 
   get("/shorten-url") {
