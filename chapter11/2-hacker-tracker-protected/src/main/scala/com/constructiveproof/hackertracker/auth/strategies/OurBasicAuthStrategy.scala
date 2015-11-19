@@ -8,8 +8,8 @@ import com.constructiveproof.hackertracker.models.User
 class OurBasicAuthStrategy(protected override val app: ScalatraBase, realm: String)
   extends BasicAuthStrategy[User](app, realm) {
 
-  protected def validate(userName: String, password: String)(implicit request: HttpServletRequest, response: HttpServletResponse): Option[User] = {
-    if(userName == "scalatra" && password == "scalatra") Some(User("scalatra"))
+  protected def validate(username: String, password: String)(implicit request: HttpServletRequest, response: HttpServletResponse): Option[User] = {
+    if(username == "scalatra" && password == "scalatra") Some(User("scalatra"))
     else None
   }
 
