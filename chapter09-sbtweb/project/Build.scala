@@ -1,7 +1,10 @@
 import sbt._
 import Keys._
 
-import com.earldouglas.xwp.XwpPlugin._
+import com.earldouglas.xwp.JettyPlugin
+import com.earldouglas.xwp.WebappPlugin.autoImport._
+import com.earldouglas.xwp.JettyPlugin.autoImport._
+import com.earldouglas.xwp.ContainerPlugin.start
 import com.slidingautonomy.sbt.filter.Import._
 import com.typesafe.sbt.web.Import.WebKeys._
 import com.typesafe.sbt.web.Import._
@@ -35,10 +38,10 @@ object Chapter09SbtWebBuild extends Build {
         "ch.qos.logback" % "logback-classic" % "1.1.2" % "runtime",
         "javax.servlet" % "javax.servlet-api" % "3.1.0" % "provided"
       ),
-      webappSrc := (resourceDirectory in Assets).value,
-      webappDest := (stagingDirectory in Assets).value,
+      sourceDirectory in webappPrepare := (resourceDirectory in Assets).value,
+      target in webappPrepare := (stagingDirectory in Assets).value,
       (test in Test) <<= (test in Test) dependsOn (stage in Assets),
-      (start in container) <<= (start in container) dependsOn (stage in Assets)
+      (start in Jetty) <<= (start in Jetty) dependsOn (stage in Assets)
     )
 
   val myScalateSettings =
@@ -76,7 +79,7 @@ object Chapter09SbtWebBuild extends Build {
   }
 
   lazy val project = Project("chapter09-sbtweb", file("."))
-    .enablePlugins(SbtWeb)
+    .enablePlugins(SbtWeb, JettyPlugin)
     .settings(mySettings: _*)
     .settings(myScalateSettings: _*)
     .settings(webSettings: _*)
