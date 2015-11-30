@@ -10,6 +10,7 @@ class HackersControllerSpec extends FunSuite with ScalatraSuite with DatabaseIni
   addServlet(classOf[HackersController], "/*")
 
   before {
+    wipeDb
     configureDb()
     Db.init
   }
