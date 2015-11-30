@@ -4,10 +4,9 @@ import java.io.File
 
 import com.mchange.v2.c3p0.ComboPooledDataSource
 import org.apache.commons.io.FileUtils
-import org.squeryl.adapters.{H2Adapter, MySQLAdapter}
-import org.squeryl.Session
-import org.squeryl.SessionFactory
 import org.slf4j.LoggerFactory
+import org.squeryl.{Session, SessionFactory}
+import org.squeryl.adapters.H2Adapter
 
 trait DatabaseInit {
   val logger = LoggerFactory.getLogger(getClass)
