@@ -26,6 +26,7 @@ object HackerTrackerBuild extends Build {
         "org.scalatra" %% "scalatra" % ScalatraVersion,
         "org.scalatra" %% "scalatra-scalate" % ScalatraVersion,
         "org.scalatra" %% "scalatra-scalatest" % ScalatraVersion % "test",
+        "commons-io" % "commons-io" % "2.4",
         "com.h2database" % "h2" % "1.2.127",
         "org.squeryl" %% "squeryl" % "0.9.5-7",
         "c3p0" % "c3p0" % "0.9.1.2",
