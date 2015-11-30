@@ -1,4 +1,5 @@
 import org.scalatra.sbt.ScalatraPlugin
+import com.earldouglas.xwp.JettyPlugin
 import sbt._
 import Keys._
 
@@ -32,6 +33,7 @@ object Chapter05Build extends Build {
     )
 
   lazy val project = Project(Name, file("."))
+    .enablePlugins(JettyPlugin)
     .settings(mySettings:_*)
 
 }

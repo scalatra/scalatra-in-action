@@ -2,6 +2,7 @@ import sbt._
 import Keys._
 
 import org.scalatra.sbt.ScalatraPlugin
+import com.earldouglas.xwp.JettyPlugin
 
 object Chapter07Build extends Build {
   val Organization = "org.scalatra"
@@ -27,5 +28,5 @@ object Chapter07Build extends Build {
         "javax.servlet" % "javax.servlet-api" % "3.1.0" % "provided"
       )
     )
-  )
+  ).enablePlugins(JettyPlugin)
 }

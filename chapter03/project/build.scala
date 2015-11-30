@@ -3,6 +3,8 @@ import Keys._
 
 import org.scalatra.sbt.ScalatraPlugin
 
+import com.earldouglas.xwp.JettyPlugin
+
 object Chapter03Build extends Build {
   val Organization = "org.scalatra"
   val Name = "Chapter3"
@@ -28,5 +30,5 @@ object Chapter03Build extends Build {
         "javax.servlet" % "javax.servlet-api" % "3.1.0" % "provided"
       )
     )
-  )
+  ).enablePlugins(JettyPlugin)
 }
