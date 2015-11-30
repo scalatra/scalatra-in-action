@@ -2,6 +2,7 @@ import sbt._
 import Keys._
 
 import org.scalatra.sbt._
+import com.earldouglas.xwp.JettyPlugin
 
 object Chapter06Build extends Build {
 
@@ -14,7 +15,7 @@ object Chapter06Build extends Build {
   lazy val project = Project (
     Name,
     file("."),
-    settings = Defaults.defaultSettings ++ ScalatraPlugin.scalatraSettings ++ Seq(
+    settings = Defaults.defaultConfigs ++ ScalatraPlugin.scalatraSettings ++ Seq(
       organization := Organization,
       name := Name,
       version := Version,
@@ -27,6 +28,6 @@ object Chapter06Build extends Build {
         "javax.servlet" % "javax.servlet-api" % "3.1.0" % "provided"
       )
     )
-  )
+  ).enablePlugins(JettyPlugin)
 
 }

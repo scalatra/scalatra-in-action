@@ -1,7 +1,8 @@
-import com.earldouglas.xwp.XwpPlugin._
 import sbt._
 import Keys._
 
+import com.earldouglas.xwp.JettyPlugin
+import com.earldouglas.xwp.WebappPlugin.autoImport._
 import com.mojolly.scalate._
 import com.mojolly.scalate.ScalatePlugin._
 import com.mojolly.scalate.ScalatePlugin.ScalateKeys._
@@ -19,7 +20,7 @@ object Chapter09Docker extends Build {
   val DockerImageName = ImageName("org.scalatra/chapter09-docker")
 
   val mySettings =
-    jetty() ++ Seq(
+    Seq(
       organization := Organization,
       name := Name,
       version := Version,
@@ -64,7 +65,7 @@ object Chapter09Docker extends Build {
     dockerfile in docker := {
 
       val classpath = (fullClasspath in Runtime).value
-      val webappDir = (webappDest in webapp).value
+      val webappDir = (target in webappPrepare).value
 
       val mainclass = mainClass.value.getOrElse(sys.error("Expected exactly one main class"))
 
@@ -81,9 +82,13 @@ object Chapter09Docker extends Build {
 
         // Install Oracle Java JDK 1.8.x
         runRaw("mkdir -p /usr/lib/jvm")
-        runRaw("""wget --header "Cookie: oraclelicense=accept-securebackup-cookie" -O /usr/lib/jvm/jdk-8u51-linux-x64.tar.gz http://download.oracle.com/otn-pub/java/jdk/8u51-b16/jdk-8u51-linux-x64.tar.gz""")
-        runRaw("tar xzf /usr/lib/jvm/jdk-8u51-linux-x64.tar.gz --directory /usr/lib/jvm")
-        runRaw("update-alternatives --install /usr/bin/java java /usr/lib/jvm/jdk1.8.0_51/bin/java 100")
+        runRaw(
+          "wget --header \"Cookie: oraclelicense=accept-securebackup-cookie\"" +
+            " -O /usr/lib/jvm/jdk-8u51.tar.gz http://download.oracle.com/" +
+            "otn-pub/java/jdk/8u51-b16/jdk-8u51-linux-x64.tar.gz")
+        runRaw("tar xzf /usr/lib/jvm/jdk-8u51.tar.gz --directory /usr/lib/jvm")
+        runRaw("update-alternatives --install /usr/bin/java java " +
+            "/usr/lib/jvm/jdk1.8.0_51/bin/java 100")
         runRaw("update-alternatives --install /usr/bin/javac javac /usr/lib/jvm/jdk1.8.0_51/bin/javac 100")
 
         // Add all .jar files
@@ -105,7 +110,7 @@ object Chapter09Docker extends Build {
 
         cmdRaw(
           f"java " +
-            f"-Xmx4g -XX:PermSize=256m -XX:MaxPermSize=256m " +
+            f"-Xmx4g " +
             f"-Dlogback.configurationFile=/app/conf/logback.xml " +
             f"-Dconfig.file=/app/conf/application.conf " +
             f"-cp $classpathString $mainclass")
@@ -116,7 +121,7 @@ object Chapter09Docker extends Build {
   )
 
   lazy val project = Project("chapter09-docker", file("."))
-    .enablePlugins(DockerPlugin)
+    .enablePlugins(JettyPlugin, DockerPlugin)
     .settings(mySettings: _*)
     .settings(myScalateSettings: _*)
     .settings(myDockerSettings: _*)

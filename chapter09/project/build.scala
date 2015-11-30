@@ -3,6 +3,8 @@ import Keys._
 
 import org.scalatra.sbt._
 
+import com.earldouglas.xwp.JettyPlugin
+
 import com.mojolly.scalate._
 import com.mojolly.scalate.ScalatePlugin._
 import com.mojolly.scalate.ScalatePlugin.ScalateKeys._
@@ -46,7 +48,12 @@ object Chapter09Build extends Build {
       }
     )
 
+  val test = Seq(
+
+  )
+
   lazy val project = Project("chapter09", file("."))
+    .enablePlugins(JettyPlugin)
     .settings(mySettings: _*)
     .settings(myScalateSettings: _*)
 

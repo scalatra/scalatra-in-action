@@ -1,4 +1,5 @@
 import org.scalatra.sbt.ScalatraPlugin
+import com.earldouglas.xwp.JettyPlugin
 import sbt._
 import Keys._
 
@@ -30,5 +31,5 @@ object Chapter08Build extends Build {
         "javax.servlet" % "javax.servlet-api" % "3.1.0" % "provided"
       )
     )
-  )
+  ).enablePlugins(JettyPlugin)
 }

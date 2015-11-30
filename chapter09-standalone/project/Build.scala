@@ -1,3 +1,4 @@
+import com.earldouglas.xwp.JettyPlugin
 import sbt._
 import Keys._
 
@@ -64,6 +65,7 @@ object Chapter09StandaloneBuild extends Build {
     )
 
   lazy val project = Project("chapter09-standalone", file("."))
+    .enablePlugins(JettyPlugin)
     .settings(mySettings: _*)
     .settings(myScalateSettings: _*)
     .settings(myDistSettings: _*)

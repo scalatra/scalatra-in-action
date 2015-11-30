@@ -2,7 +2,7 @@ import sbt._
 import Keys._
 
 import org.scalatra.sbt.ScalatraPlugin
-
+import com.earldouglas.xwp.JettyPlugin
 import play.twirl.sbt.SbtTwirl
 
 object Chapter07TwirlBuild extends Build {
@@ -29,5 +29,5 @@ object Chapter07TwirlBuild extends Build {
       )
     )
   ).settings(ScalatraPlugin.scalatraSettings:_*)
-   .enablePlugins(SbtTwirl)
+   .enablePlugins(SbtTwirl, JettyPlugin)
 }
