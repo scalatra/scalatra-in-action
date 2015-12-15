@@ -48,10 +48,6 @@ object Chapter09Build extends Build {
       }
     )
 
-  val test = Seq(
-
-  )
-
   lazy val project = Project("chapter09", file("."))
     .enablePlugins(JettyPlugin)
     .settings(mySettings: _*)
