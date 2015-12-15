@@ -1,8 +1,10 @@
 package com.constructiveproof.hackertracker
 
+import java.io.File
+
 import com.constructiveproof.hackertracker.init.DatabaseInit
 import com.constructiveproof.hackertracker.models.Db
-import org.scalatest.{BeforeAndAfterAll, BeforeAndAfter, FunSuite}
+import org.scalatest.{BeforeAndAfter, BeforeAndAfterAll, FunSuite}
 import org.scalatra.test.scalatest.ScalatraSuite
 
 class HackersControllerSpec extends FunSuite with ScalatraSuite with DatabaseInit with BeforeAndAfter with BeforeAndAfterAll {
@@ -10,6 +12,7 @@ class HackersControllerSpec extends FunSuite with ScalatraSuite with DatabaseIni
   addServlet(classOf[HackersController], "/*")
 
   before {
+    wipeDb
     configureDb()
     Db.init
   }

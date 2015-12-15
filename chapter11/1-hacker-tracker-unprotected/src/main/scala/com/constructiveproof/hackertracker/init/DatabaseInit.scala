@@ -1,15 +1,19 @@
 package com.constructiveproof.hackertracker.init
 
+import java.io.File
+
 import com.mchange.v2.c3p0.ComboPooledDataSource
-import org.squeryl.adapters.{H2Adapter, MySQLAdapter}
-import org.squeryl.Session
-import org.squeryl.SessionFactory
+import org.apache.commons.io.FileUtils
 import org.slf4j.LoggerFactory
+import org.squeryl.adapters.H2Adapter
+import org.squeryl.{Session, SessionFactory}
 
 trait DatabaseInit {
   val logger = LoggerFactory.getLogger(getClass)
 
-  val databaseConnection = "jdbc:h2:file:~/db/hackertracker.db"
+  val dbDir = "/tmp/db"
+  val dbPath = dbDir + "/hackertracker.db"
+  val databaseConnection = "jdbc:h2:file:" + dbPath
 
   var cpds = new ComboPooledDataSource
 
@@ -32,5 +36,9 @@ trait DatabaseInit {
   def closeDbConnection() {
     logger.info("Closing c3po connection pool")
     cpds.close()
+  }
+
+  def wipeDb = {
+    FileUtils.deleteDirectory(new File(dbDir))
   }
 }
