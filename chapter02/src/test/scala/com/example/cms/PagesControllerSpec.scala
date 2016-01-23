@@ -1,5 +1,7 @@
 package com.example.cms
+
 import org.scalatra.test.specs2._
+
 class PagesControllerSpec extends ScalatraSpec { def is =
   "GET /pages/:slug on PagesController" ^
     "should return status 200" ! pagesWork^

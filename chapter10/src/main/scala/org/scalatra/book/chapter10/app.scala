@@ -11,6 +11,8 @@ class Chapter10App(db: Database) extends ScalatraServlet with ScalateSupport wit
 
   override protected implicit def executor = scala.concurrent.ExecutionContext.global
 
+  println(new java.io.File( "." ).getCanonicalPath())
+
   before("/*") {
     contentType = "text/html"
   }

@@ -16,7 +16,7 @@ object Chapter09Docker extends Build {
   val Name = "chapter09-docker"
   val Version = "0.1.0-SNAPSHOT"
   val ScalaVersion = "2.11.6"
-  val ScalatraVersion = "2.4.0.RC1"
+  val ScalatraVersion = "2.4.0"
   val DockerImageName = ImageName("org.scalatra/chapter09-docker")
 
   val mySettings =
@@ -25,6 +25,7 @@ object Chapter09Docker extends Build {
       name := Name,
       version := Version,
       scalaVersion := ScalaVersion,
+      fork in Test := true,
       resolvers += Classpaths.typesafeReleases,
       libraryDependencies ++= Seq(
         "org.scalatra" %% "scalatra" % ScalatraVersion,

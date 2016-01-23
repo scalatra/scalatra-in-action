@@ -9,7 +9,7 @@ object Chapter05Build extends Build {
   val Name = "Chapter5"
   val Version = "0.1.0-SNAPSHOT"
   val ScalaVersion = "2.11.6"
-  val ScalatraVersion = "2.4.0.RC1"
+  val ScalatraVersion = "2.4.0"
 
   val mySettings = Defaults.defaultConfigs ++
     ScalatraPlugin.scalatraWithDist ++
@@ -18,13 +18,14 @@ object Chapter05Build extends Build {
       name := Name,
       version := Version,
       scalaVersion := ScalaVersion,
+      fork in Test := true,
       resolvers += Classpaths.typesafeReleases,
       resolvers += "Scalaz Bintray Repo" at "http://dl.bintray.com/scalaz/releases",
       libraryDependencies ++= Seq(
         "org.scalatra" %% "scalatra" % ScalatraVersion,
         "org.scalatra" %% "scalatra-scalate" % ScalatraVersion,
         "org.scalatra" %% "scalatra-json" % ScalatraVersion,
-        "org.json4s"   %% "json4s-jackson" % "3.3.0.RC2",
+        "org.json4s"   %% "json4s-jackson" % "3.3.0",
         "org.scalaz" %% "scalaz-core" % "7.1.2",
         "org.scalatra" %% "scalatra-scalatest" % ScalatraVersion % "test",
         "ch.qos.logback" % "logback-classic" % "1.1.3" % "runtime",

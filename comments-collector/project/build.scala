@@ -10,7 +10,7 @@ object CommentsCollectorBuild extends Build {
   val Name = "Comments Collector"
   val Version = "0.1.0-SNAPSHOT"
   val ScalaVersion = "2.11.6"
-  val ScalatraVersion = "2.4.0.RC1"
+  val ScalatraVersion = "2.4.0"
 
   lazy val project = Project (
     "comments-collector",
@@ -26,7 +26,7 @@ object CommentsCollectorBuild extends Build {
         "org.scalatra" %% "scalatra-scalate" % ScalatraVersion,
         "org.scalatra" %% "scalatra-specs2" % ScalatraVersion % "test",
         "org.scalatra" %% "scalatra-swagger" % ScalatraVersion,
-        "org.json4s"   %% "json4s-jackson" % "3.3.0.RC2",
+        "org.json4s"   %% "json4s-jackson" % "3.3.0",
         "org.scalaz" %% "scalaz-core" % "7.1.2",
         "org.mongodb" %% "casbah" % "2.8.1",
         "ch.qos.logback" % "logback-classic" % "1.1.3" % "runtime",

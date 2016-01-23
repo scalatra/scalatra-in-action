@@ -11,20 +11,21 @@ object HackerTrackerBuild extends Build {
   val Name = "Chapter 13 - Hacker Tracker API"
   val Version = "0.1.0-SNAPSHOT"
   val ScalaVersion = "2.11.6"
-  val ScalatraVersion = "2.4.0.RC1"
+  val ScalatraVersion = "2.4.0"
 
   lazy val project = Project (
-    "hacker-tracker-protected",
+    "hacker-tracker-api",
     file("."),
     settings = ScalatraPlugin.scalatraSettings ++ scalateSettings ++ Seq(
       organization := Organization,
       name := Name,
       version := Version,
       scalaVersion := ScalaVersion,
+      fork in Test := true,
       resolvers += Classpaths.typesafeReleases,
       resolvers += "Scalaz Bintray Repo" at "http://dl.bintray.com/scalaz/releases",
       libraryDependencies ++= Seq(
-        "org.json4s" %% "json4s-jackson" % "3.2.11",
+        "org.json4s" %% "json4s-jackson" % "3.3.0",
         "org.scalatra" %% "scalatra" % ScalatraVersion,
         "org.scalatra" %% "scalatra-auth" % ScalatraVersion,
         "org.scalatra" %% "scalatra-json" % ScalatraVersion,

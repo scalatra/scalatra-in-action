@@ -18,7 +18,7 @@ class AppSpec extends FunSuite with ScalatraSuite with BeforeAndAfter {
 
   addServlet(new Chapter10App(db), "/*")
 
-  test("simple get") {
+  test("get all areas") {
     get("/areas") {
       status should equal(200)
     }

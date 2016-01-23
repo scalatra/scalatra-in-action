@@ -15,7 +15,7 @@ object Chapter09StandaloneBuild extends Build {
   val Name = "chapter09-standalone"
   val Version = "0.1.0-SNAPSHOT"
   val ScalaVersion = "2.11.6"
-  val ScalatraVersion = "2.4.0.RC1"
+  val ScalatraVersion = "2.4.0"
 
   val mySettings =
     ScalatraPlugin.scalatraSettings ++ Seq(
@@ -23,6 +23,7 @@ object Chapter09StandaloneBuild extends Build {
       name := Name,
       version := Version,
       scalaVersion := ScalaVersion,
+      fork in Test := true,
       resolvers += Classpaths.typesafeReleases,
       libraryDependencies ++= Seq(
         "org.scalatra" %% "scalatra" % ScalatraVersion,

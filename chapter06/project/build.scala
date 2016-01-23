@@ -10,7 +10,7 @@ object Chapter06Build extends Build {
   val Name = "Chapter6"
   val Version = "0.1.0-SNAPSHOT"
   val ScalaVersion = "2.11.6"
-  val ScalatraVersion = "2.4.0.RC1"
+  val ScalatraVersion = "2.4.0"
 
   lazy val project = Project (
     Name,
@@ -20,6 +20,7 @@ object Chapter06Build extends Build {
       name := Name,
       version := Version,
       scalaVersion := ScalaVersion,
+      fork in Test := true,
       libraryDependencies ++= Seq(
         "org.scalatra" %% "scalatra" % ScalatraVersion,
         "org.scalatra" %% "scalatra-scalate" % ScalatraVersion,

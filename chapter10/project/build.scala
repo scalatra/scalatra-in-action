@@ -8,8 +8,8 @@ object Chapter10Build extends Build {
   val Organization = "org.scalatra"
   val Name = "Chapter 10"
   val Version = "0.1.0-SNAPSHOT"
-  val ScalaVersion = "2.11.6"
-  val ScalatraVersion = "2.4.0.RC1"
+  val ScalaVersion = "2.11.7"
+  val ScalatraVersion = "2.4.0"
 
   val mySettings = Defaults.defaultConfigs ++
     ScalatraPlugin.scalatraSettings ++
@@ -18,11 +18,13 @@ object Chapter10Build extends Build {
       name := Name,
       version := Version,
       scalaVersion := ScalaVersion,
+      fork in Test := true,
       resolvers += Classpaths.typesafeReleases,
       resolvers += "Scalaz Bintray Repo" at "http://dl.bintray.com/scalaz/releases",
       libraryDependencies ++= Seq(
         "org.scalatra" %% "scalatra" % ScalatraVersion,
         "org.scalatra" %% "scalatra-scalate" % ScalatraVersion,
+        "org.scala-lang" % "scala-compiler" % "2.11.2",  // TODO fix binary incompatibility
         "org.scalatra" %% "scalatra-scalatest" % ScalatraVersion % "test",
         "org.scalaz" %% "scalaz-core" % "7.1.2",
         "ch.qos.logback" % "logback-classic" % "1.1.3" % "runtime",

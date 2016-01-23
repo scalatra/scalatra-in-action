@@ -10,7 +10,7 @@ object HackerTrackerBuild extends Build {
   val Name = "Chapter 4 - Hacker Tracker"
   val Version = "0.1.0-SNAPSHOT"
   val ScalaVersion = "2.11.6"
-  val ScalatraVersion = "2.4.0.RC1"
+  val ScalatraVersion = "2.4.0"
 
   lazy val project = Project (
     "hacker-tracker",
@@ -20,6 +20,7 @@ object HackerTrackerBuild extends Build {
       name := Name,
       version := Version,
       scalaVersion := ScalaVersion,
+      fork in Test := true,
       resolvers += Classpaths.typesafeReleases,
       resolvers += "Scalaz Bintray Repo" at "http://dl.bintray.com/scalaz/releases",
       libraryDependencies ++= Seq(
