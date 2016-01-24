@@ -6,7 +6,7 @@ import com.earldouglas.xwp.JettyPlugin
 object Chapter10Build extends Build {
 
   val Organization = "org.scalatra"
-  val Name = "Chapter 10"
+  val Name = "climbing-routes"
   val Version = "0.1.0-SNAPSHOT"
   val ScalaVersion = "2.11.7"
   val ScalatraVersion = "2.4.0"
@@ -34,7 +34,7 @@ object Chapter10Build extends Build {
       )
     )
 
-  lazy val project = Project("chapter10", file("."))
+  lazy val project = Project("climbing-routes", file("."))
     .settings(mySettings:_*)
     .enablePlugins(JettyPlugin)
 

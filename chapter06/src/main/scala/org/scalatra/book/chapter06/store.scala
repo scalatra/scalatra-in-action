@@ -1,4 +1,4 @@
-package org.scalatra.book.chapter05
+package org.scalatra.book.chapter06
 
 import java.io.{File, FileOutputStream, InputStream, OutputStream}
 import java.util.concurrent.atomic.AtomicLong

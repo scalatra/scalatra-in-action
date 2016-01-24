@@ -7,7 +7,7 @@ import com.earldouglas.xwp.JettyPlugin
 
 object Chapter03Build extends Build {
   val Organization = "org.scalatra"
-  val Name = "Chapter3"
+  val Name = "record-store"
   val Version = "0.1.0-SNAPSHOT"
   val ScalaVersion = "2.11.6"
   val ScalatraVersion = "2.4.0"

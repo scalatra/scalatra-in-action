@@ -1,4 +1,4 @@
-package org.scalatra.book.chapter05
+package org.scalatra.book.chapter06
 
 import org.json4s._
 import org.json4s.JsonDSL._

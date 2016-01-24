@@ -1,4 +1,4 @@
-package org.scalatra.book.chapter05
+package org.scalatra.book.chapter06
 
 case class Recipe(title: String, details: RecipeDetails,
   ingredients: List[IngredientLine], steps: List[String])

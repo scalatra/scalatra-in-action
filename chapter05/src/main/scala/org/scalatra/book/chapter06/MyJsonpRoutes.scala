@@ -1,4 +1,4 @@
-package org.scalatra.book.chapter05
+package org.scalatra.book.chapter06
 
 import org.scalatra._
 import org.scalatra.json._
