@@ -24,4 +24,30 @@ class AppSpec extends FunSuite with ScalatraSuite with BeforeAndAfter {
     }
   }
 
+  test("get one area") {
+    get("/areas/2") {
+      status should equal(200)
+    }
+  }
+
+  test("modify a route") {
+    put("/routes/1?routeName=foo&description=bar") {
+      status should equal(200)
+    }
+
+    put("/routes/100?routeName=foo&description=bar") {
+      status should equal(404)
+    }
+  }
+
+  test("delete a route") {
+    delete("/routes/1") {
+      status should equal(200)
+    }
+
+    delete("/routes/1") {
+      status should equal(404)
+    }
+  }
+
 }

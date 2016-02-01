@@ -1,6 +1,4 @@
-import org.eclipse.jetty.server.Server
-
-import org.eclipse.jetty.server._
+import org.eclipse.jetty.server.{Server, ServerConnector}
 import org.eclipse.jetty.webapp.WebAppContext
 import org.scalatra.book.chapter09.AppConfig
 import org.scalatra.servlet.ScalatraListener
