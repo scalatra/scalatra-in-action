@@ -24,7 +24,6 @@ object Chapter10Build extends Build {
       libraryDependencies ++= Seq(
         "org.scalatra" %% "scalatra" % ScalatraVersion,
         "org.scalatra" %% "scalatra-scalate" % ScalatraVersion,
-        "org.scala-lang" % "scala-compiler" % "2.11.2",  // TODO fix binary incompatibility
         "org.scalatra" %% "scalatra-scalatest" % ScalatraVersion % "test",
         "org.scalaz" %% "scalaz-core" % "7.1.2",
         "ch.qos.logback" % "logback-classic" % "1.1.3" % "runtime",
