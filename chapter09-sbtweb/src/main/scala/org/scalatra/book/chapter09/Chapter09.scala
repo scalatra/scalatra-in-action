@@ -5,10 +5,6 @@ import org.scalatra.scalate.ScalateSupport
 
 class Chapter09(appConfig: AppConfig) extends ScalatraServlet with ScalateSupport {
 
-  get("/") {
-    f"Greetings! (isDevelopment = ${isDevelopmentMode})"
-  }
-
   get("/shorten-url") {
     val token = UrlShortener.nextFreeToken
     f"${appConfig.webBase}/$token"
