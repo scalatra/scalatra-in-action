@@ -3,9 +3,6 @@ package org.scalatra.book.chapter06
 import org.json4s._
 import org.json4s.JsonDSL._
 
-import org.json4s.Extraction.decompose
-import org.json4s.jackson.JsonMethods.{parse, pretty}
-
 sealed trait Fact
 case class Energy(value: Int) extends Fact
 case class Carbohydrate(value: Double) extends Fact
