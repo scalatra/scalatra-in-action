@@ -12,7 +12,7 @@ object json4s_basics {
 
   // fooBar: org.json4s.JValue = JObject(List((label,JString(Foo bar)), ...
 
-  import org.json4s.jackson.parseJson
+  import org.json4s.jackson.JsonMethods.parse
 
   val txt =
     """{
@@ -21,7 +21,7 @@ object json4s_basics {
       | "fairTrade": true
       |}""".stripMargin
 
-  val parsed = parseJson(txt)
+  val parsed = parse(txt)
   // parsed: org.json4s.JValue = JObject(List((label,JString(Foo bar)), ...
 
   fooBar == parsed
