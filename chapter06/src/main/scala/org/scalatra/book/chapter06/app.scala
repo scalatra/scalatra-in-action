@@ -2,11 +2,11 @@ package org.scalatra.book.chapter06
 
 import java.io.{FileInputStream, File, IOException}
 
-import org.scalatra.ScalatraServlet
+import org.scalatra.{ContentEncodingSupport, ScalatraServlet}
 import org.scalatra.scalate.ScalateSupport
 import org.scalatra.servlet._
 
-class DocumentsApp(store: DocumentStore) extends ScalatraServlet with FileUploadSupport with ScalateSupport {
+class DocumentsApp(store: DocumentStore) extends ScalatraServlet with FileUploadSupport with ScalateSupport with ContentEncodingSupport {
 
   configureMultipartHandling(MultipartConfig(
     maxFileSize = Some(30 * 1024 * 1024),

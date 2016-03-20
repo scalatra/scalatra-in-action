@@ -55,18 +55,22 @@ class Chapter10App(db: Database) extends ScalatraServlet with ScalateSupport wit
 
   // create a new area
   post("/areas") {
+    new AsyncResult {
+      val is = {
 
-    // use halting
-    val name = params.get("name") getOrElse halt(BadRequest())
-    val location = params.get("location") getOrElse halt(BadRequest())
-    val latitude = params.getAs[Double]("latitude") getOrElse halt(BadRequest())
-    val longitude = params.getAs[Double]("longitude") getOrElse halt(BadRequest())
-    val description = params.get("description") getOrElse halt(BadRequest())
+        // halt on an error
+        val name = params.get("name") getOrElse halt(BadRequest())
+        val location = params.get("location") getOrElse halt(BadRequest())
+        val latitude = params.getAs[Double]("latitude") getOrElse halt(BadRequest())
+        val longitude = params.getAs[Double]("longitude") getOrElse halt(BadRequest())
+        val description = params.get("description") getOrElse halt(BadRequest())
 
-    db.run(createArea(name, location, latitude, longitude, description)) map { area =>
-      Found(f"/areas/${area.id}")
+        db.run(createArea(name, location, latitude, longitude, description)) map { area =>
+          Found(f"/areas/${area.id}")
+        }
+
+      }
     }
-
   }
 
   // update name and description of a route
@@ -80,7 +84,7 @@ class Chapter10App(db: Database) extends ScalatraServlet with ScalateSupport wit
         }
 
         // uses scalaz \/ for parameter validation
-        // note: being explicit about the types here
+        // being explicit about the types here
 
         val x: ActionResult \/ Future[ActionResult] = for {
           routeId      <- params.getAs[Int]("routeId") \/> BadRequest()
@@ -94,7 +98,7 @@ class Chapter10App(db: Database) extends ScalatraServlet with ScalateSupport wit
           }
         }
 
-        // ActionResult \/ Future[ActionResult] -> Future[ActionResult \/ ActionResult]
+        // ActionResult \/ Future[ActionResult] => Future[ActionResult \/ ActionResult]
         // for sequence see scalaz.Traverse
         val y: Future[ActionResult \/ ActionResult] = x.sequence[Future, ActionResult]
 
