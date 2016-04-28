@@ -15,7 +15,7 @@ object Chapter12CrawlerBuild extends Build {
   lazy val project = Project (
     "chapter-12-crawler",
     file("."),
-    settings = ScalatraPlugin.scalatraWithJRebel ++ scalateSettings ++ Seq(
+    settings = ScalatraPlugin.scalatraSettings ++ scalateSettings ++ Seq(
       organization := Organization,
       name := Name,
       version := Version,

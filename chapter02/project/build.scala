@@ -15,7 +15,7 @@ object ScalatraCmsBuild extends Build {
   lazy val project = Project (
     "scalatra-cms",
     file("."),
-    settings = ScalatraPlugin.scalatraWithJRebel ++ scalateSettings ++ Seq(
+    settings = ScalatraPlugin.scalatraSettings ++ scalateSettings ++ Seq(
       organization := Organization,
       name := Name,
       version := Version,
