@@ -29,7 +29,8 @@ object Chapter10Build extends Build {
         "ch.qos.logback" % "logback-classic" % "1.1.3" % "runtime",
         "com.typesafe.slick" %% "slick" % "3.0.0",
         "com.h2database" % "h2" % "1.4.187",
-        "javax.servlet" % "javax.servlet-api" % "3.1.0" % "provided"
+        "javax.servlet" % "javax.servlet-api" % "3.1.0" % "provided",
+        "org.scala-lang" % "scala-compiler" % ScalaVersion
       )
     )
 
